@@ -1,6 +1,7 @@
 @import "~bootstrap/scss/bootstrap";
 .App {
   text-align: center;
+  font-family: "Poppins";
 }
 
 @mixin text($weight: 400, $fontSize: 18px, $color: white){

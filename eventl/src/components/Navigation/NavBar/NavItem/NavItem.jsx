@@ -1,13 +1,20 @@
-import React from 'react'
+import React from "react";
+import "./NavItem.scss";
 
 const NavItem = (props) => {
-    return(
-        <ul className="NavItems">
-            <li>
-                <a href=""></a>
-            </li>
+  return (
+    <ul className="NavItem">
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/">Events</a>
+      </li>
+      <li>
+        <a href="/"> About us</a>
+      </li>
+    </ul>
+  );
+};
 
-        </ul>
-    )
-
-}
+export default NavItem;

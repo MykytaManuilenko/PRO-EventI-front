@@ -1,0 +1,19 @@
+.NavItem {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin-left: 200px;
+    
+    li{
+        text-decoration: none;
+        display: inline-block;
+        margin-right: 68px;
+        
+        a{
+            color: white;
+            font-weight: 500;
+            font-size: 18px;
+        }
+    }
+}
+
