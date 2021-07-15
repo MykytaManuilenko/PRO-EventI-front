@@ -1,0 +1,26 @@
+.Card{
+
+    .CardImage{
+        width: 324px;
+        height: 206px;
+        border-radius: 39px;
+    }
+
+    .TextContainer{
+        margin-top: 14px;
+
+        .EventName{
+            margin:0;
+            font-size: 18px;
+            font-weight: 400;
+
+        }
+        .EventDate{
+            margin: 0;
+            margin-top: 4px;
+            font-size: 16px;
+            color: #8F909E;
+            font-weight: 500;
+        }
+    }
+}

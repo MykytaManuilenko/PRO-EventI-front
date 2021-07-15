@@ -1,0 +1,30 @@
+@import "~bootstrap/scss/bootstrap";
+.App {
+  text-align: center;
+  font-family: "Poppins";
+}
+
+@mixin text($weight: 400, $fontSize: 18px, $color: white){
+  font-family: 'Poppins';
+  font-weight: $weight;
+  font-size: $fontSize;
+  margin-bottom: 0;
+  color: $color;
+
+}
+
+.boldHeader {
+  @include text($weight: 600, $fontSize: 36px);
+}
+
+.smallText {
+  @include text($fontSize: 16px,  $color: #E8E6E6);
+  margin-top: 5px;
+}
+
+
+.locText{
+  @include text($weight:600, $fontSize: 26px);
+  margin-top: 57px;
+}
+
