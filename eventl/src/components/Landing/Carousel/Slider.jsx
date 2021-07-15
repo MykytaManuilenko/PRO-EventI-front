@@ -2,10 +2,12 @@ import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import "./Carousel.scss";
 import Button from '../../UI/Button/Button'
+import SearchPart from '../SearchPart/SearchPart'
 
 const Slider = () => {
   return (
-    <Carousel indicators={false} interval={null}>
+    <>
+    <Carousel indicators={false} interval={null} className="Carousel">
       <Carousel.Item>
         <img src="/v2.png" alt="First slide" />
         <Carousel.Caption className="name">
@@ -43,6 +45,8 @@ const Slider = () => {
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
+    <SearchPart/>
+    </>
   );
 };
 

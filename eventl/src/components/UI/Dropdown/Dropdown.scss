@@ -1,0 +1,43 @@
+.Container{
+    padding: 10px;
+    cursor: pointer;
+
+    .ClickableText{
+        margin: 0;
+        justify-content: flex-start;
+        align-items: center;
+        display: flex;
+    }
+}
+.activeFilter{
+    border-radius: 5px 5px 0 0;
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0 4px 0 0 rgb(0 0 0 / 20%), 0 4px 9px 0 rgb(0 0 0 / 19%);
+}
+
+.FilterList{
+    position: fixed;
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(2,minmax(80px, 1fr)); 
+    text-align: left;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0 5px 0 0 rgb(0 0 0 / 20%), 0 12px 14px 0 rgb(0 0 0 / 19%);
+    border-radius: 0 5px 5px 5px;
+
+    .Check{
+        margin-right: 12px;
+    }
+
+    li{
+        padding: 6px;
+
+    }
+}
+
+.Dropdown{
+    margin-right: 10px;
+}

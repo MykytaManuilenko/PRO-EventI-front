@@ -1,16 +1,21 @@
-img{
-    width: 100vw;
-    height: 85vh;
-    object-fit: cover;
-    filter: brightness(85%);
+.Carousel{
+    img{
+        width: 100vw;
+        height: 85vh;
+        object-fit: cover;
+        filter: brightness(85%);
+    }
+
+    .name {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        height: 100%;
+        padding-top: 20px;
+    
+    }
+
 }
 
-.name {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100%;
-    padding-top: 20px;
 
-}
