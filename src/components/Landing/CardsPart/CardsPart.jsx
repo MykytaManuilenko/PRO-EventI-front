@@ -21,9 +21,9 @@ const CardsPart = () => {
 
         </div>
       
-     
-
       <div className="CardsContainer">
+        {/* карточки доставать из базы, 
+        и сделать проверку чтобы больше 3 рядов не добавляло */}
         <Card image="./image1.png" name="Classic concert" date="16 May, 2021" />
         <Card image="./image1.png" name="Classic concert" date="16 May, 2021" />
         <Card image="./image1.png" name="Classic concert" date="16 May, 2021" />
