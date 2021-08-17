@@ -12,7 +12,9 @@ const CardsPart = () => {
             <hr className="Line" />
 
         </div>
-        <CardSlider/>
+         <CardSlider/>
+
+        
         <Button class="ShowButton">Show all</Button>
 
         <div className="TitlePart">
@@ -25,14 +27,14 @@ const CardsPart = () => {
         {/* карточки доставать из базы, 
         и сделать проверку чтобы больше 3 рядов не добавляло */}
         <Card image="./image1.png" name="Classic concert" date="16 May, 2021" />
+        <Card image="./image.png" name="Classic concert" date="16 May, 2021" />
+        <Card image="./image3.png" name="Classic concert" date="16 May, 2021" />
+        <Card image="./image2.png" name="Classic concert" date="16 May, 2021" />
+        <Card image="./image3.png" name="Classic concert" date="16 May, 2021" />
         <Card image="./image1.png" name="Classic concert" date="16 May, 2021" />
+        <Card image="./image2.png" name="Classic concert" date="16 May, 2021" />
         <Card image="./image1.png" name="Classic concert" date="16 May, 2021" />
-        <Card image="./image1.png" name="Classic concert" date="16 May, 2021" />
-        <Card image="./image1.png" name="Classic concert" date="16 May, 2021" />
-        <Card image="./image1.png" name="Classic concert" date="16 May, 2021" />
-        <Card image="./image1.png" name="Classic concert" date="16 May, 2021" />
-        <Card image="./image1.png" name="Classic concert" date="16 May, 2021" />
-        <Card image="./image1.png" name="Classic concert" date="16 May, 2021" />
+        <Card image="./image3.png" name="Classic concert" date="16 May, 2021" />
         {/* <Card image="./image1.png" name="Classic concert" date="16 May, 2021" /> */}
       </div>
       <Button class="ShowButton">Show all</Button>

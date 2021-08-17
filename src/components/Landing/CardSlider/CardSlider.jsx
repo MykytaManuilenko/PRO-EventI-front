@@ -1,34 +1,68 @@
-import React, { useEffect } from "react";
-// import "./CardSlider.scss";
+import React, { useState } from "react";
+import {
+  CarouselProvider,
+  Slider,
+  Slide,
+  Dot
+} from "pure-react-carousel";
+import "./CardSlider.scss";
+import "pure-react-carousel/dist/react-carousel.es.css";
+
 import Card from "../../UI/Card/Card";
-// import Glide from "@glidejs/glide";
 
-const sliderConfiguration = {
-  gap: 20,
-  perView: 2,
-  startAt: 0,
-  type: "slider",
-};
 const CardSlider = () => {
-//   const slider = new Glide(".glide", sliderConfiguration);
-
-//   useEffect(() => {
-//     return () => slider.mount()
-//   }, [slider])
-
   return (
-    <div className="main__glide">
-      <div className="glide__track" data-glide-el="track">
-        <ul className="glide__slides">
-          <li className="glide__slide">
+    <div className="carousel__container">
+      <CarouselProvider
+        naturalSlideWidth={100}
+        naturalSlideHeight={125}
+        totalSlides={8}
+        visibleSlides={1}
+        currentSlide={2}
+      >
+        <Slider>
+          {/* добавить карточки из базы */}
+        <Slide index={1}>
             <Card
               image="./image1.png"
               name="Classic concert"
               date="16 May, 2021"
             />
-          </li>
-        </ul>
-      </div>
+          </Slide>
+          <Slide index={2}>
+            <Card
+              image="./image2.png"
+              name="Classic concert"
+              date="16 May, 2021"
+            />
+          </Slide>
+
+          <Slide index={3}>
+            <Card
+              image="./image3.png"
+              name="Classic concert"
+              date="16 May, 2021"
+            />
+          </Slide> 
+          <Slide index={4}>
+            <Card
+              image="./image1.png"
+              name="Classic concert"
+              date="16 May, 2021"
+            />
+          </Slide> 
+          <Slide index={5}>
+            <Card
+              image="./image2.png"
+              name="Classic concert"
+              date="16 May, 2021"
+            />
+          </Slide>
+        </Slider>
+        <Dot className="dots" slide={1}></Dot>
+        <Dot className="dots" slide={2}></Dot>
+        <Dot className="dots" slide={5}></Dot>
+      </CarouselProvider>
     </div>
   );
 };
