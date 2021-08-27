@@ -5,7 +5,7 @@ import Filters from './Filters/Filters'
 
 const SearchPart = (props) => {
     return(
-        <div className="SearchPart">
+        <div className={"SearchPart " + props.cname}>
             <Search/>
             <Filters/>
         </div>

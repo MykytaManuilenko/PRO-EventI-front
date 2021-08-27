@@ -3,7 +3,7 @@ import "./NavItem.scss";
 
 const NavItem = (props) => {
   return (
-    <ul className={"NavItem" + (props.active ? " active" : "")}>
+    <ul className={"NavItem" + (props.active ? " activeNav" : "") + (" " + props.cname)}>
       <li>
         <a href="/">Home</a>
       </li>

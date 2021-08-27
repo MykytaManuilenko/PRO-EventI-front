@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import NavItem from "./NavItem/NavItem";
 import "./NavBar.scss";
 
-const NavBar = () => {
+const NavBar = (props) => {
   const [navbar, setNavbar] = useState(false);
 
   const changeBackground = () => {
-    if(window.scrollY >= 89){
+    if(window.scrollY >= 69){
       setNavbar(true);
     }else{
       setNavbar(false);
@@ -14,10 +14,10 @@ const NavBar = () => {
   }
   window.addEventListener('scroll', changeBackground);
   return (
-    <nav className={"SimpleNavBar" + (navbar ? " active" : "")}>
+    <nav className={"SimpleNavBar" + (navbar ? " active" : "") + (" " + props.cname)}>
       <h2 className="logo">Eventl</h2>
       <div className="items">
-        <NavItem active={navbar}/>
+        <NavItem active={navbar} cname={props.cname}/>
       </div>
       <div className="rightPart">
         {/* тут должна быть локация */}

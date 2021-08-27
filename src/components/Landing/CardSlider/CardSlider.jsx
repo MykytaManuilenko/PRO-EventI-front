@@ -61,7 +61,7 @@ const CardSlider = () => {
         </Slider>
         <Dot className="dots" slide={1}></Dot>
         <Dot className="dots" slide={2}></Dot>
-        <Dot className="dots" slide={5}></Dot>
+        <Dot className="dots" slide={4}></Dot>
       </CarouselProvider>
     </div>
   );

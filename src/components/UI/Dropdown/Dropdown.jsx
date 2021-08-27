@@ -1,21 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import Arrow from "../Arrow/Arrow";
 import "./Dropdown.scss";
 
 const Dropdown = (props) => {
-  const [open, setOpen] = useState(false);
   return (
     <div className="Dropdown">
       <div
-        className={"Container" + (open ? " activeFilter" : "")}
-        onClick={() => setOpen(!open)}
+        className={"Container" + (props.open ? " activeFilter" : "")}
+        onClick={props.clicked}
       >
         <p className="ClickableText">
-          {props.children} <Arrow isOpen={open} />
+          {props.children} <Arrow isOpen={props.open} />
         </p>
       </div>
-
-      {open && (
+      
+      {props.open && (
         <ul className="FilterList">
           {props.types.map((type, index) => {
             return (
