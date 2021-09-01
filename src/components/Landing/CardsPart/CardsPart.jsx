@@ -7,9 +7,9 @@ import "./CardsPart.scss";
 
 const CardsPart = () => {
   const cardsArray = [
-    { image: "./image1.png", name: "Classic concert", date: "16 May, 2021" },
-    { image: "./image2.png", name: "Classic concert", date: "16 May, 2021" },
-    { image: "./image3.png", name: "Classic concert", date: "16 May, 2021" },
+    { image: "./image1.png", name: "Classic concert", date: "16 May, 2021", type:"Music" },
+    { image: "./image2.png", name: "Dance competition", date: "16 May, 2021", type:"Dance" },
+    { image: "./image3.png", name: "Classic concert", date: "16 May, 2021", type:"Dance" },
     { image: "./image2.png", name: "Classic concert", date: "16 May, 2021" },
     { image: "./image1.png", name: "Classic concert", date: "16 May, 2021" },
     { image: "./image3.png", name: "Classic concert", date: "16 May, 2021" },
@@ -18,6 +18,7 @@ const CardsPart = () => {
     { image: "./image1.png", name: "Classic concert", date: "16 May, 2021" },
     { image: "./image2.png", name: "Classic concert", date: "16 May, 2021" }
   ];
+  
   return (
     <div className="CardPart">
       <div className="TitlePart">
@@ -44,7 +45,7 @@ const CardsPart = () => {
             )
           })}
       </div>
-      <Link to="/allEvents">
+      <Link to="/allEvents" >
         <Button class="ShowButton">Show all</Button>
       </Link>
     </div>
