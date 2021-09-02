@@ -1,0 +1,142 @@
+.regPage{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+
+    .registerContain{
+        padding: 20px;
+        height: 100vh;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .regForm{
+        background-color: white;
+        box-shadow: 0px 4px 40px rgba(167, 167, 167, 0.25);
+        border-radius: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 35px 20px;
+        width: 880px;
+        height: 700px;
+        margin-top: 90px;
+
+        .title{
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 36px;
+            margin-bottom: 71px;
+            color: #0C0D2C;
+        }
+
+        .firstRow{
+            display: flex;
+            width: 85%;
+            margin-bottom: 49px;
+
+            .placePhoto{
+                // border: 1px solid black;
+                // border-radius: 50px;
+                // width: 100px;
+                // // height: 100px;
+                // margin-right: 30px;
+            }
+        }
+
+        .secondRow{
+            display: flex;
+            width: 85%;
+            margin-bottom: 49px;
+        }
+
+
+        .inputNameCont, .inputSurnameCont, 
+        .birthInputCont, .sexInputCont{
+            display: flex;
+            align-items: center;
+            position: relative;
+            width:70%;
+        }
+
+        .emailContain, .telephoneContain, .passContainer{
+            margin-bottom: 49px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            width:85%;
+
+        }
+
+        .inputNameCont, .birthInputCont{
+            margin-right: 82px;
+        }
+
+        .labels{
+            margin: 0;
+            position: absolute;
+            top:5px;
+            padding-left: 10px;
+            pointer-events: none;
+            transition: 0.5s;
+            font-weight: 300;
+            font-size: 13px;
+            color: #919191;
+        }
+    }
+
+    .inputName, .inputSurname, .birthInput, 
+    .sexInput, .emailInput, .telephoneInput, .passwordInput{
+        border: none;
+        border-bottom: 0.6px solid #FCC117;
+        padding: 8px 0;
+        outline: none;
+        font-weight: 300;
+        font-size: 14px;
+        width:100%;
+    }
+
+    .inputName:focus ~ .labels,
+    .inputSurname:focus ~ .labels,
+    .sexInput:focus ~ .labels, 
+    .birthInput:focus ~ .labels,
+    .emailInput:focus ~ .labels,
+    .telephoneInput:focus ~ .labels,
+    .passwordInput:focus ~ .labels{
+        top: -15px;
+    }
+}
+
+.buttContainer{
+    display: flex;
+    justify-content: flex-start;
+    width: 85%;
+    align-items: baseline;
+
+    .LogInButt{
+        background-color: #ff5569;
+        border: none;
+        margin-top: 0;
+    
+    }
+
+    .redirectLog{
+        margin: 0;
+        // display: flex;
+        align-items: center;
+        margin-left: 43px;
+        // margin-right: 10px;
+
+        a{
+            color: black;
+            text-decoration: underline;
+        }
+    }
+
+}

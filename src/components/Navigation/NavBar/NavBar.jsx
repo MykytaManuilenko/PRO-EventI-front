@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NavItem from "./NavItem/NavItem";
 import "./NavBar.scss";
+import {Link} from 'react-router-dom'
 
 const NavBar = (props) => {
   const [navbar, setNavbar] = useState(false);
@@ -25,7 +26,10 @@ const NavBar = (props) => {
           <img src="./location.svg" alt="" className="locationI" />
           Warsaw, Poland
         </p>
-        <button className="logButton">Log in</button>
+        <Link to="/login">
+          <button className="logButton">Log in</button>
+        </Link>
+        
       </div>
     </nav>
   );
