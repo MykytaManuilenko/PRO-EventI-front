@@ -4,6 +4,7 @@ import Button from "../../UI/Button/Button";
 import Card from "../../UI/Card/Card";
 import CardSlider from "../CardSlider/CardSlider";
 import "./CardsPart.scss";
+// import LocationAuto from "../../UI/LocationAuto/LocationAuto";
 
 const CardsPart = () => {
   const cardsArray = [
@@ -21,6 +22,7 @@ const CardsPart = () => {
   
   return (
     <div className="CardPart">
+      {/* <LocationAuto /> */}
       <div className="TitlePart">
         <p className="Title">Popular events</p>
         <hr className="Line" />
