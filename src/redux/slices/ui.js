@@ -2,37 +2,63 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialUiState = {
   loading: false,
-  err: null,
-  success: null,
-  isErr: false,
-  isSuc: false,
+  errRegister: null,
+  successRegister: null,
+  errLogIn: null,
+  successLogIn: null,
+  isErrReg: false,
+  isSucReg: false,
+  isSucLogIn: false,
+  isErrLogIn: false,
 };
 
 const uiSlice = createSlice({
   name: "UI",
   initialState: initialUiState,
   reducers: {
-    setError(state, action) {
-      state.err = {
+    setErrorRegister(state, action) {
+      state.errRegister = {
         status: action.payload.status,
         message: action.payload.message,
       };
-      state.isErr = true;
+      state.isErrReg = true;
     },
-    unsetError(state) {
-      state.err = null;
-      state.isErr = false;
+    unsetErrorRegister(state) {
+      state.errRegister = null;
+      state.isErrReg = false;
     },
-    setSuccess(state, action) {
-      state.success = {
+    setSuccessRegister(state, action) {
+      state.successRegister = {
         status: action.payload.status,
         message: action.payload.message,
       };
-      state.isSuc = true;
+      state.isSucReg = true;
     },
-    unsetSuccess(state) {
-      state.success = null;
-      state.isSuc = false;
+    unsetSuccessRegister(state) {
+      state.successRegister = null;
+      state.isSucReg = false;
+    },
+    setErrorLogIn(state, action) {
+      state.errLogIn = {
+        status: action.payload.status,
+        message: action.payload.message,
+      };
+      state.isErrLogIn = true;
+    },
+    unsetErrorLogIn(state) {
+      state.errLogIn = null;
+      state.isErrLogIn = false;
+    },
+    setSuccessLogIn(state, action) {
+      state.successLogIn = {
+        status: action.payload.status,
+        message: action.payload.message,
+      };
+      state.isSucLogIn = true;
+    },
+    unsetSuccessLogIn(state) {
+      state.successLogIn = null;
+      state.isSucLogIn = false;
     },
     setLoading(state) {
       state.loading = true;

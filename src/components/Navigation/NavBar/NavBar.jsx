@@ -8,8 +8,8 @@ import { logOutUser } from "../../../redux/actions/auth";
 import { useLocation } from "react-router-dom";
 
 const NavBar = (props) => {
-  const { userName, isAuthenticated } = useSelector(
-    (state) => state.authentication
+  const isAuthenticated = useSelector(
+    (state) => state.authentication.isAuthenticated
   );
 
   const dispatch = useDispatch();
@@ -18,12 +18,10 @@ const NavBar = (props) => {
   const [locValue, setLocValue] = useState("");
   const [isClicked, setIsClicked] = useState(false);
   const ref = useRef();
-  const userId = useSelector((state) => state.authentication.user_id);
   const routes = ["/login", "/allEvents", "/registration"];
   const [colour, setColour] = useState("");
 
   let location = useLocation();
-  console.log("location :>> ", location.pathname);
 
   const logOut = (token) => {
     dispatch(logOutUser(token));
@@ -52,11 +50,7 @@ const NavBar = (props) => {
   }, [isClicked]);
 
   useEffect(() => {
-    console.log("colour :>> ", colour);
-    console.log(" LALALALALALA:>> ", routes.includes(location.pathname));
-    console.log("location.typeOf() :>> ", typeof location.pathname);
     setColour("white");
-
     if (routes.includes(location.pathname)) {
       setColour("black");
     }
@@ -65,7 +59,7 @@ const NavBar = (props) => {
   window.addEventListener("scroll", changeBackground);
   return (
     <nav
-      className={"SimpleNavBar" + (navbar ? " active" : "")}
+      className={"SimpleNavBar" + (navbar ? " activeNav" : "")}
       style={
         location.pathname === "/"
           ? { background: "none" }

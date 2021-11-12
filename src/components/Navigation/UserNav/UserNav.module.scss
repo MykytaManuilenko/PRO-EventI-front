@@ -1,8 +1,16 @@
 .userNavContainer {
+  display: flex;
+  justify-content: flex-end;
+
   .userInfo {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: baseline;
+    padding: 31px;
+
+    p {
+      margin: 0;
+    }
   }
 }

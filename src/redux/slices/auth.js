@@ -5,7 +5,6 @@ const initialAuthState = {
   userName: "",
   userRole: "UNREGISTERED",
   user_id: "",
-  token: "",
 };
 
 const authSlice = createSlice({
@@ -14,26 +13,23 @@ const authSlice = createSlice({
   reducers: {
     registration(state, action) {
       state.isAuthenticated = true;
-      state.userName = action.payload.firstName;
+      state.userName = action.payload.userName;
       state.userRole = action.payload.role;
       state.user_id = action.payload.userId;
     },
     confirmLogin(state) {
       state.isAuthenticated = true;
-      state.userRole = "CONFIRMED_USER";
     },
     logOut(state) {
-       state.isAuthenticated = false;
-       state.userName = "";
-       state.userRole= "";
-       state.user_id = "";
-      //  state.token = "";
+      state.isAuthenticated = false;
+      state.userName = "";
+      state.userRole = "";
+      state.user_id = "";
     },
     login(state, action) {
       state.isAuthenticated = true;
       state.userRole = action.payload.role;
       state.user_id = action.payload.userId;
-      // state.token = action.payload.token;
     },
   },
 });

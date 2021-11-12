@@ -3,9 +3,8 @@ import { authAction } from "../slices/auth";
 import { uiActions } from "../slices/ui";
 import jwt from "jwt-decode";
 import axiosInstance from "../../utils/axiosInstance";
-import { useHistory } from "react-router-dom";
 
-const registrationUser = (data) => (dispatch) => {
+const registrationUser = (data, history) => (dispatch) => {
   dispatch(uiActions.setLoading());
   axios
     .post("/api/register", data)
@@ -18,17 +17,19 @@ const registrationUser = (data) => (dispatch) => {
       };
       dispatch(authAction.registration(merged));
       dispatch(
-        uiActions.setSuccess({
+        uiActions.setSuccessRegister({
           status: "success",
           message: "Confirm your email :)",
         })
       );
-      dispatch(uiActions.unsetError(""));
+      dispatch(uiActions.unsetErrorRegister(""));
       localStorage.setItem("accessToken", res.data.accessToken);
+      history.push("/userProfile");
     })
     .catch((err) => {
+      dispatch(uiActions.unsetSuccessRegister(""));
       dispatch(
-        uiActions.setError({
+        uiActions.setErrorRegister({
           status: "error",
           message: err.response.data.message,
         })
@@ -46,9 +47,17 @@ const logInUser = (data, history) => (dispatch) => {
       const merged = { userId: token.userId, role: token.role };
       dispatch(authAction.login(merged));
       history.push("/userProfile");
+      dispatch(uiActions.unsetErrorLogIn(""));
     })
     .catch((err) => {
       console.log("err :>> ", err);
+      console.log("errrr :>> ", err.response.data);
+      dispatch(
+        uiActions.setErrorLogIn({
+          status: "error",
+          message: err.response.data.message,
+        })
+      );
     });
 };
 
@@ -58,7 +67,7 @@ const logOutUser = (token, history) => (dispatch) => {
     .then((res) => {
       dispatch(authAction.logOut(token));
       localStorage.removeItem("accessToken");
-      history.push("/");
+      history.push("/login");
     })
     .catch((err) => {
       console.log("err :>> ", err);

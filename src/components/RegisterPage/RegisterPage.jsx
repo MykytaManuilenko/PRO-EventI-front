@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import NavBar from "../Navigation/NavBar/NavBar";
 import "./RegisterPage.scss";
 import Button from "../UI/Button/Button";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { registrationUser } from "../../redux/actions/auth";
@@ -11,23 +10,16 @@ import { Alert } from "react-bootstrap";
 import { uiActions } from "../../redux/slices/ui";
 
 const RegisterPage = () => {
-  const Error = useSelector((state) => state.UI.err);
+  const Error = useSelector((state) => state.UI.errRegister);
   const Success = useSelector((state) => state.UI.success);
-  const isError = useSelector((state) => state.UI.isErr);
-  const isSuccess = useSelector((state) => state.UI.isSuc);
+  const isError = useSelector((state) => state.UI.isErrReg);
+  const isSuccess = useSelector((state) => state.UI.isSucReg);
+  const [show, setShow] = useState(true);
 
-  const autoCloseAlert = () => {
-    console.log("ERROR CLOSE :>> ");
-    setTimeout(() => {
-      dispatch(uiActions.unsetError());
-      console.log("UNSET ERROR :>> ");
-    }, 3000);
-  };
-
+  const regexpPhonePL =
+    /^(?:(?:(?:\+|00)?48)|(?:\(\+?48\)))?(?:1[2-8]|2[2-69]|3[2-49]|4[1-8]|5[0-9]|6[0-35-9]|[7-8][1-9]|9[145])\d{7}$/;
+  const history = useHistory();
   const dispatch = useDispatch();
-  const registerHandler = (data) => {
-    dispatch(registrationUser(data));
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -35,6 +27,8 @@ const RegisterPage = () => {
       lastName: "",
       email: "",
       password: "",
+      birthDate: "",
+      phone: "",
     },
     validationSchema: Yup.object({
       firstName: Yup.string()
@@ -52,6 +46,7 @@ const RegisterPage = () => {
         .required("Field is required")
         .min(8, "The password should contains of min. 8 symbols")
         .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
+      phone: Yup.string().matches(regexpPhonePL, "Invalid phone number"),
     }),
     onSubmit: (values) => {
       const data = {
@@ -59,45 +54,48 @@ const RegisterPage = () => {
         password: formik.values.password,
         firstName: formik.values.firstName,
         lastName: formik.values.lastName,
+        birthDate: formik.values.birthDate,
+        phone: formik.values.phone,
       };
-      registerHandler(data);
+      console.log("data :>> ", data);
+      dispatch(registrationUser(data, history));
     },
   });
 
   return (
-    // <div
-    //   className="regPage"
-    //   style={{ backgroundImage: "url(./Background.svg)" }}
-    // >
-    /* <div className="allert">
-            <Alert className="allertError" variant="danger" show={Error}>
-              {Error.message}
-            </Alert>
-          </div> */
-
     <div
       className="regPage"
       style={{ backgroundImage: "url(./Background.svg)" }}
     >
       {isError ? (
-        <div className="allert">
-          <Alert className="allertError" variant="danger" show={Error}>
-            {Error.message}
-          </Alert>
-        </div>
+        <Alert
+          className="allertError"
+          variant="danger"
+          onClose={() => {
+            dispatch(uiActions.unsetErrorRegister(""));
+            setShow(false);
+          }}
+          dismissible
+        >
+          {Error.message}
+        </Alert>
       ) : null}
 
       {isSuccess ? (
         <Alert
           className="allertSuccess"
           variant="success"
-          show={autoCloseAlert}
+          onClose={() => {
+            dispatch(uiActions.unsetErrorRegister(""));
+            setShow(false);
+          }}
+          dismissible
         >
           {Success.message}
         </Alert>
       ) : null}
       <div className="registerContain">
-        <form className="regForm" onSubmit={formik.handleSubmit}>
+        <form className="regForm" onSubmit={formik.handleSubmit} noValidate>
           <p className="title">Create your account</p>
 
           <div className="firstRow">
@@ -109,39 +107,67 @@ const RegisterPage = () => {
                 value={formik.values.firstName}
                 name="firstName"
                 type="text"
+                placeholder="firstName"
                 className="inputName"
               />
               <label className="labels">First Name *</label>
               {formik.touched.firstName && formik.errors.firstName ? (
-                <p>{formik.errors.firstName}</p>
+                <p className="errorText">{formik.errors.firstName}</p>
               ) : null}
             </div>
+
             <div className="inputSurnameCont">
               <input
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.lastName}
                 name="lastName"
+                placeholder="lastName"
                 type="text"
                 className="inputSurname"
               />
               <label className="labels">Surname *</label>
               {formik.touched.lastName && formik.errors.lastName ? (
-                <p>{formik.errors.lastName}</p>
+                <p className="errorText">{formik.errors.lastName}</p>
               ) : null}
             </div>
           </div>
 
-          {/* <div className="secondRow">
-              <div className="birthInputCont">
-                <input type="text" className="birthInput" />
-                <label className="labels">Birthdate *</label>
-              </div>
-              <div className="sexInputCont">
-                <input type="text" className="sexInput" />
-                <label className="labels">Sex</label>
-              </div>
-            </div> */}
+          <div className="secondRow">
+            <div className="birthInputCont">
+              <input
+                type="date"
+                required
+                className="birthInput"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.birthDate}
+                name="birthDate"
+                placeholder="birthDate"
+              />
+              <label className="labels">Birthdate *</label>
+              {formik.touched.birthDate && formik.errors.birthDate ? (
+                <p className="errorText">{formik.errors.birthDate}</p>
+              ) : null}
+            </div>
+
+            <div className="telephoneContain">
+              <input
+                type="text"
+                required
+                className="telephoneInput"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.phone}
+                name="phone"
+                placeholder="phone"
+              />
+              <label className="labels">Telephone number</label>
+              {formik.touched.phone && formik.errors.phone ? (
+                <p className="errorText">{formik.errors.phone}</p>
+              ) : null}
+            </div>
+          </div>
 
           <div className="emailContain">
             <input
@@ -150,31 +176,31 @@ const RegisterPage = () => {
               value={formik.values.email}
               name="email"
               type="text"
+              required
               className="emailInput"
+              autoComplete="off"
+              placeholder="email"
             />
             <label className="labels">Email *</label>
             {formik.touched.email && formik.errors.email ? (
-              <p>{formik.errors.email}</p>
+              <p className="errorText">{formik.errors.email}</p>
             ) : null}
           </div>
-
-          {/* <div className="telephoneContain">
-              <input type="text" className="telephoneInput" />
-              <label className="labels">Telephone number</label>
-            </div> */}
 
           <div className="passContainer">
             <input
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
+              required
               name="password"
               type="password"
               className="passwordInput"
+              placeholder="password"
             />
             <label className="labels">Password</label>
             {formik.touched.password && formik.errors.password ? (
-              <p>{formik.errors.password}</p>
+              <p className="errorText">{formik.errors.password}</p>
             ) : null}
           </div>
 
@@ -192,7 +218,6 @@ const RegisterPage = () => {
         </form>
       </div>
     </div>
-    // </div>
   );
 };
 

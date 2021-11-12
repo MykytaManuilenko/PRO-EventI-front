@@ -1,23 +1,55 @@
 .logNav {
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  // align-items: flex-start;
+  // justify-content: center;
   flex-direction: column;
-  margin-left: 20px;
-  width: 200px;
+  width: 230px;
   position: fixed;
+  background-color: #8698e9;
+  margin: 0;
+  // height: 820px;
+  height: 100vh;
+  border-radius: 0 50px 50px 0;
+  padding-left: 40px;
+  padding-top: 65px;
 
-  ul {
-    list-style: none;
+  .logo {
+    font-family: "Baloo Thambi 2", cursive;
+    color: rgba(252, 193, 23, 1);
+    margin-bottom: 0;
+    margin-right: 40px;
+  }
+
+  .listOfLinks {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin: 0;
     padding: 0;
+    margin: 127px 0 20px 0;
 
-    li {
-      text-decoration: none;
-      display: inline-block;
+    .navLink {
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      margin-bottom: 61px;
+      color: white;
+      font-size: 19px;
+      font-weight: 400;
     }
+  }
+
+  .icons {
+    margin-right: 19px;
+  }
+
+  .logOutButt {
+    border: none;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    color: white;
   }
 }

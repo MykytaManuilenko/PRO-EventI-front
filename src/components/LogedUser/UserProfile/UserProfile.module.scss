@@ -1,11 +1,38 @@
-.profileCont{
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
+.profileCont {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 90%;
+  margin: auto;
 
-    .infoCont{
-        display: flex;
-        justify-content: center;
-        width: 100%;
+  .userInfoContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 4px 100px rgba(101, 101, 101, 0.25);
+    border: 1px solid #efefef;
+    border-radius: 20px;
+    padding: 20px;
+
+    .userData {
+      p {
+        text-align: left;
+        margin: 0;
+      }
     }
+
+    .registerDate {
+      display: flex;
+      justify-content: flex-end;
+      color: #555454;
+      font-size: 14px;
+    }
+
+    .buttContainer {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
 }

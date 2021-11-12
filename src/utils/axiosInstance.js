@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import jwt from "jwt-decode";
 import dayjs from "dayjs";
 
-// const authToken = useSelector((state) => state.authentication.token);
 let authToken = localStorage.getItem("accessToken")
   ? localStorage.getItem("accessToken")
   : null;
@@ -29,13 +28,13 @@ axiosInstance.interceptors.request.use(async (request) => {
   console.log("isExpired :>> ", isExpired);
   if (!isExpired) return request;
 
-const response = await axios({
-    method: 'post',
-    url: '/api/tokens/refresh',
-    headers: { "Authorization": "Bearer " + authToken}
-});
+  const response = await axios({
+    method: "post",
+    url: "/api/tokens/refresh",
+    headers: { Authorization: "Bearer " + authToken },
+  });
 
-  localStorage.setItem('accessToken', response.data.accessToken);
+  localStorage.setItem("accessToken", response.data.accessToken);
   request.headers.authorization = `Bearer ${response.data.accessToken}`;
 
   return request;

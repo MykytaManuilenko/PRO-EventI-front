@@ -20,10 +20,8 @@ const Landing = (props) => {
 
   return (
     <div>
-      {/* <NavBar></NavBar> */}
       <Slider />
       <CardsPart />
-      <Footer />
     </div>
   );
 };

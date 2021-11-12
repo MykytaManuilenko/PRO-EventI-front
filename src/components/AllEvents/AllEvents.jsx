@@ -130,8 +130,6 @@ const AllEvents = () => {
           )}
         </div>
       </div>
-
-      <Footer></Footer>
     </>
   );
 };

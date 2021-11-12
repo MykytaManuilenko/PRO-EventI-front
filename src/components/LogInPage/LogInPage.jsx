@@ -4,12 +4,18 @@ import "./LogInPage.scss";
 import { Link, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logInUser } from "../../redux/actions/auth";
+import { uiActions } from "../../redux/slices/ui";
+import { Alert } from "react-bootstrap";
 
 const LogInPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const isErrorLogIn = useSelector((state) => state.UI.isErrLogIn);
+  const Error = useSelector((state) => state.UI.errLogIn);
+  const Success = useSelector((state) => state.UI.successLogIn);
+  const [show, setShow] = useState(true);
 
   const formik = useFormik({
     initialValues: {
@@ -36,6 +42,21 @@ const LogInPage = () => {
       className="logPage"
       style={{ backgroundImage: "url(./Background.svg)" }}
     >
+      {console.log("AAAAAAAA :>> ", Error)}
+      {isErrorLogIn ? (
+        <Alert
+          className="allertError"
+          variant="danger"
+          onClose={() => {
+            dispatch(uiActions.unsetErrorLogIn(""));
+            setShow(false);
+          }}
+          dismissible
+        >
+          {console.log("Error :>> ", Error)}
+          {Error.message}
+        </Alert>
+      ) : null}
       <div className="LogInContainer">
         <form className="logInForm" onSubmit={formik.handleSubmit}>
           <p className="title">Login to your account</p>
@@ -46,11 +67,12 @@ const LogInPage = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
+              placeholder="email"
               name="email"
             />
             <label className="labels">User name</label>
             {formik.touched.email && formik.errors.email ? (
-              <p>{formik.errors.email}</p>
+              <p className="errorText">{formik.errors.email}</p>
             ) : null}
           </div>
           <div className="inputContPass">
@@ -60,11 +82,12 @@ const LogInPage = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
+              placeholder="pass"
               name="password"
             />
             <label className="labels">Password</label>
             {formik.touched.password && formik.errors.password ? (
-              <p>{formik.errors.password}</p>
+              <p className="errorText">{formik.errors.password}</p>
             ) : null}
           </div>
 

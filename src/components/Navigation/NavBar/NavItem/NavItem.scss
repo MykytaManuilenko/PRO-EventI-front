@@ -5,18 +5,18 @@
   margin-left: 200px;
 
   li {
-    text-decoration: none;
     display: inline-block;
     margin-right: 68px;
 
     a {
+      text-decoration: none;
       font-weight: 500;
       font-size: 18px;
     }
   }
 }
 
-.activeNav {
+.activeNavItem {
   li {
     a {
       color: black !important;
