@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./RegisterPage.scss";
 import Button from "../UI/Button/Button";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { registrationUser } from "../../redux/actions/auth";
@@ -11,14 +11,13 @@ import { uiActions } from "../../redux/slices/ui";
 
 const RegisterPage = () => {
   const Error = useSelector((state) => state.UI.errRegister);
-  const Success = useSelector((state) => state.UI.success);
+  const Success = useSelector((state) => state.UI.successRegister);
   const isError = useSelector((state) => state.UI.isErrReg);
   const isSuccess = useSelector((state) => state.UI.isSucReg);
   const [show, setShow] = useState(true);
 
   const regexpPhonePL =
     /^(?:(?:(?:\+|00)?48)|(?:\(\+?48\)))?(?:1[2-8]|2[2-69]|3[2-49]|4[1-8]|5[0-9]|6[0-35-9]|[7-8][1-9]|9[145])\d{7}$/;
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -50,15 +49,15 @@ const RegisterPage = () => {
     }),
     onSubmit: (values) => {
       const data = {
-        email: formik.values.email,
-        password: formik.values.password,
-        firstName: formik.values.firstName,
-        lastName: formik.values.lastName,
-        birthDate: formik.values.birthDate,
-        phone: formik.values.phone,
+        email: values.email,
+        password: values.password,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        birthDate: values.birthDate,
+        phone: values.phone,
       };
       console.log("data :>> ", data);
-      dispatch(registrationUser(data, history));
+      dispatch(registrationUser(data));
     },
   });
 
@@ -86,7 +85,7 @@ const RegisterPage = () => {
           className="allertSuccess"
           variant="success"
           onClose={() => {
-            dispatch(uiActions.unsetErrorRegister(""));
+            dispatch(uiActions.unsetSuccessRegister(""));
             setShow(false);
           }}
           dismissible

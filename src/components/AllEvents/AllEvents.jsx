@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-import NavBar from "../Navigation/NavBar/NavBar";
-import Footer from "../Navigation/Footer/Footer";
 import Card from "../UI/Card/Card";
 import "./AllEvents.scss";
 import SearchPart from "../Landing/SearchPart/SearchPart";

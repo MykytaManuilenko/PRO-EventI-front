@@ -1,0 +1,87 @@
+// .buttGoBack {
+//   cursor: pointer;
+//   color: #ff6a7c;
+//   position: absolute;
+//   top: -60px;
+//   left: 50px;
+// }
+
+// .contnCreateType {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-start;
+//   align-items: center;
+//   width: 90%;
+//   height: 320px;
+//   margin: auto;
+//   background: #ffffff;
+//   box-shadow: 0px 4px 100px rgb(101 101 101 / 25%);
+//   border-radius: 20px;
+//   margin-top: 15px;
+//   padding: 20px;
+
+//   .title {
+//     width: 100%;
+//     text-align: left;
+//   }
+// }
+
+.modal-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .formCreateType {
+    margin-top: 20px;
+    width: 85%;
+    .contnType {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      width: 100%;
+    }
+
+    input {
+      border: none;
+      border-bottom: 0.6px solid #0f10304f;
+      padding: 8px 0;
+      outline: none;
+      font-weight: 300;
+      font-size: 14px;
+      width: 100%;
+    }
+    label {
+      margin: 0;
+      position: absolute;
+      top: 10px;
+      padding-left: 10px;
+      pointer-events: none;
+      transition: 0.5s;
+      font-weight: 300;
+      font-size: 15px;
+      color: #18193cb8;
+    }
+    input:not(:placeholder-shown) ~ label,
+    input:focus ~ label {
+      transform: translateY(-25px);
+    }
+
+    ::-webkit-input-placeholder {
+      opacity: 0;
+      transition: inherit;
+    }
+
+    .buttContainer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      width: 100%;
+      .addTypeButt {
+        border: none !important;
+        background-color: #ff6a7c;
+      }
+    }
+  }
+}

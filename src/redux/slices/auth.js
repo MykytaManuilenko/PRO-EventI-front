@@ -13,7 +13,7 @@ const authSlice = createSlice({
   reducers: {
     registration(state, action) {
       state.isAuthenticated = true;
-      state.userName = action.payload.userName;
+      state.userName = action.payload.firstName;
       state.userRole = action.payload.role;
       state.user_id = action.payload.userId;
     },

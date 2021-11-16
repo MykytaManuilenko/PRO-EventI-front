@@ -4,30 +4,21 @@ import { uiActions } from "../slices/ui";
 import jwt from "jwt-decode";
 import axiosInstance from "../../utils/axiosInstance";
 
-const registrationUser = (data, history) => (dispatch) => {
+const registrationUser = (data) => (dispatch) => {
   dispatch(uiActions.setLoading());
   axios
     .post("/api/register", data)
     .then((res) => {
-      const token = jwt(res.data.accessToken);
-      const merged = {
-        userId: token.userId,
-        role: token.role,
-        firstName: data.firstName,
-      };
-      dispatch(authAction.registration(merged));
       dispatch(
         uiActions.setSuccessRegister({
           status: "success",
           message: "Confirm your email :)",
         })
       );
-      dispatch(uiActions.unsetErrorRegister(""));
-      localStorage.setItem("accessToken", res.data.accessToken);
-      history.push("/userProfile");
+      dispatch(uiActions.unsetErrorRegister());
     })
     .catch((err) => {
-      dispatch(uiActions.unsetSuccessRegister(""));
+      dispatch(uiActions.unsetSuccessRegister());
       dispatch(
         uiActions.setErrorRegister({
           status: "error",
@@ -38,7 +29,6 @@ const registrationUser = (data, history) => (dispatch) => {
 };
 
 const logInUser = (data, history) => (dispatch) => {
-  // const history = useHistory();
   axiosInstance
     .post("/api/tokens/credentials", data)
     .then((res) => {
@@ -71,7 +61,6 @@ const logOutUser = (token, history) => (dispatch) => {
     })
     .catch((err) => {
       console.log("err :>> ", err);
-      // console.log('localStorage :>> ', localStorage.getItem('accessToken'));
     });
 };
 

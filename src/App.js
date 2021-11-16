@@ -14,11 +14,15 @@ import Footer from "./components/Navigation/Footer/Footer";
 import { useSelector } from "react-redux";
 import { Redirect, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./utils/AuthVerification/PrivateRoute";
+import EventPageAdmin from "./components/AdminPanel/EventPage/EventPageAdmin";
+// import CreateEventType from "./components/AdminPanel/CreateEventType/CreateEventType";
 
 function App() {
   const isAuthenticated = useSelector(
     (state) => state.authentication.isAuthenticated
   );
+
+  const userRole = useSelector((state) => state.authentication.userRole);
   return (
     <div className="App">
       <nav>
@@ -30,25 +34,12 @@ function App() {
           <NavBar />
         )}
       </nav>
-
-      {/* <Route exact path="/">
-        <Landing />
-      </Route>
-
-      <Route exact path="/login">
-        <LogInPage />
-      </Route> */}
-
-      {/* <Route exact path="/registration">
-        <RegisterPage />
-      </Route> */}
-
       <main
         style={
           isAuthenticated
             ? {
-                width: "calc(100% - 230px)",
-                marginLeft: "230px",
+                width: "calc(100% - 260px)",
+                marginLeft: "260px",
                 background:
                   "linear-gradient(116.48deg, rgba(255, 255, 255, 0.56) 0.47%, rgba(255, 255, 255, 0.357) 113.36%)",
                 backdropFilter: "blur(86px)",
@@ -66,11 +57,12 @@ function App() {
           </Route>
 
           <Route exact path="/registration">
-            {!isAuthenticated ? (
+            <RegisterPage />
+            {/* {!isAuthenticated ? (
               <RegisterPage />
             ) : (
               <Redirect to="/userProfile" />
-            )}
+            )} */}
           </Route>
 
           <Route exact path="/allEvents">
@@ -86,7 +78,9 @@ function App() {
           <PrivateRoute
             isAuth={isAuthenticated}
             path="/events"
-            Component={EventsPage}
+            Component={
+              userRole === "SYSTEM_ADMIN" ? EventPageAdmin : EventsPage
+            }
             roles={["USER", "SYSTEM_ADMIN"]}
           />
           <PrivateRoute
@@ -95,6 +89,13 @@ function App() {
             Component={CreateEvent}
             roles={["USER", "SYSTEM_ADMIN"]}
           />
+
+          {/* <PrivateRoute
+            isAuth={isAuthenticated}
+            path="/createType"
+            Component={CreateEventType}
+            roles={["SYSTEM_ADMIN"]}
+          /> */}
         </Switch>
       </main>
 

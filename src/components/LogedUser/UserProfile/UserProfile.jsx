@@ -5,7 +5,6 @@ import axiosInstance from "../../../utils/axiosInstance";
 const UserProfile = () => {
   const [userInfo, setUserInfo] = useState("");
   useEffect(() => {
-    // const authToken = localStorage.getItem("accessToken");
     axiosInstance
       .get("/api/users/me")
       .then((res) => {

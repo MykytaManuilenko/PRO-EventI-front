@@ -1,22 +1,38 @@
 .createEventCont {
+  .containerGoBack {
+    position: absolute;
+    top: -60px;
+    left: 50px;
+
+    .goBack {
+      cursor: pointer;
+      color: #ff6a7c;
+      font-size: 16px;
+    }
+  }
+
   .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    width: 900px;
-    height: 772px;
+    width: 90%;
+    // height: 772px;
     margin: auto;
-    border: 1px solid black;
+    background: #ffffff;
+    box-shadow: 0px 4px 100px rgb(101 101 101 / 25%);
     border-radius: 20px;
+    margin-top: 15px;
 
     .title {
       font-weight: 500;
       font-size: 24px;
       line-height: 36px;
-      // margin-bottom: 71px;
       color: #0c0d2c;
       text-align: left;
+      width: 100%;
+      padding-left: 49px;
+      margin-top: 32px;
     }
 
     hr {
@@ -31,43 +47,96 @@
       height: 0.5px;
     }
 
-    .topPart {
-      display: flex;
-      flex-direction: row;
-    }
-
     .createForm {
-      width: 80%;
-      margin: 20px;
+      width: 85%;
+      margin: 50px 20px 20px 20px;
+
+      .descriptionInput {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 37px;
+
+        label {
+          text-align: left;
+          font-weight: 300;
+          font-size: 15px;
+          color: #18193cb8;
+        }
+        .inputDescr {
+          padding: 50px;
+          border-radius: 10px;
+          background-color: #fbfbfb;
+          box-shadow: inset 0px 2px 5px rgba(158, 156, 156, 0.25);
+          border: none;
+        }
+      }
+
+      .inputTitle,
+      .inputType,
+      .dateInput,
+      .timeInput,
+      .locationInput,
+      .priceInput,
+      .amountInput {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+        width: 100%;
+      }
+
+      input {
+        border: none;
+        border-bottom: 0.6px solid #0f10304f;
+        padding: 8px 0;
+        outline: none;
+        font-weight: 300;
+        font-size: 14px;
+        width: 100%;
+        // margin-bottom: 48px;
+      }
+
+      .labels {
+        margin: 0;
+        position: absolute;
+        top: 10px;
+        padding-left: 10px;
+        pointer-events: none;
+        transition: 0.5s;
+        font-weight: 300;
+        font-size: 15px;
+        color: #18193cb8;
+      }
+
+      input:not(:placeholder-shown) ~ label,
+      input:focus ~ label {
+        transform: translateY(-25px);
+      }
+
+      ::-webkit-input-placeholder {
+        opacity: 0;
+        transition: inherit;
+      }
+
+      button {
+        margin-top: 43px;
+      }
     }
 
     .gridContainer {
       width: 100%;
       display: grid;
       grid-template-areas:
+        "title title type"
+        "description description description"
         "date time location"
         "price amount amount";
       grid-gap: 46px;
     }
-  }
-}
-
-.descriptionInput {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 37px;
-  label {
-    text-align: left;
-    font-weight: 300;
-    font-size: 15px;
-    color: #18193cb8;
-  }
-  .inputDescr {
-    padding: 50px;
-    border-radius: 10px;
-    background-color: #fbfbfb;
-    box-shadow: inset 0px 2px 5px rgba(158, 156, 156, 0.25);
-    border: none;
+    .createButt {
+      background-color: #ff6a7c;
+      border: none;
+    }
   }
 }
 
@@ -87,54 +156,14 @@
   grid-area: amount;
 }
 
-.inputTitle,
-.inputType,
-.dateInput,
-.timeInput,
-.locationInput,
-.priceInput,
-.amountInput {
-  display: flex;
-  align-items: center;
-  position: relative;
-  width: 100%;
+.inputTitle {
+  grid-area: title;
 }
 
-.nameInput,
-.typeInput,
-.inputDate,
-.inputTime,
-.inputLocation .inputPrice,
-.inputAmount {
-  border: none;
-  border-bottom: 0.6px solid #0f10304f;
-  padding: 8px 0;
-  outline: none;
-  font-weight: 300;
-  font-size: 14px;
-  width: 100%;
-  margin-bottom: 48px;
+.inputType {
+  grid-area: type;
 }
 
-.labels {
-  margin: 0;
-  position: absolute;
-  top: 10px;
-  padding-left: 10px;
-  pointer-events: none;
-  transition: 0.5s;
-  font-weight: 300;
-  font-size: 15px;
-  color: #18193cb8;
-}
-
-.nameInput:focus ~ .labels,
-.typeInput:focus ~ .labels,
-.inputDescr:focus ~ .labels,
-.inputDate:focus ~ .labels,
-.inputTime:focus ~ .labels,
-.inputPrice:focus ~ .labels,
-.inputAmount:focus ~ .labels,
-.inputLocation:focus ~ .labels {
-  top: -12px;
+.descriptionInput {
+  grid-area: description;
 }

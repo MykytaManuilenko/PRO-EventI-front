@@ -14,7 +14,6 @@ const LogInPage = () => {
   const history = useHistory();
   const isErrorLogIn = useSelector((state) => state.UI.isErrLogIn);
   const Error = useSelector((state) => state.UI.errLogIn);
-  const Success = useSelector((state) => state.UI.successLogIn);
   const [show, setShow] = useState(true);
 
   const formik = useFormik({
@@ -42,7 +41,6 @@ const LogInPage = () => {
       className="logPage"
       style={{ backgroundImage: "url(./Background.svg)" }}
     >
-      {console.log("AAAAAAAA :>> ", Error)}
       {isErrorLogIn ? (
         <Alert
           className="allertError"
@@ -53,7 +51,6 @@ const LogInPage = () => {
           }}
           dismissible
         >
-          {console.log("Error :>> ", Error)}
           {Error.message}
         </Alert>
       ) : null}

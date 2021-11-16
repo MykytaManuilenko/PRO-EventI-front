@@ -4,9 +4,9 @@ const Button = (props) => (
   <button
     type={props.type === "" ? props.type : ""}
     className={["ButtonStyle", props.class].join(" ")}
-    onClick={props.clicked === "" ? (e) => props.clicked(e) : null}
+    onClick={props.onClick}
   >
-    {props.children}
+    <p>{props.children}</p>
   </button>
 );
 
