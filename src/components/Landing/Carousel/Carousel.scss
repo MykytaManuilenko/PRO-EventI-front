@@ -1,21 +1,25 @@
-.Carousel{
-    img{
-        width: 100vw;
-        height: 85vh;
-        object-fit: cover;
-        filter: brightness(85%);
+.containerCarousel {
+  .Carousel {
+    img {
+      width: 100vw;
+      height: 85vh;
+      object-fit: cover;
+      filter: brightness(85%);
     }
 
     .name {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        height: 100%;
-        padding-top: 20px;
-    
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100%;
+      padding-top: 20px;
     }
-
+  }
+  .SearchPart {
+    background: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
 }
-
-

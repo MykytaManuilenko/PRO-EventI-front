@@ -1,27 +1,66 @@
-.Card{
+.Card {
+  position: relative;
+  .CardImage {
+    width: 324px;
+    height: 206px;
+    border-radius: 39px;
+    filter: drop-shadow(0px 4px 50px rgba(119, 119, 119, 0.14));
+  }
 
-    .CardImage{
-        width: 324px;
-        height: 206px;
-        border-radius: 39px;
-        filter: drop-shadow(0px 4px 50px rgba(119, 119, 119, 0.14));
+  .TextContainer {
+    margin-top: 14px;
+
+    .EventName {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 400;
     }
-
-    .TextContainer{
-        margin-top: 14px;
-
-        .EventName{
-            margin:0;
-            font-size: 18px;
-            font-weight: 400;
-
-        }
-        .EventDate{
-            margin: 0;
-            margin-top: 4px;
-            font-size: 16px;
-            color: #8F909E;
-            font-weight: 500;
-        }
+    .EventDate {
+      margin: 0;
+      margin-top: 4px;
+      font-size: 16px;
+      color: #8f909e;
+      font-weight: 500;
     }
+  }
+  .hovered {
+    top: 0;
+    display: none;
+    position: absolute;
+    background-color: linear-gradient(
+      180deg,
+      rgba(2, 2, 2, 0.4) 0%,
+      rgba(14, 13, 13, 0.248) 100%
+    );
+  }
+  // .hovered:hover {
+  //   background-color: linear-gradient(
+  //     180deg,
+  //     rgba(2, 2, 2, 0.4) 0%,
+  //     rgba(14, 13, 13, 0.248) 100%
+  //   );
+  //   display: flex;
+  // }
+  &:hover .hovered {
+    display: block;
+    transform: translateY(-20px);
+    background-color: linear-gradient(
+      180deg,
+      rgba(2, 2, 2, 0.4) 0%,
+      rgba(14, 13, 13, 0.248) 100%
+    );
+    z-index: 3;
+    // background-color: red;
+    width: 324;
+  }
+  //   &:before {
+  //     background-color: red;
+  //     z-index: 2;
+  //     display: block;
+  //     position: absolute;
+  //     top: 0;
+  //     left: 0;
+  //     width: 100%;
+  //     height: 100%;
+  //   }
 }

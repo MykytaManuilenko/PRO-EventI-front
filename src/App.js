@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { Redirect, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./utils/AuthVerification/PrivateRoute";
 import EventPageAdmin from "./components/AdminPanel/EventPage/EventPageAdmin";
+import EventDetail from "./components/LogedUser/EventsPages/EventDetail/EventDetail";
 // import CreateEventType from "./components/AdminPanel/CreateEventType/CreateEventType";
 
 function App() {
@@ -68,6 +69,12 @@ function App() {
           <Route exact path="/allEvents">
             {!isAuthenticated ? <AllEvents /> : <Redirect to="/userProfile" />}
           </Route>
+          <PrivateRoute
+            isAuth={isAuthenticated}
+            path="/events/:eventId"
+            Component={EventDetail}
+            roles={["USER", "SYSTEM_ADMIN"]}
+          />
 
           <PrivateRoute
             isAuth={isAuthenticated}
@@ -83,6 +90,9 @@ function App() {
             }
             roles={["USER", "SYSTEM_ADMIN"]}
           />
+          {/* <Route exact path="/events/:eventId">
+            <EventDetail />
+          </Route> */}
           <PrivateRoute
             isAuth={isAuthenticated}
             path="/createEvent"

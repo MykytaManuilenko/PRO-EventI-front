@@ -1,0 +1,106 @@
+.containerForEvent {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 90%;
+  margin: auto;
+  background: #ffffff;
+  box-shadow: 0px 4px 100px rgb(101 101 101 / 25%);
+  border-radius: 20px;
+  margin-top: 15px;
+  //   padding: 30px;
+
+  .eventHeader {
+    width: 100%;
+    height: 362px;
+    position: relative;
+
+    img {
+      border-radius: 20px;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      filter: brightness(55%);
+    }
+    .eventTitle {
+      position: absolute;
+      top: 100px;
+      left: 235px;
+      display: flex;
+      justify-content: center;
+      gap: 380px;
+
+      color: #ffffff;
+      .leftPartTitle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+      }
+      .rightPart {
+        margin-top: 5px;
+        display: flex;
+        flex-direction: column;
+        // justify-content: flex-start;
+        align-items: flex-start;
+        // margin-left: 450px;
+      }
+      .title {
+        font-size: 30px;
+        font-weight: 600;
+        margin-bottom: 0;
+      }
+    }
+    .buttonContainer {
+      position: absolute;
+      top: 260px;
+      left: 800px;
+    }
+    .buyButton {
+      // position: absolute;
+      // top: 160px;
+      // left: 640px;
+      margin: 0;
+      border: none !important;
+      background-color: #ff6a7c;
+      box-shadow: 5px 5px 10px #10050525;
+    }
+  }
+  .descriptionPart {
+    display: grid;
+    grid-template-columns: 65% 35%;
+    padding: 50px;
+    width: 100%;
+
+    .leftDescription,
+    .rightDescription {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .descriptionText {
+        width: 60%;
+        text-align: left;
+      }
+    }
+
+    .descrTitle {
+      font-size: 20px;
+      font-weight: 400;
+      color: #0c0d2c;
+    }
+  }
+}
+
+.containerGoBack {
+  position: absolute;
+  top: -60px;
+  left: 50px;
+
+  .goBack {
+    cursor: pointer;
+    color: #ff6a7c;
+    font-size: 16px;
+  }
+}

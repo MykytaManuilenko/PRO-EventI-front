@@ -1,0 +1,85 @@
+@mixin fileContainer() {
+  border: 1px solid gray;
+  border-radius: 5px;
+  background-color: #f0f0f2;
+  width: 50%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+.modal-content {
+  border: none !important;
+  border-radius: 20px !important;
+
+  .modal-body {
+    display: flex;
+    justify-content: center;
+  }
+
+  .formAddPhoto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .inputContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      width: 100%;
+      .inputBackground,
+      .inputEventPhoto {
+        @include fileContainer();
+        input[type="file"] {
+          //   width: 100%;
+          //   display: none;
+          //   position: absolute;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          cursor: pointer;
+          z-index: 2;
+        }
+        label {
+          color: gray;
+          //   width: 50%;
+          //   position: absolute;
+          //   top: 65px;
+          //   left: 170px;
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+
+    .previewPhotoContainer {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .previewPhoto {
+        margin: 10px;
+        border: 1px solid black;
+        width: 115px;
+        height: 115px;
+
+        img {
+          width: 115px;
+          height: 115px;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  .addTypeButt {
+    background-color: #ff6a7c;
+    border: none !important;
+  }
+}

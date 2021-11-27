@@ -1,3 +1,4 @@
+@use "../../../../style/AlertMessages/errorMessage";
 .createEventCont {
   .containerGoBack {
     position: absolute;
@@ -83,17 +84,26 @@
         align-items: flex-start;
         position: relative;
         width: 100%;
-      }
 
-      input {
-        border: none;
-        border-bottom: 0.6px solid #0f10304f;
-        padding: 8px 0;
-        outline: none;
-        font-weight: 300;
-        font-size: 14px;
-        width: 100%;
-        // margin-bottom: 48px;
+        input {
+          border: none;
+          border-bottom: 0.6px solid #0f10304f;
+          padding: 8px 0;
+          outline: none;
+          font-weight: 300;
+          font-size: 14px;
+          width: 100%;
+          // margin-bottom: 48px;
+        }
+        input:not(:placeholder-shown) ~ label,
+        input:focus ~ label {
+          transform: translateY(-25px);
+        }
+
+        ::-webkit-input-placeholder {
+          opacity: 0;
+          transition: inherit;
+        }
       }
 
       .labels {
@@ -108,18 +118,30 @@
         color: #18193cb8;
       }
 
-      input:not(:placeholder-shown) ~ label,
-      input:focus ~ label {
-        transform: translateY(-25px);
-      }
-
-      ::-webkit-input-placeholder {
-        opacity: 0;
-        transition: inherit;
-      }
-
       button {
         margin-top: 43px;
+      }
+    }
+
+    .firstRow {
+      display: flex;
+      // justify-content: center;
+      flex-direction: row;
+      align-items: baseline;
+
+      .photoButton {
+        border: 1px solid #b5b5bf;
+        cursor: pointer;
+        border-radius: 133px;
+        /* background-color: #ff6a7c; */
+        width: 20%;
+        height: 100%;
+        padding: 30px;
+        grid-area: photo;
+        margin-bottom: 20px;
+        .addPhoto {
+          margin: 0;
+        }
       }
     }
 
@@ -127,12 +149,14 @@
       width: 100%;
       display: grid;
       grid-template-areas:
-        "title title type"
+        // "photo title type"
+
         "description description description"
         "date time location"
         "price amount amount";
       grid-gap: 46px;
     }
+
     .createButt {
       background-color: #ff6a7c;
       border: none;
@@ -158,10 +182,14 @@
 
 .inputTitle {
   grid-area: title;
+  width: 40% !important;
+  margin-right: 28px;
+  margin-left: 28px;
 }
 
-.inputType {
+.inputMultiSelect {
   grid-area: type;
+  width: 45%;
 }
 
 .descriptionInput {

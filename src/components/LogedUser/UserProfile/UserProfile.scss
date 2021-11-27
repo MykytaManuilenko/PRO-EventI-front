@@ -1,0 +1,100 @@
+@use "../../../style/colors.scss" as color;
+.profileCont {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 20px;
+  width: 90%;
+  margin: auto;
+
+  .userInfoContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 4px 100px rgba(101, 101, 101, 0.25);
+    border: 1px solid #efefef;
+    border-radius: 20px;
+    padding: 30px;
+
+    .userData {
+      p {
+        text-align: left;
+        margin: 0;
+      }
+    }
+
+    .registerDate {
+      display: flex;
+      justify-content: flex-end;
+      color: #555454;
+      font-size: 14px;
+    }
+
+    .buttonContainer {
+      display: flex;
+      justify-content: flex-end;
+      .editButt {
+        background-color: color.$button-color;
+        border: none;
+        width: 99px !important;
+      }
+    }
+  }
+  .myEventsContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 4px 100px rgba(101, 101, 101, 0.25);
+    border: 1px solid #efefef;
+    border-radius: 20px;
+    padding: 30px;
+
+    .header {
+      font-size: 20px;
+      font-weight: 500;
+      color: color.$headerColor;
+    }
+
+    .cards {
+      width: 100%;
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        td {
+          text-align: left;
+          // margin-top: 10px;
+          padding: 20px;
+        }
+      }
+      .eventButtons {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+
+        .showButton {
+          margin-top: 0;
+          background-color: color.$button-color;
+          border: none;
+          padding: 12px 5px !important;
+          p {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.moreButton {
+  border: 2px solid color.$button-color;
+  padding: 7px 20px;
+  border-radius: 10px;
+  margin-left: 20px;
+  cursor: pointer;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import "./Card.scss";
+import Button from "../Button/Button";
 
 const Card = (props) => {
   return (
@@ -12,6 +13,11 @@ const Card = (props) => {
           <p className="EventName">{props.name}</p>
           <p className="EventDate">{props.date}</p>
         </div>
+      </div>
+      <div className="hovered">
+        <Button className="showMoreButt" onClick={props.onClick}>
+          Show more
+        </Button>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import eventStyle from "./CreateEvent.module.scss";
 import { useHistory } from "react-router-dom";
@@ -6,30 +6,98 @@ import * as Yup from "yup";
 import axiosInstance from "../../../../utils/axiosInstance";
 import PhotoModal from "../../AddPhotoModal/PhotoModal";
 import Button from "../../../UI/Button/Button";
+import axios from "axios";
+import Multiselect from "multiselect-react-dropdown";
+import Alert from "react-bootstrap/Alert";
 
 const CreateEvent = () => {
   const [modalShow, setModalShow] = useState();
   const [file, setFile] = useState();
-  // const formData = new FormData();
+  const [multipleFiles, setMultipleFiles] = useState();
+  const [types, setTypes] = useState([]);
+  const [selectedValue, setSelectedVal] = useState("");
+  const [isError, setIsError] = useState({ status: false, message: "" });
 
-  const createEvent = (data) => {
-    // axiosInstance
-    //   .post("/api/files", formData, {
-    //     params: { type: "EVENT_BACKGROUND" },
-    //   })
-    //   .then((res) => {
-    //     console.log("res :>> ", res.data.fileId);
-    //     axiosInstance
-    //       .post("/api/events", data)
-    //       .then((res) => {
-    //         console.log("res :>> ", res);
-    //       })
-    //       .catch((err) => {
-    //         console.log("err :>> ", err);
-    //       });
-    //   })
-    //   .catch((err) => console.log("err :>> ", err));
-    console.log("data :>> ", data);
+  // useEffect(() => {
+  //   getType();
+  // }, []);
+  // const getType = () => {
+  //   axiosInstance
+  //     .get("/api/events/type")
+  //     .then((res) => {
+  //       setTypes(res.data);
+  //       console.log("res.data :>> ", res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log("err :>> ", err);
+  //     });
+  // };
+
+  const createEventOnlyBackground = (formData, data) => {
+    axiosInstance
+      .post("/api/files", formData, {
+        params: { type: "EVENT_BACKGROUND" },
+      })
+      .then((res) => {
+        console.log("res :>> ", res.data.fileId);
+        data.background = res.data.fileId;
+
+        axiosInstance
+          .post("/api/events", data)
+          .then((res) => {
+            console.log("res :>> ", res);
+          })
+          .catch((err) => {
+            console.log("err :>> ", err);
+            console.log("data :>> ", data);
+          });
+        isError && setIsError({ status: false, message: "" });
+      })
+      .catch((err) => {
+        setIsError({ status: true, message: err.response.data.message });
+        console.log("err :>> ", err);
+      });
+  };
+
+  const createEvent = (formDataMultiple, formData, data) => {
+    axios
+      .all([
+        axiosInstance.post("/api/files/bulk", formDataMultiple, {
+          params: { type: "EVENT_PHOTO" },
+        }),
+        axiosInstance.post("/api/files", formData, {
+          params: { type: "EVENT_BACKGROUND" },
+        }),
+      ])
+      .then((res1, res2) => {
+        res1.map((res) => {
+          console.log("resPHOTO :>> ", res);
+
+          if (res.data.length !== 0) {
+            for (let i = 0; i < res.data.length; i++) {
+              data.photos.push(res.data[i].fileId);
+            }
+          }
+          data.background = res.data.fileId;
+          console.log("data :>> ", data);
+        });
+        isError && setIsError({ status: false, message: "" });
+
+        axiosInstance
+          .post("/api/events", data)
+          .then((res) => {
+            console.log("res :>> ", res);
+            isError && setIsError({ status: false, message: "" });
+          })
+          .catch((err) => {
+            console.log("err.mes :>> ", err.message);
+            setIsError({ status: true, message: err.response.data.message });
+          });
+      })
+      .catch((err) => {
+        console.log("err.messsss :>> ", err.response.data.message);
+        setIsError({ status: true, message: err.response.data.message });
+      });
   };
 
   const formik = useFormik({
@@ -37,7 +105,7 @@ const CreateEvent = () => {
       title: "",
       description: "",
       price: "",
-      type: [null],
+      type: [],
       background: {},
       data: "",
       startTime: "",
@@ -51,31 +119,34 @@ const CreateEvent = () => {
         .min(2, "Must be at least 2 characters")
         .max(100, "Must be 100 characters or less")
         .required("Field is required"),
-      // description: Yup.string()
-      //   .max(1000, "Must be 1000 characters or less")
-      //   .required("Field is required"),
-      // price: Yup.number()
-      //   .test(
-      //     "Is positive?",
-      //     "The number must be greater than 0!",
-      //     (value) => value > 0
-      //   )
-      //   .required("Field is required"),
-      // amount: Yup.number()
-      //   .test(
-      //     "Is positive?",
-      //     "The number must be greater than 0!",
-      //     (value) => value > 0
-      //   )
-      //   .required("Field is required"),
+      description: Yup.string()
+        .max(1000, "Must be 1000 characters or less")
+        .required("Field is required"),
+      price: Yup.number()
+        .test(
+          "Is positive?",
+          "The number must be greater than 0!",
+          (value) => value > 0
+        )
+        .required("Field is required"),
+      maxPlacesNumber: Yup.number()
+        .test(
+          "Is positive?",
+          "The number must be greater than 0!",
+          (value) => value > 0
+        )
+        .required("Field is required"),
     }),
     onSubmit: () => {
       const formData = new FormData();
+      const formDataMultiple = new FormData();
+
       const data = {
         title: formik.values.title,
         description: formik.values.description,
         price: formik.values.price,
-        type: [],
+        // type: selectedValue,
+        type: ["music"],
         background: "",
         startTime: formik.values.startTime,
         endTime: formik.values.endTime,
@@ -87,29 +158,30 @@ const CreateEvent = () => {
           street: "Ciołka 6",
         },
       };
-      // data.background = { UUID: "cef0cbf3-6458-4f13-a418-ee4d7e7505dd" };
       formData.append("file", file);
-      console.log("LALLA :>> ");
-      axiosInstance
-        .post("/api/files", formData, {
-          params: { type: "EVENT_BACKGROUND" },
-        })
-        .then((res) => {
-          console.log("res :>> ", res.data.fileId);
-          data.background = res.data.fileId;
+      // if (selectedValue.length !== 0) {
+      //   const mapValue = [];
+      //   selectedValue.map((value) => {
+      //     mapValue.push(value.name);
+      //   });
+      //   data.type = mapValue;
+      // } else {
+      //   data.type = selectedValue.name;
+      // }
 
-          axiosInstance
-            .post("/api/events", data)
-            .then((res) => {
-              console.log("res :>> ", res);
-            })
-            .catch((err) => {
-              console.log("err :>> ", err);
-              console.log("data :>> ", data);
-            });
-        })
-        .catch((err) => console.log("err :>> ", err));
-      // createEvent(data);
+      // console.log("selectedValue :>> ", selectedValue);
+      if (multipleFiles && multipleFiles.length !== 0) {
+        const multipleArrFile = Array.from(multipleFiles);
+        multipleArrFile.forEach((file) => {
+          formDataMultiple.append("files", file);
+        });
+        createEvent(formDataMultiple, formData, data);
+      } else {
+        createEventOnlyBackground(formData, data);
+      }
+
+      console.log("LALLA :>> ");
+      // createEvent(formDataMultiple, formData, data);
     },
   });
   let history = useHistory();
@@ -117,6 +189,12 @@ const CreateEvent = () => {
   return (
     <>
       <div className={eventStyle.createEventCont}>
+        {isError.status && (
+          <Alert variant="danger" onClose={() => setIsError(false)} dismissible>
+            {isError.message}
+          </Alert>
+        )}
+
         <div className={eventStyle.containerGoBack}>
           <p className={eventStyle.goBack} onClick={() => history.goBack()}>
             Go Back
@@ -130,10 +208,22 @@ const CreateEvent = () => {
             onSubmit={formik.handleSubmit}
             noValidate
           >
-            <div className={eventStyle.gridContainer}>
-              {/* ======================================ADD PHOTOOO */}
-              <div className="photoButton">
-                <p onClick={() => setModalShow(true)}>Add photo</p>
+            {/* ======================================ADD PHOTOOO */}
+            <div className={eventStyle.firstRow}>
+              <div
+                className={eventStyle.photoButton}
+                onClick={() => setModalShow(true)}
+              >
+                <img
+                  alt=""
+                  src="./camera_icon.png"
+                  style={{
+                    height: "50px",
+                    width: "60px",
+                    marginBottom: "10px",
+                  }}
+                />
+                <p className={eventStyle.addPhoto}>Add photo</p>
               </div>
               {/* ======================================ADD PHOTOOO */}
 
@@ -149,23 +239,53 @@ const CreateEvent = () => {
                 />
                 <label className={eventStyle.labels}>Title*</label>
                 {formik.touched.title && formik.errors.title ? (
-                  <p>{formik.errors.title}</p>
+                  <p className={eventStyle.errorText}>{formik.errors.title}</p>
                 ) : null}
               </div>
 
-              <div className={eventStyle.inputType}>
-                <input
-                  type="text"
-                  className={eventStyle.typeInput}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.type}
-                  placeholder="title"
-                  name="type"
+              {/* =====================DROPDOWN========= */}
+              <div className={eventStyle.inputMultiSelect}>
+                <Multiselect
+                  onRemove={function noRefCheck() {}}
+                  onSearch={function noRefCheck() {}}
+                  // onSelect={(e) => {
+                  //   // console.log("onSelect :>> ", e);
+                  //   setSelectedVal(e);
+                  // }}
+                  onSelect={(e) => setSelectedVal(e)}
+                  // selectedValues={selectedValue}
+                  options={types}
+                  onKeyPressFn={function noRefCheck() {}}
+                  placeholder="Type"
+                  displayValue="name"
+                  closeOnSelect={false}
+                  selectionLimit={2}
+                  style={{
+                    multiselectContainer: {
+                      width: "100%",
+                      // marginTop: selectedValue.length !== 0 ? "5px" : "10px",
+                    },
+                    searchBox: {
+                      border: "none",
+                      padding: "0",
+                      borderBottom: "1px solid #0f10304f",
+                      borderRadius: "0",
+                      height: "100%",
+                    },
+                    inputField: {
+                      margin: "0",
+                      height: "100%",
+                    },
+                    chips: {
+                      backgroundColor: "rgba(167, 169, 163, 0.41)",
+                      color: "#0C0D2C",
+                    },
+                  }}
                 />
-                <label className={eventStyle.labels}>Type*</label>
               </div>
-
+            </div>
+            {/* =====================DROPDOWN========= */}
+            <div className={eventStyle.gridContainer}>
               <div className={eventStyle.descriptionInput}>
                 <label>Description*</label>
                 <textarea
@@ -173,11 +293,12 @@ const CreateEvent = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.description}
-                  placeholder="title"
                   name="description"
                 />
                 {formik.touched.description && formik.errors.description ? (
-                  <p>{formik.errors.description}</p>
+                  <p className={eventStyle.errorText}>
+                    {formik.errors.description}
+                  </p>
                 ) : null}
               </div>
 
@@ -232,7 +353,7 @@ const CreateEvent = () => {
                 />
                 <label className={eventStyle.labels}>Price</label>
                 {formik.touched.price && formik.errors.price ? (
-                  <p>{formik.errors.price}</p>
+                  <p className={eventStyle.errorText}>{formik.errors.price}</p>
                 ) : null}
               </div>
 
@@ -251,17 +372,15 @@ const CreateEvent = () => {
                 </label>
                 {formik.touched.maxPlacesNumber &&
                 formik.errors.maxPlacesNumber ? (
-                  <p>{formik.errors.maxPlacesNumber}</p>
+                  <p className={eventStyle.errorText}>
+                    {formik.errors.maxPlacesNumber}
+                  </p>
                 ) : null}
               </div>
             </div>
-
-            {/* <button type="submit">Create</button> */}
             <Button type="submit" class={eventStyle.createButt}>
               Create
             </Button>
-
-            {/* <p>{formData}</p> */}
           </form>
         </div>
       </div>
@@ -269,9 +388,10 @@ const CreateEvent = () => {
       <PhotoModal
         show={modalShow}
         onHide={() => setModalShow(false)}
-        // formData={formData}
         file={file}
         setFile={setFile}
+        multipleFiles={multipleFiles}
+        setMultipleFiles={setMultipleFiles}
       />
     </>
   );

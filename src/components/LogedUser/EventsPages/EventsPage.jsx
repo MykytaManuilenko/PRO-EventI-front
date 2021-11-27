@@ -1,76 +1,32 @@
 import React, { useEffect, useState } from "react";
 import "./EventsPage.scss";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Button from "../../UI/Button/Button";
 import axiosInstance from "../../../utils/axiosInstance";
 import Card from "../../UI/Card/Card";
+import SearchPart from "../../Landing/SearchPart/SearchPart";
+import { convertData } from "../../../utils/convertData";
 
 const EventsPage = () => {
   const [events, setEvents] = useState();
+  const history = useHistory();
   useEffect(() => {
     axiosInstance
-      .get("/api/events", { params: { limit: 10 } })
+      .get("/api/events")
       .then((res) => {
         console.log("res :>> ", res);
         setEvents(res.data);
-        console.log("res.data :>> ", res.data);
+        console.log("events page :>> ", res.data);
       })
       .catch((err) => {
         console.log("err :>> ", err);
       });
   }, []);
 
-  const convertData = (data) => {
-    const dataNew = new Date(data);
-    const year = dataNew.getFullYear();
-    const month = dataNew.getMonth() + 1;
-    const day = dataNew.getDate();
-    let monthName = "";
-
-    switch (month) {
-      case 1:
-        monthName = "Jan";
-        break;
-      case 2:
-        monthName = "Feb";
-        break;
-      case 3:
-        monthName = "Mar";
-        break;
-      case 4:
-        monthName = "Apr";
-        break;
-      case 5:
-        monthName = "May";
-        break;
-      case 6:
-        monthName = "Jun";
-        break;
-      case 7:
-        monthName = "Jul";
-        break;
-      case 8:
-        monthName = "Aug";
-        break;
-      case 9:
-        monthName = "Sept";
-        break;
-      case 10:
-        monthName = "Oct";
-        break;
-      case 11:
-        monthName = "Nov";
-        break;
-      case 12:
-        monthName = "Dec";
-        break;
-    }
-
-    return day + " " + monthName + ", " + year;
-  };
   return (
     <>
       <div className="containerEventPage">
+        <SearchPart className="SearchPartLogIn" />
         <p className="title">All Events</p>
         <div className="gridEventCont">
           {events &&
@@ -81,7 +37,7 @@ const EventsPage = () => {
                   image={event.backgroundUrl}
                   name={event.title}
                   date={convertData(event.startTime)}
-                  className="CardImage"
+                  onClick={() => history.push(`/events/${event.eventId}`)}
                 />
               );
             })}

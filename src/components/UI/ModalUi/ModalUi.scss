@@ -1,0 +1,12 @@
+@use "../../../style/colors.scss" as color;
+.confirmButt {
+  background-color: color.$rejectButton;
+  margin: 0;
+  border: none;
+}
+
+.rejectButt {
+  background-color: color.$confirmButton;
+  margin: 0;
+  border: none;
+}

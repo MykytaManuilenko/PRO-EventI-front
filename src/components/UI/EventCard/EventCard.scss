@@ -1,0 +1,15 @@
+.eventCard {
+  display: flex;
+  flex-direction: row;
+  .imageCard {
+    width: 170px;
+    height: 134px;
+    border-radius: 39px;
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+    margin-top: 10px;
+  }
+}
