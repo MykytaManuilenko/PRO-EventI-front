@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./RegisterPage.scss";
 import Button from "../UI/Button/Button";
 import { Link } from "react-router-dom";
@@ -8,12 +8,16 @@ import { registrationUser } from "../../redux/actions/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { Alert } from "react-bootstrap";
 import { uiActions } from "../../redux/slices/ui";
+import Multiselect from "multiselect-react-dropdown";
+import getEventTypes from "../../api/services/User";
 
 const RegisterPage = () => {
   const Error = useSelector((state) => state.UI.errRegister);
   const Success = useSelector((state) => state.UI.successRegister);
   const isError = useSelector((state) => state.UI.isErrReg);
   const isSuccess = useSelector((state) => state.UI.isSucReg);
+  const [selectedValue, setSelectedVal] = useState("");
+  const [types, setTypes] = useState([]);
   const [show, setShow] = useState(true);
 
   const regexpPhonePL =
@@ -28,6 +32,7 @@ const RegisterPage = () => {
       password: "",
       birthDate: "",
       phone: "",
+      eventTypes: [""],
     },
     validationSchema: Yup.object({
       firstName: Yup.string()
@@ -55,12 +60,32 @@ const RegisterPage = () => {
         lastName: values.lastName,
         birthDate: values.birthDate,
         phone: values.phone,
+        eventTypes: selectedValue,
+        // eventTypes: ["music", "dance"],
       };
       console.log("data :>> ", data);
+      if (selectedValue.length !== 0) {
+        const mapValue = [];
+        selectedValue.map((value) => {
+          mapValue.push(value.name);
+        });
+        console.log("mapValue :>> ", mapValue);
+        data.eventTypes = mapValue;
+      } else {
+        data.eventTypes = selectedValue.name;
+      }
       dispatch(registrationUser(data));
     },
   });
 
+  useEffect(() => {
+    getEventTypes("/api/events/type")
+      .then((response) => {
+        console.log("response :>> ", response.data);
+        setTypes(response.data);
+      })
+      .catch((err) => console.log("errAAA :>> ", err));
+  }, []);
   return (
     <div
       className="regPage"
@@ -168,6 +193,31 @@ const RegisterPage = () => {
             </div>
           </div>
 
+          <div className="typeSelector">
+            <Multiselect
+              onRemove={function noRefCheck() {}}
+              onSearch={function noRefCheck() {}}
+              onSelect={(e) => setSelectedVal(e)}
+              onKeyPressFn={function noRefCheck() {}}
+              placeholder="Type"
+              displayValue="name"
+              closeOnSelect={false}
+              selectionLimit={2}
+              options={types}
+              style={{
+                searchBox: {
+                  border: "none",
+                  borderBottom: "1px solid #fcc117",
+                  borderRadius: "0",
+                },
+                chips: {
+                  backgroundColor: "rgba(167, 169, 163, 0.41)",
+                  color: "#0C0D2C",
+                },
+              }}
+            />
+          </div>
+
           <div className="emailContain">
             <input
               onChange={formik.handleChange}
@@ -204,12 +254,9 @@ const RegisterPage = () => {
           </div>
 
           <div className="buttContainer">
-            {/* <Button type='submit' class="RegButt" 
-              // clicked={handleRegister}
-              >
-                Register
-              </Button> */}
-            <button type="submit">Register</button>
+            <Button type="submit" class="RegButt">
+              Register
+            </Button>
             <p className="redirectLog">
               Already a member? <Link to="/login">Log In</Link>
             </p>

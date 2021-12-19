@@ -1,3 +1,4 @@
+@import "../../style/container";
 .main {
   width: 85%;
   display: flex;
@@ -33,31 +34,18 @@
       margin-top: 8px;
     }
   }
+  .CardsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-gap: 1rem;
+    justify-items: center;
+    width: 100%;
+    margin: 30px 0;
+  }
 
   .searchPart {
     background-color: transparent !important;
     box-shadow: none;
     margin-top: 120px !important;
   }
-
-  .CardsContainer {
-    margin-top: 59px;
-    display: grid;
-    grid-template-columns: repeat(3, 420px);
-    grid-template-rows: repeat(3, 275px);
-    row-gap: 60px;
-  }
 }
-
-// .eventsNav{
-//     .location{
-//         color: black;
-
-//     }
-//         li{
-//             a{
-//                 color: black;
-
-//             }
-//         }
-// }

@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../../utils/axiosInstance";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./EventDetail.scss";
 import Button from "../../../UI/Button/Button";
 import { convertData } from "../../../../utils/convertData";
+import Like from "../../../UI/LikeSVG/Like";
+import TypeCard from "../../../UI/TypeCard/TypeCard";
+import GoBack from "../../../UI/GoBack/GoBack";
 
 const EventDetail = () => {
   const { eventId } = useParams();
   console.log("eventId :>> ", eventId);
   const [event, setEvent] = useState();
-  const history = useHistory();
+  const [isLiked, setIsLiked] = useState();
 
   useEffect(() => {
     axiosInstance
       .get(`/api/events/${eventId}`)
       .then((res) => {
-        console.log("Eventres :>> ", res.data);
         setEvent(res.data);
+        setIsLiked(res.data.isLiked);
+        console.log("res.data :>> ", res.data);
       })
       .catch((err) => {
         console.log("err :>> ", err);
@@ -34,20 +38,58 @@ const EventDetail = () => {
     );
   };
 
+  const [likedArray, setLikedArray] = useState([]);
+
+  const addFavourite = (eventId) => {
+    const likeCopy = [...likedArray];
+    if (isLiked || likeCopy.includes(eventId)) {
+      const index = likeCopy.indexOf(eventId);
+      likeCopy.splice(index, 1);
+      setLikedArray(likeCopy);
+      setIsLiked(false);
+      axiosInstance
+        .post(`/api/events/like/${eventId}`, { like: false })
+        .then((res) => {
+          console.log("res :>> ", res);
+        })
+        .catch((err) => {
+          console.log("err :>> ", err);
+        });
+    } else {
+      likeCopy.push(eventId);
+      setLikedArray(likeCopy);
+      setIsLiked(true);
+      axiosInstance
+        .post(`/api/events/like/${eventId}`, { like: true })
+        .then((res) => {
+          console.log("res :>> ", res);
+        })
+        .catch((err) => {
+          console.log("err :>> ", err);
+        });
+    }
+    console.log("likeCopy :>> ", likeCopy);
+  };
+
   return (
     <>
-      <div className="containerGoBack">
-        <p className="goBack" onClick={() => history.goBack()}>
-          Go Back
-        </p>
-      </div>
+      <GoBack />
       <div className="containerForEvent">
         {event && (
           <>
-            <div className="eventHeader">
-              <img src={event.backgroundUrl} alt="" />
+            <div
+              className="eventHeader"
+              style={{
+                background: `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), center / cover no-repeat url(${event.backgroundUrl}) `,
+              }}
+            >
+              <div className="likeContainer">
+                <Like
+                  addFavourite={() => addFavourite(eventId)}
+                  isLiked={isLiked}
+                />
+              </div>
               <div className="eventTitle">
-                {/* <img src="/like.svg" alt="" /> */}
                 <div className="leftPartTitle">
                   <p className="title">{event.title}</p>
                   <p className="secondary">
@@ -92,10 +134,8 @@ const EventDetail = () => {
                   >
                     Price: {event.price}
                   </p>
+                  <Button class="buyButton">Book now</Button>
                 </div>
-              </div>
-              <div className="buttonContainer">
-                <Button class="buyButton">Book now</Button>
               </div>
             </div>
             <div className="descriptionPart">
@@ -103,10 +143,23 @@ const EventDetail = () => {
                 <p className="descrTitle">Description</p>
                 <p className="descriptionText">{event.description}</p>
                 <p className="descrTitle">Event Photo</p>
+                <div className="photoContainer">
+                  {event.photos &&
+                    event.photos.map((photo) => {
+                      return (
+                        <img src={photo.photoUrl} alt="" key={photo.fileId} />
+                      );
+                    })}
+                </div>
               </div>
               <div className="rightDescription">
                 <p className="descrTitle">Location</p>
+
                 <p className="descrTitle">Type</p>
+                {event.types &&
+                  event.types.map((type, index) => {
+                    return <TypeCard typeName={type} index={index} />;
+                  })}
               </div>
             </div>
           </>

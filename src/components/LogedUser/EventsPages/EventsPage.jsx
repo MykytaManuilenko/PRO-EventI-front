@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./EventsPage.scss";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "../../UI/Button/Button";
 import axiosInstance from "../../../utils/axiosInstance";
 import Card from "../../UI/Card/Card";
@@ -9,13 +9,15 @@ import { convertData } from "../../../utils/convertData";
 
 const EventsPage = () => {
   const [events, setEvents] = useState();
-  const history = useHistory();
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     axiosInstance
       .get("/api/events")
       .then((res) => {
         console.log("res :>> ", res);
         setEvents(res.data);
+        setIsLoading(false);
         console.log("events page :>> ", res.data);
       })
       .catch((err) => {
@@ -23,7 +25,9 @@ const EventsPage = () => {
       });
   }, []);
 
-  return (
+  return isLoading ? (
+    <p>Loading...</p>
+  ) : (
     <>
       <div className="containerEventPage">
         <SearchPart className="SearchPartLogIn" />
@@ -37,7 +41,9 @@ const EventsPage = () => {
                   image={event.backgroundUrl}
                   name={event.title}
                   date={convertData(event.startTime)}
-                  onClick={() => history.push(`/events/${event.eventId}`)}
+                  eventId={event.eventId}
+                  isLiked={event.isLiked}
+                  price={event.price}
                 />
               );
             })}

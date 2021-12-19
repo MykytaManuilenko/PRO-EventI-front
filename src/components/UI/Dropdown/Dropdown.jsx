@@ -13,13 +13,18 @@ const Dropdown = (props) => {
           {props.children} <Arrow isOpen={props.open} />
         </p>
       </div>
-      
+
       {props.open && (
         <ul className="FilterList">
           {props.types.map((type, index) => {
             return (
               <li key={index}>
-                <input type="checkbox" className="Check" />
+                <input
+                  value={type}
+                  type="checkbox"
+                  className="Check"
+                  onChange={(e) => props.handleChange(e.target.value)}
+                />
                 {type}
               </li>
             );

@@ -7,6 +7,7 @@ const PrivateRoute = ({ path, Component, roles, isAuth }) => {
 
   return (
     <Route
+      exact
       path={path}
       render={() => {
         if (isAuth && roles.includes(userRole)) {

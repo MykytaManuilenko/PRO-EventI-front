@@ -5,63 +5,74 @@ import Button from "../../UI/Button/Button";
 import EventCard from "../../UI/EventCard/EventCard";
 import { convertData } from "../../../utils/convertData";
 import { useHistory } from "react-router-dom";
-import Dropdown from "react-bootstrap/Dropdown";
 import ModalUi from "../../UI/ModalUi/ModalUi";
+import TypeCard from "../../UI/TypeCard/TypeCard";
+import Card from "../../UI/Card/Card";
+import ButtonBasedDropdown from "../../UI/ButtonBasedDropdown/ButtonBasedDropdown";
 
 const UserProfile = () => {
   const [eventId, setEventId] = useState();
   const [userInfo, setUserInfo] = useState("");
-  const [userEvent, setUserEvent] = useState();
+  const [userEvent, setUserEvent] = useState([]);
+  const [likedEvents, setLikedEvents] = useState("");
   const [show, setShow] = useState(false);
+  const [isCanceled, setIsCanceled] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
+
   useEffect(() => {
     axiosInstance
       .get("/api/users/me")
       .then((res) => {
         setUserInfo(res.data);
+        setIsLoading(false);
         console.log("res.data :>> ", res.data);
       })
       .catch((err) => {
         console.log("err :>> ", err);
       });
     axiosInstance
-      .get("/api/events/my")
+      .get("/api/events/my", { params: { limit: 3 } })
       .then((res) => {
         setUserEvent(res.data);
+        setIsLoading(false);
         console.log("MyEvents res :>> ", res);
+      })
+      .catch((err) => {
+        console.log("err :>> ", err);
+      });
+  }, [isCanceled]);
+
+  //ЭТО НУЖНО ПОМЕНЯТЬ!!!!!!!!!!
+  useEffect(() => {
+    axiosInstance
+      .get("/api/events/my/like", { params: { limit: 5 } })
+      .then((res) => {
+        console.log("resMYLIKED :>> ", res);
+        setLikedEvents(res.data);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log("err :>> ", err);
       });
   }, []);
 
-  const customDropdown = React.forwardRef(({ onClick }, ref) => (
-    <div
-      ref={ref}
-      className="moreButton"
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      <img src="/more.svg" alt="" />
-    </div>
-  ));
-
   const clickHandler = (eventId) => {
     console.log("eventId :>> ", eventId);
     axiosInstance
       .patch(`/api/events/cancel/${eventId}`)
       .then((res) => {
-        console.log("res :>> ", res);
         setShow(false);
+        setIsCanceled(!isCanceled);
       })
       .catch((err) => {
         console.log("err :>> ", err);
       });
   };
 
-  return (
+  return isLoading ? (
+    <p> Loading...</p>
+  ) : (
     <div className="profileCont">
       <div className="userInfoContainer">
         <div className="registerDate">Registered from 10.11.2021</div>
@@ -70,17 +81,29 @@ const UserProfile = () => {
             {userInfo.firstName} {userInfo.lastName}
           </p>
         </div>
-        <div className="buttonContainer">
+        <div className="bottomPart">
+          <div className="userTypeContainer">
+            {userInfo.eventTypes &&
+              userInfo.eventTypes.map((eventType) => {
+                return <TypeCard typeName={eventType} />;
+              })}
+          </div>
           <Button class="editButt">Edit</Button>
         </div>
       </div>
       <div className="myEventsContainer">
-        <p className="header">My Events</p>
+        <div className="header">
+          <p className="headerText">My Events</p>
+          <Button class="showButt" onClick={() => history.push("/myEvents")}>
+            Show all
+          </Button>
+        </div>
+
         <div className="cards">
           <table>
             <tbody>
-              {userEvent &&
-                userEvent.map((event, key) => {
+              {userEvent && userEvent.length > 0 ? (
+                userEvent.map((event) => {
                   return (
                     <tr key={event.eventId}>
                       <td>
@@ -88,6 +111,7 @@ const UserProfile = () => {
                           image={event.backgroundUrl}
                           title={event.title}
                           date={convertData(event.startTime)}
+                          isCanceled={event.canceled}
                         ></EventCard>
                       </td>
                       <td>
@@ -100,29 +124,20 @@ const UserProfile = () => {
                           >
                             Show more
                           </Button>
-                          <Dropdown align="end">
-                            <Dropdown.Toggle
-                              as={customDropdown}
-                              id="dropdown-basic"
-                            ></Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              <Dropdown.Item>Edit</Dropdown.Item>
-                              <Dropdown.Item
-                                onClick={() => {
-                                  setShow(true);
-                                  setEventId(event.eventId);
-                                }}
-                              >
-                                Cancel
-                              </Dropdown.Item>
-                              <Dropdown.Item>Delete</Dropdown.Item>
-                            </Dropdown.Menu>
-                          </Dropdown>
+                          <ButtonBasedDropdown
+                            onClick={() => {
+                              setShow(true);
+                              setEventId(event.eventId);
+                            }}
+                          />
                         </div>
                       </td>
                     </tr>
                   );
-                })}
+                })
+              ) : (
+                <p>You have not created any events yet :(</p>
+              )}
             </tbody>
             <ModalUi
               show={show}
@@ -134,6 +149,30 @@ const UserProfile = () => {
               secondBttClick={() => clickHandler(eventId)}
             ></ModalUi>
           </table>
+        </div>
+      </div>
+      <div className="likedEventContainer">
+        <div className="header">
+          <p className="headerText">Liked Events</p>
+          <Button class="showButt" onClick={() => history.push("/likedEvents")}>
+            Show all
+          </Button>
+        </div>
+        <div className="likedEventCards">
+          {likedEvents &&
+            likedEvents.map((likedEvent) => {
+              return (
+                <Card
+                  image={likedEvent.backgroundUrl}
+                  name={likedEvent.title}
+                  date={convertData(likedEvent.startTime)}
+                  eventId={likedEvent.eventId}
+                  isLiked={likedEvent.isLiked}
+                  key={likedEvent.eventId}
+                  isCanceled={likedEvent.canceled}
+                />
+              );
+            })}
         </div>
       </div>
     </div>

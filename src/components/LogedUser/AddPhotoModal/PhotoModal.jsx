@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "../../UI/Button/Button";
 import "./PhotoModal.scss";
@@ -13,8 +13,6 @@ const PhotoModal = (props) => {
   };
 
   const handleMultipleFile = (e) => {
-    console.log("MULTIPLEEEE :>> ");
-
     if (
       previewMultiple.length + e.target.files.length > 5 ||
       e.target.files.length > 5
@@ -94,7 +92,6 @@ const PhotoModal = (props) => {
                 background
               </p>
             </div>
-            {console.log("previewMultiple :>> ", previewMultiple)}
             {showPhotos(previewMultiple)}
           </div>
 

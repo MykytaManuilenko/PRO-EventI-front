@@ -1,3 +1,4 @@
+@use "../../../style/colors" as color;
 .eventCard {
   display: flex;
   flex-direction: row;
@@ -5,6 +6,15 @@
     width: 170px;
     height: 134px;
     border-radius: 39px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      color: color.$white;
+      font-weight: 500;
+      font-size: 20px;
+    }
   }
   .text {
     display: flex;

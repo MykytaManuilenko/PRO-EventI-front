@@ -93,8 +93,9 @@ const LogInPage = () => {
           </div>
 
           <div className="buttCont">
-            {/* <Button class="LogInButt">Log in</Button> */}
-            <button type="submit">LogIn</button>
+            <Button class="LogInButt" type="submit">
+              Log in
+            </Button>
           </div>
         </form>
 

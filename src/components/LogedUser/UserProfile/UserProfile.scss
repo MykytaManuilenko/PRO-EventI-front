@@ -1,4 +1,5 @@
 @use "../../../style/colors.scss" as color;
+@import "../../../style/container";
 .profileCont {
   display: flex;
   justify-content: space-between;
@@ -7,16 +8,33 @@
   width: 90%;
   margin: auto;
 
-  .userInfoContainer {
+  .header {
     display: flex;
-    justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
-    background-color: white;
-    box-shadow: 0px 4px 100px rgba(101, 101, 101, 0.25);
-    border: 1px solid #efefef;
-    border-radius: 20px;
-    padding: 30px;
+    .headerText {
+      font-size: 20px;
+      font-weight: 500;
+      color: color.$headerColor;
+      margin-bottom: 0;
+    }
+    .showButt {
+      margin: 0;
+      border: 2px solid color.$button-color;
+      color: color.$button-color;
+    }
+  }
+
+  .userInfoContainer {
+    @include containerStyle;
+    .userTypeContainer {
+      display: flex;
+      justify-content: flex-start;
+      width: 50%;
+      gap: 15px;
+    }
 
     .userData {
       p {
@@ -32,33 +50,23 @@
       font-size: 14px;
     }
 
-    .buttonContainer {
+    .bottomPart {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+      margin-top: 40px;
+
       .editButt {
         background-color: color.$button-color;
         border: none;
         width: 99px !important;
+        margin: 0 !important;
       }
     }
   }
   .myEventsContainer {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
-    width: 100%;
-    background-color: white;
-    box-shadow: 0px 4px 100px rgba(101, 101, 101, 0.25);
-    border: 1px solid #efefef;
-    border-radius: 20px;
-    padding: 30px;
-
-    .header {
-      font-size: 20px;
-      font-weight: 500;
-      color: color.$headerColor;
-    }
+    @include containerStyle;
 
     .cards {
       width: 100%;
@@ -67,8 +75,7 @@
         width: 100%;
         td {
           text-align: left;
-          // margin-top: 10px;
-          padding: 20px;
+          padding: 20px 0;
         }
       }
       .eventButtons {
@@ -87,6 +94,18 @@
           }
         }
       }
+    }
+  }
+
+  .likedEventContainer {
+    @include containerStyle;
+    .likedEventCards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-gap: 1rem;
+      justify-items: center;
+      width: 100%;
+      margin-top: 30px;
     }
   }
 }

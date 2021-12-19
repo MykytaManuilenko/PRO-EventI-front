@@ -6,10 +6,8 @@ import dayjs from "dayjs";
 let authToken = localStorage.getItem("accessToken")
   ? localStorage.getItem("accessToken")
   : null;
-// const baseURL = "http://localhost:3000";
 console.log("localStorage :>> ", localStorage.getItem("accessToken"));
 const axiosInstance = axios.create({
-  // baseURL,
   headers: { authorization: "Bearer " + authToken && authToken },
 });
 

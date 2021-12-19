@@ -28,7 +28,6 @@
     align-items: center;
     padding: 35px 20px;
     width: 880px;
-    height: 600px;
 
     .title {
       font-weight: 500;
@@ -42,14 +41,6 @@
       display: flex;
       width: 85%;
       margin-bottom: 49px;
-
-      .placePhoto {
-        // border: 1px solid black;
-        // border-radius: 50px;
-        // width: 100px;
-        // // height: 100px;
-        // margin-right: 30px;
-      }
     }
 
     .secondRow {
@@ -70,7 +61,8 @@
     }
 
     .emailContain,
-    .passContainer {
+    .passContainer,
+    .typeSelector {
       margin-bottom: 49px;
       display: flex;
       flex-direction: column;

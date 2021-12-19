@@ -1,89 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../UI/Card/Card";
 import "./AllEvents.scss";
 import SearchPart from "../Landing/SearchPart/SearchPart";
 import { useLocation } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance";
+import { convertData } from "../../utils/convertData";
 
 const AllEvents = () => {
-  const [cardsArray, setCardsArr] = useState([
-    {
-      image: "./image1.png",
-      name: "Classic concert",
-      date: "16 May, 2021",
-      type: "Music",
-    },
-    {
-      image: "./image2.png",
-      name: "Dance competition",
-      date: "16 May, 2021",
-      type: "Dance",
-    },
-    {
-      image: "./image3.png",
-      name: "DONDON",
-      date: "16 May, 2021",
-      type: "Music",
-    },
-    {
-      image: "./image2.png",
-      name: "CIIIII",
-      date: "16 May, 2021",
-      type: "Science",
-    },
-    {
-      image: "./image1.png",
-      name: "CII",
-      date: "16 May, 2021",
-      type: "Science",
-    },
-    {
-      image: "./image3.png",
-      name: "Classic concert",
-      date: "16 May, 2021",
-      type: "Music",
-    },
-    {
-      image: "./image2.png",
-      name: "Classic concert",
-      date: "16 May, 2021",
-      type: "Music",
-    },
-    {
-      image: "./image3.png",
-      name: "Classic concert",
-      date: "16 May, 2021",
-      type: "Music",
-    },
-    {
-      image: "./image1.png",
-      name: "Classic concert",
-      date: "16 May, 2021",
-      type: "Music",
-    },
-    {
-      image: "./image2.png",
-      name: "Classic concert",
-      date: "16 May, 2021",
-      type: "Music",
-    },
-  ]);
-
+  const [cardsArray, setCardsArr] = useState([]);
   const [search, setSearch] = useState("");
   const [isMatch, setIsMatch] = useState(true);
 
-  // useEffect(() => {
-  //   getAllEvents("/events"); //route который будет у Никиты на беке
-  // });
-
-  // функция которая достает event с route
-  // const getAllEvents = (url) => {
-  //   axios
-  //     .get(url)
-  //     .then((res) => {
-  //       setEvents(res.data);
-  //     })
-  //     .catch((err) => console.error("Error during uploading events " + err));
-  // };
+  useEffect(() => {
+    axiosInstance
+      .get("/api/events")
+      .then((res) => {
+        console.log("res :>> ", res);
+        setCardsArr(res.data);
+      })
+      .catch((err) => {
+        console.log("err :>> ", err);
+      });
+  }, []);
 
   localStorage.setItem("search", search);
 
@@ -101,9 +39,7 @@ const AllEvents = () => {
     <>
       <div className="main">
         <SearchPart
-          // isMatch={isMatch}
           cname="searchPart"
-          // setIsMatch={setIsMatch}
           search={search}
           setSearch={setSearch}
           eventInfo={cardsArray}
@@ -116,6 +52,19 @@ const AllEvents = () => {
         <div className="CardsContainer">
           {/* карточки доставать из базы, 
           и сделать проверку чтобы больше 3 рядов не добавляло */}
+          {cardsArray &&
+            cardsArray.map((card) => {
+              return (
+                <Card
+                  image={card.backgroundUrl}
+                  name={card.title}
+                  eventId={card.eventId}
+                  isLiked={card.isLiked}
+                  key={card.eventId}
+                  date={convertData(card.startTime)}
+                />
+              );
+            })}
           {isMatch ? (
             filteredSearch.map((event, index) => {
               return (

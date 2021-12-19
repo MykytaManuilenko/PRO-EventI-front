@@ -16,6 +16,8 @@ import { Redirect, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./utils/AuthVerification/PrivateRoute";
 import EventPageAdmin from "./components/AdminPanel/EventPage/EventPageAdmin";
 import EventDetail from "./components/LogedUser/EventsPages/EventDetail/EventDetail";
+import MyEvents from "./components/LogedUser/EventsPages/MyEvents/MyEvents";
+import myLikedEvents from "./components/LogedUser/EventsPages/MyLikedEvents/MyLikedEvents";
 // import CreateEventType from "./components/AdminPanel/CreateEventType/CreateEventType";
 
 function App() {
@@ -59,11 +61,6 @@ function App() {
 
           <Route exact path="/registration">
             <RegisterPage />
-            {/* {!isAuthenticated ? (
-              <RegisterPage />
-            ) : (
-              <Redirect to="/userProfile" />
-            )} */}
           </Route>
 
           <Route exact path="/allEvents">
@@ -73,6 +70,19 @@ function App() {
             isAuth={isAuthenticated}
             path="/events/:eventId"
             Component={EventDetail}
+            roles={["USER", "SYSTEM_ADMIN"]}
+          />
+
+          <PrivateRoute
+            isAuth={isAuthenticated}
+            path="/myEvents"
+            Component={MyEvents}
+            roles={["USER", "SYSTEM_ADMIN"]}
+          />
+          <PrivateRoute
+            isAuth={isAuthenticated}
+            path="/likedEvents"
+            Component={myLikedEvents}
             roles={["USER", "SYSTEM_ADMIN"]}
           />
 

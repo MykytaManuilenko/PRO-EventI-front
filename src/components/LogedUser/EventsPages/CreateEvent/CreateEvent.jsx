@@ -18,20 +18,20 @@ const CreateEvent = () => {
   const [selectedValue, setSelectedVal] = useState("");
   const [isError, setIsError] = useState({ status: false, message: "" });
 
-  // useEffect(() => {
-  //   getType();
-  // }, []);
-  // const getType = () => {
-  //   axiosInstance
-  //     .get("/api/events/type")
-  //     .then((res) => {
-  //       setTypes(res.data);
-  //       console.log("res.data :>> ", res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log("err :>> ", err);
-  //     });
-  // };
+  useEffect(() => {
+    getType();
+  }, []);
+  const getType = () => {
+    axiosInstance
+      .get("/api/events/type")
+      .then((res) => {
+        setTypes(res.data);
+        console.log("res.data :>> ", res.data);
+      })
+      .catch((err) => {
+        console.log("err :>> ", err);
+      });
+  };
 
   const createEventOnlyBackground = (formData, data) => {
     axiosInstance
@@ -46,10 +46,12 @@ const CreateEvent = () => {
           .post("/api/events", data)
           .then((res) => {
             console.log("res :>> ", res);
+            history.push(`/events/${res.data.eventId}`);
+            isError && setIsError({ status: false, message: "" });
           })
           .catch((err) => {
-            console.log("err :>> ", err);
-            console.log("data :>> ", data);
+            console.log("err :>> ", err.response);
+            setIsError({ status: true, message: err.response.data.message });
           });
         isError && setIsError({ status: false, message: "" });
       })
@@ -69,25 +71,22 @@ const CreateEvent = () => {
           params: { type: "EVENT_BACKGROUND" },
         }),
       ])
-      .then((res1, res2) => {
+      .then((res1) => {
         res1.map((res) => {
-          console.log("resPHOTO :>> ", res);
-
           if (res.data.length !== 0) {
             for (let i = 0; i < res.data.length; i++) {
               data.photos.push(res.data[i].fileId);
             }
           }
           data.background = res.data.fileId;
-          console.log("data :>> ", data);
         });
         isError && setIsError({ status: false, message: "" });
 
         axiosInstance
           .post("/api/events", data)
           .then((res) => {
-            console.log("res :>> ", res);
             isError && setIsError({ status: false, message: "" });
+            history.push(`/events/${res.data.eventId}`);
           })
           .catch((err) => {
             console.log("err.mes :>> ", err.message);
@@ -145,8 +144,7 @@ const CreateEvent = () => {
         title: formik.values.title,
         description: formik.values.description,
         price: formik.values.price,
-        // type: selectedValue,
-        type: ["music"],
+        type: selectedValue,
         background: "",
         startTime: formik.values.startTime,
         endTime: formik.values.endTime,
@@ -159,17 +157,16 @@ const CreateEvent = () => {
         },
       };
       formData.append("file", file);
-      // if (selectedValue.length !== 0) {
-      //   const mapValue = [];
-      //   selectedValue.map((value) => {
-      //     mapValue.push(value.name);
-      //   });
-      //   data.type = mapValue;
-      // } else {
-      //   data.type = selectedValue.name;
-      // }
+      if (selectedValue.length !== 0) {
+        const mapValue = [];
+        selectedValue.map((value) => {
+          mapValue.push(value.name);
+        });
+        data.type = mapValue;
+      } else {
+        data.type = selectedValue.name;
+      }
 
-      // console.log("selectedValue :>> ", selectedValue);
       if (multipleFiles && multipleFiles.length !== 0) {
         const multipleArrFile = Array.from(multipleFiles);
         multipleArrFile.forEach((file) => {
@@ -179,9 +176,6 @@ const CreateEvent = () => {
       } else {
         createEventOnlyBackground(formData, data);
       }
-
-      console.log("LALLA :>> ");
-      // createEvent(formDataMultiple, formData, data);
     },
   });
   let history = useHistory();
@@ -253,7 +247,6 @@ const CreateEvent = () => {
                   //   setSelectedVal(e);
                   // }}
                   onSelect={(e) => setSelectedVal(e)}
-                  // selectedValues={selectedValue}
                   options={types}
                   onKeyPressFn={function noRefCheck() {}}
                   placeholder="Type"

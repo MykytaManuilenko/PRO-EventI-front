@@ -59,7 +59,7 @@ const LogNavBar = () => {
               <PageIcon className={styleNav.icons} />
               My Page
             </NavLink>
-
+            {/* 
             <NavLink
               className={styleNav.navLink}
               to="/friends"
@@ -67,7 +67,7 @@ const LogNavBar = () => {
             >
               <FiendsIcon className={styleNav.icons} />
               Friends
-            </NavLink>
+            </NavLink> */}
 
             <NavLink
               className={styleNav.navLink}

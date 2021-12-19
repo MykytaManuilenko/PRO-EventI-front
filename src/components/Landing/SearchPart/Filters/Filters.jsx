@@ -1,11 +1,11 @@
 import { React, useState } from "react";
 import "./Filters.scss";
 import Dropdown from "../../../UI/Dropdown/Dropdown";
-// import Multiselect from "multiselect-react-dropdown";
-// import Select from "react-select";
-// import Option from "./Option/Option";
+import axiosInstance from "../../../../utils/axiosInstance";
+import { useEffect } from "react";
 
 const Filters = () => {
+  const [filters, setFilters] = useState([]);
   //добавить данные с базы!!!
   // const [isOpen, setIsOpen] = useState(false);
   const [type, setType] = useState(false);
@@ -19,11 +19,35 @@ const Filters = () => {
   //   { value: 3, label: "Music" },
   // ];
   //   const options = [{name: 'Option 1️', id: 1},{name: 'Option 2️', id: 2}]
+  useEffect(() => {
+    axiosInstance
+      .get("/api/events/type", { params: { type: ["music", "event"] } })
+      .then((res) => {
+        console.log("res :>> ", res);
+      })
+      .catch((err) => {
+        console.log("errFilters :>> ", err);
+      });
+  }, []);
+
   const types = ["All type", "Music", "Dance", "Science"];
 
+  const handleFilters = (eventValue) => {
+    const filtersCopy = [...filters];
+    console.log("eventValue :>> ", eventValue);
+    if (filtersCopy.includes(eventValue)) {
+      const index = filtersCopy.indexOf(eventValue);
+      filtersCopy.splice(index, 1);
+      setFilters(filtersCopy);
+    } else {
+      filtersCopy.push(eventValue);
+      console.log("filtersCopy :>> ", filtersCopy);
+      setFilters(filtersCopy);
+    }
+  };
   const name = [];
   listOfFilter.map((names) => name.push(names));
-  console.log("name :>> ", name);
+  // console.log("name :>> ", name);
 
   return (
     <div className="Filters">
@@ -41,6 +65,7 @@ const Filters = () => {
           setData(false);
           setLocation(false);
         }}
+        handleChange={handleFilters}
       >
         {name[0]}
       </Dropdown>
@@ -52,6 +77,7 @@ const Filters = () => {
           setData(!data);
           setLocation(false);
         }}
+        handleChange={handleFilters}
       >
         {name[1]}
       </Dropdown>
