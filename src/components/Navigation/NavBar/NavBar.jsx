@@ -77,10 +77,7 @@ const NavBar = (props) => {
           onClick={() => {
             setIsClicked(!isClicked);
           }}
-          style={
-            // routes.includes(location) ? { color: "black" } : { color: "white" }
-            { color: colour }
-          }
+          style={{ color: colour }}
         >
           {isClicked ? (
             <LocationAuto
@@ -103,7 +100,6 @@ const NavBar = (props) => {
           <div>
             <Link to="/userProfile">
               <p>Profile</p>
-              {/* <p>{userName}</p>  */}
             </Link>
             <button onClick={() => logOut(localStorage.getItem("accessToken"))}>
               Out

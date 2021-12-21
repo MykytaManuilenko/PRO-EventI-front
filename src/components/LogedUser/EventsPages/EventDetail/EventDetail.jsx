@@ -7,12 +7,16 @@ import { convertData } from "../../../../utils/convertData";
 import Like from "../../../UI/LikeSVG/Like";
 import TypeCard from "../../../UI/TypeCard/TypeCard";
 import GoBack from "../../../UI/GoBack/GoBack";
+import GoogleMaps from "../../../UI/GoogleMap/GoogleMaps";
+import Geocode from "react-geocode";
 
 const EventDetail = () => {
   const { eventId } = useParams();
   console.log("eventId :>> ", eventId);
   const [event, setEvent] = useState();
   const [isLiked, setIsLiked] = useState();
+  const [location, setLocation] = useState();
+  Geocode.setApiKey("AIzaSyBN_OWsAKQlSBEXtL_APmQstbRZalUVSOE");
 
   useEffect(() => {
     axiosInstance
@@ -20,6 +24,24 @@ const EventDetail = () => {
       .then((res) => {
         setEvent(res.data);
         setIsLiked(res.data.isLiked);
+
+        Geocode.fromAddress(
+          res.data.address.country +
+            " " +
+            res.data.address.city +
+            " " +
+            res.data.address.street
+        )
+          .then((res) => {
+            setLocation({
+              lat: res.results[0].geometry.location.lat,
+              lng: res.results[0].geometry.location.lng,
+            });
+          })
+          .catch((err) => {
+            console.log("errGeometry :>> ", err);
+          });
+
         console.log("res.data :>> ", res.data);
       })
       .catch((err) => {
@@ -154,8 +176,16 @@ const EventDetail = () => {
               </div>
               <div className="rightDescription">
                 <p className="descrTitle">Location</p>
+                <div style={{ width: "100%", height: "300px" }}>
+                  <GoogleMaps
+                    lat={location && location.lat}
+                    lng={location && location.lng}
+                  />
+                </div>
 
-                <p className="descrTitle">Type</p>
+                <p className="descrTitle" style={{ marginTop: "15px" }}>
+                  Type
+                </p>
                 {event.types &&
                   event.types.map((type, index) => {
                     return <TypeCard typeName={type} index={index} />;

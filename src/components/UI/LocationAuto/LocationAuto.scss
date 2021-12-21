@@ -7,23 +7,10 @@
   align-items: flex-start;
   font-weight: 500;
   position: absolute;
-  right: 225px;
+  z-index: 3;
 
   .suggestions {
     width: 100%;
     text-align: start;
   }
-}
-
-.locationInput {
-  width: 150px;
-  border: none;
-  border-bottom: 0.6px solid #fcc117;
-  padding: 8px 0;
-  outline: none;
-  font-weight: 300;
-  font-size: 14px;
-  background-color: none;
-
-  // width: 100%;
 }

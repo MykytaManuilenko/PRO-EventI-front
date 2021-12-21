@@ -12,11 +12,13 @@ import {
 } from "redux-persist";
 import authReducer from "./slices/auth";
 import uiReducer from "./slices/ui";
+import locationReducer from "./slices/location";
 import storage from "redux-persist/lib/storage";
 
 const rootReducer = combineReducers({
   authentication: authReducer,
   UI: uiReducer,
+  location: locationReducer,
 });
 
 const persistConfig = {

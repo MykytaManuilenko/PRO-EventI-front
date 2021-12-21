@@ -9,6 +9,7 @@ import Button from "../../../UI/Button/Button";
 import axios from "axios";
 import Multiselect from "multiselect-react-dropdown";
 import Alert from "react-bootstrap/Alert";
+import LocationAuto from "../../../UI/LocationAuto/LocationAuto";
 
 const CreateEvent = () => {
   const [modalShow, setModalShow] = useState();
@@ -17,6 +18,7 @@ const CreateEvent = () => {
   const [types, setTypes] = useState([]);
   const [selectedValue, setSelectedVal] = useState("");
   const [isError, setIsError] = useState({ status: false, message: "" });
+  const [address, setAddress] = useState();
 
   useEffect(() => {
     getType();
@@ -151,9 +153,9 @@ const CreateEvent = () => {
         maxPlacesNumber: formik.values.maxPlacesNumber,
         photos: [],
         address: {
-          country: "PL",
-          city: "Warsaw",
-          street: "Ciołka 6",
+          country: address.country,
+          city: address.city,
+          street: address.street,
         },
       };
       formData.append("file", file);
@@ -242,10 +244,6 @@ const CreateEvent = () => {
                 <Multiselect
                   onRemove={function noRefCheck() {}}
                   onSearch={function noRefCheck() {}}
-                  // onSelect={(e) => {
-                  //   // console.log("onSelect :>> ", e);
-                  //   setSelectedVal(e);
-                  // }}
                   onSelect={(e) => setSelectedVal(e)}
                   options={types}
                   onKeyPressFn={function noRefCheck() {}}
@@ -256,7 +254,7 @@ const CreateEvent = () => {
                   style={{
                     multiselectContainer: {
                       width: "100%",
-                      // marginTop: selectedValue.length !== 0 ? "5px" : "10px",
+                      // marginTop: selectedValue.length !== 0 ? "5px" : "15px",
                     },
                     searchBox: {
                       border: "none",
@@ -322,16 +320,11 @@ const CreateEvent = () => {
               </div>
 
               <div className={eventStyle.locationInput}>
-                <input
-                  type="text"
-                  className={eventStyle.inputLocation}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.location}
-                  placeholder="title"
-                  name="location"
+                <LocationAuto
+                  setAddress={setAddress}
+                  className={eventStyle.locationInput}
+                  labelClass={eventStyle.labels}
                 />
-                <label className={eventStyle.labels}>Location</label>
               </div>
 
               <div className={eventStyle.priceInput}>
