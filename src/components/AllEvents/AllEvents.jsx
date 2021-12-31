@@ -9,7 +9,6 @@ import { convertData } from "../../utils/convertData";
 const AllEvents = () => {
   const [cardsArray, setCardsArr] = useState([]);
   const [search, setSearch] = useState("");
-  const [isMatch, setIsMatch] = useState(true);
 
   useEffect(() => {
     axiosInstance
@@ -29,43 +28,57 @@ const AllEvents = () => {
 
   const { filtered } =
     location.state && location.state.filtered ? location.state : {};
+  const { notFound } =
+    location.state && location.state.notFound ? location.state : {};
   const { searchValue } =
     location.state && location.state.searchValue ? location.state : {};
-  const [filteredSearch, setFilteredSearch] = useState(
-    filtered ? filtered : cardsArray
-  );
+  // const [filteredSearch, setFilteredSearch] = useState(
+  //   filtered ? filtered : cardsArray
+  // );
 
   return (
     <>
       <div className="main">
         <SearchPart
           cname="searchPart"
-          search={search}
-          setSearch={setSearch}
-          eventInfo={cardsArray}
-          setEvent={setFilteredSearch}
+          events={cardsArray}
+          pathName={"/allEvents"}
         />
         <div className="TitlePart">
-          <p className="Title">All events: {searchValue}</p>
+          <p className="Title">
+            All events{searchValue ? `: ${searchValue}` : ""}
+          </p>
           <hr className="Line" />
         </div>
         <div className="CardsContainer">
-          {/* карточки доставать из базы, 
-          и сделать проверку чтобы больше 3 рядов не добавляло */}
-          {cardsArray &&
-            cardsArray.map((card) => {
-              return (
-                <Card
-                  image={card.backgroundUrl}
-                  name={card.title}
-                  eventId={card.eventId}
-                  isLiked={card.isLiked}
-                  key={card.eventId}
-                  date={convertData(card.startTime)}
-                />
-              );
-            })}
-          {isMatch ? (
+          {!filtered
+            ? cardsArray.map((card) => {
+                return (
+                  <Card
+                    image={card.backgroundUrl}
+                    name={card.title}
+                    eventId={card.eventId}
+                    isLiked={card.isLiked}
+                    key={card.eventId}
+                    date={convertData(card.startTime)}
+                  />
+                );
+              })
+            : filtered.map((event) => {
+                return (
+                  <Card
+                    image={event.backgroundUrl}
+                    name={event.title}
+                    date={convertData(event.startTime)}
+                    key={event.eventId}
+                    isLiked={event.isLiked}
+                    eventId={event.eventId}
+                  />
+                );
+              })}
+          {/* {filtered.length === 0 && <p>{notFound}</p>} */}
+
+          {/* {isMatch ? (
             filteredSearch.map((event, index) => {
               return (
                 <Card image={event.image} name={event.name} date={event.date} />
@@ -73,7 +86,7 @@ const AllEvents = () => {
             })
           ) : (
             <h3>Not found</h3>
-          )}
+          )} */}
         </div>
       </div>
     </>

@@ -48,7 +48,7 @@ const Card = (props) => {
   return (
     <div className="Card">
       <div
-        className="UpPart"
+        className={["UpPart", props.className].join(" ")}
         style={
           !props.isCanceled
             ? { background: `center / cover no-repeat url(${props.image})` }

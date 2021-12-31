@@ -2,22 +2,21 @@ import React, { useEffect, useState } from "react";
 import "./UserProfile.scss";
 import axiosInstance from "../../../utils/axiosInstance";
 import Button from "../../UI/Button/Button";
-import EventCard from "../../UI/EventCard/EventCard";
-import { convertData } from "../../../utils/convertData";
+import MyEventsTemplate from "./MyEvents/MyEventsTemplate";
+import MyLikedEventsTemplate from "./MyLikedEvents/MyLikedEventsTemplate";
+import HistoryTemplate from "./History/HistoryTemplate";
+import { convertDataWithoutName } from "../../../utils/convertData";
 import { useHistory } from "react-router-dom";
-import ModalUi from "../../UI/ModalUi/ModalUi";
-import TypeCard from "../../UI/TypeCard/TypeCard";
-import Card from "../../UI/Card/Card";
-import ButtonBasedDropdown from "../../UI/ButtonBasedDropdown/ButtonBasedDropdown";
+import EditUserType from "./EditUserType/EditUserType";
 
 const UserProfile = () => {
-  const [eventId, setEventId] = useState();
   const [userInfo, setUserInfo] = useState("");
-  const [userEvent, setUserEvent] = useState([]);
-  const [likedEvents, setLikedEvents] = useState("");
-  const [show, setShow] = useState(false);
-  const [isCanceled, setIsCanceled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isVisibleMyEvents, setIsVisibleMyEvents] = useState(true);
+  const [isVisibleLiked, setIsVisibleLiked] = useState(false);
+  const [isVisibleMyTickets, setIsVisibleMyTickets] = useState(false);
+  const [isVisibleHistory, setIsVisibleHistory] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState();
   const history = useHistory();
 
   useEffect(() => {
@@ -31,149 +30,109 @@ const UserProfile = () => {
       .catch((err) => {
         console.log("err :>> ", err);
       });
-    axiosInstance
-      .get("/api/events/my", { params: { limit: 3 } })
-      .then((res) => {
-        setUserEvent(res.data);
-        setIsLoading(false);
-        console.log("MyEvents res :>> ", res);
-      })
-      .catch((err) => {
-        console.log("err :>> ", err);
-      });
-  }, [isCanceled]);
-
-  //ЭТО НУЖНО ПОМЕНЯТЬ!!!!!!!!!!
-  useEffect(() => {
-    axiosInstance
-      .get("/api/events/my/like", { params: { limit: 5 } })
-      .then((res) => {
-        console.log("resMYLIKED :>> ", res);
-        setLikedEvents(res.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log("err :>> ", err);
-      });
   }, []);
 
-  const clickHandler = (eventId) => {
-    console.log("eventId :>> ", eventId);
-    axiosInstance
-      .patch(`/api/events/cancel/${eventId}`)
-      .then((res) => {
-        setShow(false);
-        setIsCanceled(!isCanceled);
-      })
-      .catch((err) => {
-        console.log("err :>> ", err);
-      });
+  const handleClick = (isMyEvents, isLiked, isMyTickets, isHistory) => {
+    setIsVisibleMyEvents(isMyEvents);
+    setIsVisibleLiked(isLiked);
+    setIsVisibleMyTickets(isMyTickets);
+    setIsVisibleHistory(isHistory);
+    setScrollPosition(window.pageYOffset);
+    window.scrollTo(0, scrollPosition);
   };
+
+  console.log("userInfo.address :>> ", userInfo.address);
 
   return isLoading ? (
     <p> Loading...</p>
   ) : (
     <div className="profileCont">
       <div className="userInfoContainer">
-        <div className="registerDate">Registered from 10.11.2021</div>
+        <div className="registerDate">
+          Registered from {convertDataWithoutName(userInfo.createdAt)}
+        </div>
         <div className="userData">
+          <div className="choosePhotoButton">
+            <img
+              alt=""
+              src="./camera_icon.svg"
+              style={{
+                height: "50px",
+                width: "60px",
+                marginBottom: "10px",
+              }}
+            />
+            {/* <p className={eventStyle.addPhoto}>Add photo</p> */}
+          </div>
           <p>
             {userInfo.firstName} {userInfo.lastName}
           </p>
         </div>
         <div className="bottomPart">
-          <div className="userTypeContainer">
-            {userInfo.eventTypes &&
-              userInfo.eventTypes.map((eventType) => {
-                return <TypeCard typeName={eventType} />;
-              })}
+          <EditUserType userInfo={userInfo} />
+          <div className="buttonsContainer">
+            <button
+              className="changePassButton"
+              onClick={() => history.push("/userProfile/changePassword")}
+            >
+              Change password
+            </button>
+            <Button
+              class="editButt"
+              onClick={() => history.push("/userProfile/edit")}
+            >
+              Edit
+            </Button>
           </div>
-          <Button class="editButt">Edit</Button>
         </div>
       </div>
-      <div className="myEventsContainer">
-        <div className="header">
-          <p className="headerText">My Events</p>
-          <Button class="showButt" onClick={() => history.push("/myEvents")}>
-            Show all
-          </Button>
+
+      <div>
+        <div className="userTabs">
+          <button
+            className={"tab" + (isVisibleMyEvents ? " active" : "")}
+            onClick={() => handleClick(true, false, false, false)}
+          >
+            My Events
+          </button>
+          <button
+            className={"tab" + (isVisibleLiked ? " active" : "")}
+            onClick={() => handleClick(false, true, false, false)}
+          >
+            Liked
+          </button>
+          <button
+            className={"tab" + (isVisibleMyTickets ? " active" : "")}
+            onClick={() => handleClick(false, false, true, false)}
+          >
+            My Tickets
+          </button>
+          <button
+            className={"tab" + (isVisibleHistory ? " active" : "")}
+            onClick={() => handleClick(false, false, false, true)}
+          >
+            History
+          </button>
         </div>
 
-        <div className="cards">
-          <table>
-            <tbody>
-              {userEvent && userEvent.length > 0 ? (
-                userEvent.map((event) => {
-                  return (
-                    <tr key={event.eventId}>
-                      <td>
-                        <EventCard
-                          image={event.backgroundUrl}
-                          title={event.title}
-                          date={convertData(event.startTime)}
-                          isCanceled={event.canceled}
-                        ></EventCard>
-                      </td>
-                      <td>
-                        <div className="eventButtons">
-                          <Button
-                            class="showButton"
-                            onClick={() =>
-                              history.push(`/events/${event.eventId}`)
-                            }
-                          >
-                            Show more
-                          </Button>
-                          <ButtonBasedDropdown
-                            onClick={() => {
-                              setShow(true);
-                              setEventId(event.eventId);
-                            }}
-                          />
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
-                <p>You have not created any events yet :(</p>
-              )}
-            </tbody>
-            <ModalUi
-              show={show}
-              hide={() => setShow(false)}
-              title="Are you sure you want to cancel the event?"
-              firstButton="No"
-              secondButton="Yes"
-              firstBttClick={() => setShow(false)}
-              secondBttClick={() => clickHandler(eventId)}
-            ></ModalUi>
-          </table>
-        </div>
-      </div>
-      <div className="likedEventContainer">
-        <div className="header">
-          <p className="headerText">Liked Events</p>
-          <Button class="showButt" onClick={() => history.push("/likedEvents")}>
-            Show all
-          </Button>
-        </div>
-        <div className="likedEventCards">
-          {likedEvents &&
-            likedEvents.map((likedEvent) => {
-              return (
-                <Card
-                  image={likedEvent.backgroundUrl}
-                  name={likedEvent.title}
-                  date={convertData(likedEvent.startTime)}
-                  eventId={likedEvent.eventId}
-                  isLiked={likedEvent.isLiked}
-                  key={likedEvent.eventId}
-                  isCanceled={likedEvent.canceled}
-                />
-              );
-            })}
-        </div>
+        {isVisibleMyEvents && (
+          <MyEventsTemplate
+            cardQuantityShown={3}
+            scrollPosition={scrollPosition}
+          />
+        )}
+        {isVisibleLiked && (
+          <MyLikedEventsTemplate
+            cardQuantityShown={5}
+            scrollPosition={scrollPosition}
+          />
+        )}
+        {isVisibleHistory && (
+          <HistoryTemplate
+            cardQuantityShown={5}
+            scrollPosition={scrollPosition}
+          />
+        )}
       </div>
     </div>
   );

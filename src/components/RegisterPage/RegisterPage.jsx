@@ -10,6 +10,7 @@ import { Alert } from "react-bootstrap";
 import { uiActions } from "../../redux/slices/ui";
 import Multiselect from "multiselect-react-dropdown";
 import getEventTypes from "../../api/services/User";
+import Input from "../UI/Input/Input";
 
 const RegisterPage = () => {
   const Error = useSelector((state) => state.UI.errRegister);
@@ -79,7 +80,7 @@ const RegisterPage = () => {
   });
 
   useEffect(() => {
-    getEventTypes("/api/events/type")
+    getEventTypes("/api/event-types")
       .then((response) => {
         console.log("response :>> ", response.data);
         setTypes(response.data);
@@ -124,76 +125,56 @@ const RegisterPage = () => {
 
           <div className="firstRow">
             <div className="placePhoto"></div>
-            <div className="inputNameCont">
-              <input
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.firstName}
-                name="firstName"
-                type="text"
-                placeholder="firstName"
-                className="inputName"
-              />
-              <label className="labels">First Name *</label>
-              {formik.touched.firstName && formik.errors.firstName ? (
-                <p className="errorText">{formik.errors.firstName}</p>
-              ) : null}
-            </div>
-
-            <div className="inputSurnameCont">
-              <input
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.lastName}
-                name="lastName"
-                placeholder="lastName"
-                type="text"
-                className="inputSurname"
-              />
-              <label className="labels">Surname *</label>
-              {formik.touched.lastName && formik.errors.lastName ? (
-                <p className="errorText">{formik.errors.lastName}</p>
-              ) : null}
-            </div>
+            <Input
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.firstName}
+              name="firstName"
+              type="text"
+              placeholder="firstName"
+              touched={formik.touched.firstName}
+              errors={formik.errors.firstName}
+              labelName="First Name"
+            />
+            <Input
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.lastName}
+              name="lastName"
+              type="text"
+              placeholder="lastName"
+              touched={formik.touched.lastName}
+              errors={formik.errors.lastName}
+              labelName="Last Name"
+            />
           </div>
 
           <div className="secondRow">
-            <div className="birthInputCont">
-              <input
-                type="date"
-                required
-                className="birthInput"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.birthDate}
-                name="birthDate"
-                placeholder="birthDate"
-              />
-              <label className="labels">Birthdate *</label>
-              {formik.touched.birthDate && formik.errors.birthDate ? (
-                <p className="errorText">{formik.errors.birthDate}</p>
-              ) : null}
-            </div>
-
-            <div className="telephoneContain">
-              <input
-                type="text"
-                required
-                className="telephoneInput"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.phone}
-                name="phone"
-                placeholder="phone"
-              />
-              <label className="labels">Telephone number</label>
-              {formik.touched.phone && formik.errors.phone ? (
-                <p className="errorText">{formik.errors.phone}</p>
-              ) : null}
-            </div>
+            <Input
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.birthDate}
+              name="birthDate"
+              type="date"
+              placeholder="birthDate"
+              touched={formik.touched.birthDate}
+              errors={formik.errors.birthDate}
+              labelName="Birthdate"
+            />
+            <Input
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.phone}
+              name="phone"
+              type="text"
+              placeholder="phone"
+              touched={formik.touched.phone}
+              errors={formik.errors.phone}
+              labelName="Phone number"
+            />
           </div>
 
-          <div className="typeSelector">
+          <div className="thirdRow">
             <Multiselect
               onRemove={function noRefCheck() {}}
               onSearch={function noRefCheck() {}}
@@ -210,47 +191,38 @@ const RegisterPage = () => {
                   borderBottom: "1px solid #fcc117",
                   borderRadius: "0",
                 },
+                inputField: {
+                  margin: "0",
+                  height: "100%",
+                },
                 chips: {
                   backgroundColor: "rgba(167, 169, 163, 0.41)",
                   color: "#0C0D2C",
                 },
               }}
             />
-          </div>
-
-          <div className="emailContain">
-            <input
+            <Input
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
               name="email"
               type="text"
-              required
-              className="emailInput"
-              autoComplete="off"
               placeholder="email"
+              touched={formik.touched.email}
+              errors={formik.errors.email}
+              labelName="E-mail"
             />
-            <label className="labels">Email *</label>
-            {formik.touched.email && formik.errors.email ? (
-              <p className="errorText">{formik.errors.email}</p>
-            ) : null}
-          </div>
-
-          <div className="passContainer">
-            <input
+            <Input
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
-              required
               name="password"
               type="password"
-              className="passwordInput"
-              placeholder="password"
+              placeholder="email"
+              touched={formik.touched.password}
+              errors={formik.errors.password}
+              labelName="Password"
             />
-            <label className="labels">Password</label>
-            {formik.touched.password && formik.errors.password ? (
-              <p className="errorText">{formik.errors.password}</p>
-            ) : null}
           </div>
 
           <div className="buttContainer">

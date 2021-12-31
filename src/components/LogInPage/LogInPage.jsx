@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logInUser } from "../../redux/actions/auth";
 import { uiActions } from "../../redux/slices/ui";
 import { Alert } from "react-bootstrap";
+import Input from "../UI/Input/Input";
 
 const LogInPage = () => {
   const dispatch = useDispatch();
@@ -57,35 +58,31 @@ const LogInPage = () => {
       <div className="LogInContainer">
         <form className="logInForm" onSubmit={formik.handleSubmit}>
           <p className="title">Login to your account</p>
-          <div className="inputContName">
-            <input
+          <div className="containerForInputs">
+            <Input
               type="text"
-              className="nameInput"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
               placeholder="email"
               name="email"
+              labelName="Email"
+              touched={formik.touched.email}
+              errors={formik.errors.email}
             />
-            <label className="labels">User name</label>
-            {formik.touched.email && formik.errors.email ? (
-              <p className="errorText">{formik.errors.email}</p>
-            ) : null}
-          </div>
-          <div className="inputContPass">
-            <input
+
+            <Input
               type="password"
-              className="passInput"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
               placeholder="pass"
               name="password"
+              labelName="Password"
+              touched={formik.touched.password}
+              errors={formik.errors.password}
+              className="inputContPass"
             />
-            <label className="labels">Password</label>
-            {formik.touched.password && formik.errors.password ? (
-              <p className="errorText">{formik.errors.password}</p>
-            ) : null}
           </div>
 
           <div className="forgetContainer">

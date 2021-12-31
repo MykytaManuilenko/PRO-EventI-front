@@ -1,5 +1,6 @@
+@use "../../../style/colors" as color;
 @mixin fileContainer() {
-  border: 1px solid gray;
+  border: 1px solid color.$gray;
   border-radius: 5px;
   background-color: #f0f0f2;
   width: 50%;
@@ -31,13 +32,12 @@
       align-items: center;
       flex-direction: row;
       width: 100%;
+      position: relative;
       .inputBackground,
       .inputEventPhoto {
         @include fileContainer();
+        position: relative;
         input[type="file"] {
-          //   width: 100%;
-          //   display: none;
-          //   position: absolute;
           width: 100%;
           height: 100%;
           opacity: 0;
@@ -45,12 +45,9 @@
           z-index: 2;
         }
         label {
-          color: gray;
-          //   width: 50%;
-          //   position: absolute;
-          //   top: 65px;
-          //   left: 170px;
+          color: color.$titleColor;
           position: absolute;
+          top: 60px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -62,24 +59,46 @@
       width: 100%;
       display: flex;
       justify-content: flex-start;
-      align-items: center;
+      align-items: flex-start;
+      .backgroundContainer {
+        display: flex;
+        flex-direction: column;
+      }
       .previewPhoto {
         margin: 10px;
         border: 1px solid black;
+        border-radius: 5px;
         width: 115px;
         height: 115px;
-
-        img {
-          width: 115px;
-          height: 115px;
-          object-fit: cover;
-        }
       }
     }
   }
 
+  .inputTooltip {
+    display: none;
+  }
+
+  .inputEventPhoto:hover ~ .inputTooltip {
+    display: block;
+    position: absolute;
+    top: 70px;
+    right: 10px;
+    color: color.$titleColor;
+    background-color: color.$gray;
+    font-size: 12px;
+    padding: 5px;
+    border-radius: 5px;
+  }
   .addTypeButt {
-    background-color: #ff6a7c;
+    background-color: color.$button-color;
     border: none !important;
+    margin: 0;
+  }
+  .disabledInput {
+    box-shadow: inset 0px 2px 5px rgba(158, 156, 156, 0.25);
+    // filter: opacity(0.5);
+    input[type="file"] {
+      cursor: not-allowed !important;
+    }
   }
 }

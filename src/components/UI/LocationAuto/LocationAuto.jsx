@@ -33,7 +33,7 @@ const LocationAuto = (props) => {
   return (
     <>
       <PlacesAutocomplete
-        value={cities}
+        value={cities && cities}
         onChange={hadleChange}
         onSelect={handleSelect}
         searchOptions={{ componentRestrictions: { country: ["pl"] } }}

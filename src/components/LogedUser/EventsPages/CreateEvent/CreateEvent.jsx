@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import eventStyle from "./CreateEvent.module.scss";
+import "./CreateEvent.scss";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import axiosInstance from "../../../../utils/axiosInstance";
@@ -10,22 +10,25 @@ import axios from "axios";
 import Multiselect from "multiselect-react-dropdown";
 import Alert from "react-bootstrap/Alert";
 import LocationAuto from "../../../UI/LocationAuto/LocationAuto";
+import Input from "../../../UI/Input/Input";
 
 const CreateEvent = () => {
   const [modalShow, setModalShow] = useState();
   const [file, setFile] = useState();
-  const [multipleFiles, setMultipleFiles] = useState();
+  const [multipleFiles, setMultipleFiles] = useState([]);
+  const [backgroundUrl, setBackgroundUrl] = useState("");
   const [types, setTypes] = useState([]);
   const [selectedValue, setSelectedVal] = useState("");
   const [isError, setIsError] = useState({ status: false, message: "" });
   const [address, setAddress] = useState();
+  const [freePrice, setFreePrice] = useState(false);
 
   useEffect(() => {
     getType();
   }, []);
   const getType = () => {
     axiosInstance
-      .get("/api/events/type")
+      .get("/api/event-types")
       .then((res) => {
         setTypes(res.data);
         console.log("res.data :>> ", res.data);
@@ -102,6 +105,7 @@ const CreateEvent = () => {
   };
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       title: "",
       description: "",
@@ -123,13 +127,15 @@ const CreateEvent = () => {
       description: Yup.string()
         .max(1000, "Must be 1000 characters or less")
         .required("Field is required"),
-      price: Yup.number()
-        .test(
-          "Is positive?",
-          "The number must be greater than 0!",
-          (value) => value > 0
-        )
-        .required("Field is required"),
+      price: !freePrice
+        ? Yup.number()
+            .test(
+              "Is positive?",
+              "The number must be greater than 0!",
+              (value) => value > 0
+            )
+            .required("Field is required")
+        : null,
       maxPlacesNumber: Yup.number()
         .test(
           "Is positive?",
@@ -145,7 +151,7 @@ const CreateEvent = () => {
       const data = {
         title: formik.values.title,
         description: formik.values.description,
-        price: formik.values.price,
+        price: freePrice ? 0 : formik.values.price,
         type: selectedValue,
         background: "",
         startTime: formik.values.startTime,
@@ -171,6 +177,7 @@ const CreateEvent = () => {
 
       if (multipleFiles && multipleFiles.length !== 0) {
         const multipleArrFile = Array.from(multipleFiles);
+        console.log("multipleFiles :>> ", multipleFiles);
         multipleArrFile.forEach((file) => {
           formDataMultiple.append("files", file);
         });
@@ -184,187 +191,189 @@ const CreateEvent = () => {
 
   return (
     <>
-      <div className={eventStyle.createEventCont}>
+      <div className="createEventCont">
         {isError.status && (
           <Alert variant="danger" onClose={() => setIsError(false)} dismissible>
             {isError.message}
           </Alert>
         )}
 
-        <div className={eventStyle.containerGoBack}>
-          <p className={eventStyle.goBack} onClick={() => history.goBack()}>
+        <div className="containerGoBack">
+          <p className="goBack" onClick={() => history.goBack()}>
             Go Back
           </p>
         </div>
-        <div className={eventStyle.container}>
-          <p className={eventStyle.title}>Create new event</p>
+        <div className="container">
+          <p className="title">Create new event</p>
           <hr />
           <form
-            className={eventStyle.createForm}
+            className="createForm"
             onSubmit={formik.handleSubmit}
             noValidate
           >
             {/* ======================================ADD PHOTOOO */}
-            <div className={eventStyle.firstRow}>
+            <div className="firstRow">
               <div
-                className={eventStyle.photoButton}
+                className="photoButton"
                 onClick={() => setModalShow(true)}
+                style={
+                  backgroundUrl
+                    ? {
+                        background: `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), center / cover no-repeat url(${backgroundUrl}) `,
+                        color: "white",
+                      }
+                    : null
+                }
               >
                 <img
                   alt=""
-                  src="./camera_icon.png"
+                  src="./camera_icon.svg"
                   style={{
-                    height: "50px",
+                    height: "60px",
                     width: "60px",
                     marginBottom: "10px",
                   }}
                 />
-                <p className={eventStyle.addPhoto}>Add photo</p>
+                <p className="addPhoto">Add photo</p>
               </div>
               {/* ======================================ADD PHOTOOO */}
-
-              <div className={eventStyle.inputTitle}>
-                <input
-                  type="text"
-                  className={eventStyle.nameInput}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.title}
-                  placeholder="title"
-                  name="title"
-                />
-                <label className={eventStyle.labels}>Title*</label>
-                {formik.touched.title && formik.errors.title ? (
-                  <p className={eventStyle.errorText}>{formik.errors.title}</p>
-                ) : null}
-              </div>
-
-              {/* =====================DROPDOWN========= */}
-              <div className={eventStyle.inputMultiSelect}>
-                <Multiselect
-                  onRemove={function noRefCheck() {}}
-                  onSearch={function noRefCheck() {}}
-                  onSelect={(e) => setSelectedVal(e)}
-                  options={types}
-                  onKeyPressFn={function noRefCheck() {}}
-                  placeholder="Type"
-                  displayValue="name"
-                  closeOnSelect={false}
-                  selectionLimit={2}
-                  style={{
-                    multiselectContainer: {
-                      width: "100%",
-                      // marginTop: selectedValue.length !== 0 ? "5px" : "15px",
-                    },
-                    searchBox: {
-                      border: "none",
-                      padding: "0",
-                      borderBottom: "1px solid #0f10304f",
-                      borderRadius: "0",
-                      height: "100%",
-                    },
-                    inputField: {
-                      margin: "0",
-                      height: "100%",
-                    },
-                    chips: {
-                      backgroundColor: "rgba(167, 169, 163, 0.41)",
-                      color: "#0C0D2C",
-                    },
-                  }}
+              <Input
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.title}
+                name="title"
+                type="text"
+                placeholder="title"
+                touched={formik.touched.title}
+                errors={formik.errors.title}
+                labelName="Title*"
+                className="inputContainer"
+              />
+              <div className="locationInput">
+                <LocationAuto
+                  setAddress={setAddress}
+                  className="locationInput"
+                  labelClass="labels"
                 />
               </div>
             </div>
             {/* =====================DROPDOWN========= */}
-            <div className={eventStyle.gridContainer}>
-              <div className={eventStyle.descriptionInput}>
-                <label>Description*</label>
-                <textarea
-                  className={eventStyle.inputDescr}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.description}
-                  name="description"
-                />
-                {formik.touched.description && formik.errors.description ? (
-                  <p className={eventStyle.errorText}>
-                    {formik.errors.description}
-                  </p>
-                ) : null}
-              </div>
-
-              <div className={eventStyle.dateInput}>
-                <input
-                  type="datetime-local"
-                  className={eventStyle.inputDate}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.startTime}
-                  placeholder="title"
-                  name="startTime"
-                />
-                <label className={eventStyle.labels}>Start Time</label>
-              </div>
-
-              <div className={eventStyle.timeInput}>
-                <input
-                  type="datetime-local"
-                  className={eventStyle.inputTime}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.endTime}
-                  placeholder="title"
-                  name="endTime"
-                />
-                <label className={eventStyle.labels}>End Time</label>
-              </div>
-
-              <div className={eventStyle.locationInput}>
-                <LocationAuto
-                  setAddress={setAddress}
-                  className={eventStyle.locationInput}
-                  labelClass={eventStyle.labels}
-                />
-              </div>
-
-              <div className={eventStyle.priceInput}>
-                <input
-                  type="number"
-                  className={eventStyle.inputPrice}
+            <div className="descriptionInput">
+              <label>Description</label>
+              <textarea
+                className="inputDescr"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.description}
+                name="description"
+              />
+              {formik.touched.description && formik.errors.description ? (
+                <p className="errorText">{formik.errors.description}</p>
+              ) : null}
+            </div>
+            <div className="inputMultiSelect">
+              <Multiselect
+                onRemove={function noRefCheck() {}}
+                onSearch={function noRefCheck() {}}
+                onSelect={(e) => setSelectedVal(e)}
+                options={types}
+                onKeyPressFn={function noRefCheck() {}}
+                placeholder="Type"
+                displayValue="name"
+                closeOnSelect={false}
+                selectionLimit={2}
+                style={{
+                  multiselectContainer: {
+                    width: "100%",
+                  },
+                  searchBox: {
+                    border: "none",
+                    padding: "0",
+                    borderBottom: "1px solid #0f10304f",
+                    borderRadius: "0",
+                    height: "100%",
+                  },
+                  inputField: {
+                    marginBottom: selectedValue.length !== 0 ? "6px" : "6px",
+                    height: "100%",
+                    fontWeight: "300",
+                    fontSize: "13px",
+                    color: "#919191",
+                  },
+                  chips: {
+                    backgroundColor: "rgb(134 152 233)",
+                    color: "#fffff",
+                  },
+                }}
+              />
+            </div>
+            <div className="secondRow">
+              <Input
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.startTime}
+                name="startTime"
+                type="datetime-local"
+                placeholder="startTime"
+                touched={formik.touched.startTime}
+                errors={formik.errors.startTime}
+                labelName="Start time*"
+                className="inputContainer"
+              />
+              <Input
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.endTime}
+                name="endTime"
+                type="datetime-local"
+                placeholder="endTime"
+                touched={formik.touched.endTime}
+                errors={formik.errors.endTime}
+                labelName="End Time*"
+                className="inputContainer"
+              />
+            </div>
+            <div className="thirdRow">
+              <div style={{ width: "100%" }}>
+                <Input
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.price}
-                  placeholder="title"
                   name="price"
+                  type="number"
+                  placeholder="price"
+                  touched={formik.touched.price}
+                  errors={formik.errors.price}
+                  labelName="Price*"
+                  className="inputContainer"
+                  disabled={freePrice ? true : false}
                 />
-                <label className={eventStyle.labels}>Price</label>
-                {formik.touched.price && formik.errors.price ? (
-                  <p className={eventStyle.errorText}>{formik.errors.price}</p>
-                ) : null}
+                <div className="priceCheckbox">
+                  <input
+                    className="inputPrice"
+                    type="checkbox"
+                    onChange={() => setFreePrice(!freePrice)}
+                  />
+                  <label className="checkboxLabel">
+                    The event will be free
+                  </label>
+                </div>
               </div>
 
-              <div className={eventStyle.amountInput}>
-                <input
-                  type="number"
-                  className={eventStyle.inputAmount}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.maxPlacesNumber}
-                  placeholder="title"
-                  name="maxPlacesNumber"
-                />
-                <label className={eventStyle.labels}>
-                  Maximum amount of people
-                </label>
-                {formik.touched.maxPlacesNumber &&
-                formik.errors.maxPlacesNumber ? (
-                  <p className={eventStyle.errorText}>
-                    {formik.errors.maxPlacesNumber}
-                  </p>
-                ) : null}
-              </div>
+              <Input
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.maxPlacesNumber}
+                name="maxPlacesNumber"
+                type="number"
+                placeholder="maxPlacesNumber"
+                touched={formik.touched.maxPlacesNumber}
+                errors={formik.errors.maxPlacesNumber}
+                labelName="Maximum amount of people*"
+                className="inputContainer"
+              />
             </div>
-            <Button type="submit" class={eventStyle.createButt}>
+            <Button type="submit" class="createButt">
               Create
             </Button>
           </form>
@@ -378,6 +387,7 @@ const CreateEvent = () => {
         setFile={setFile}
         multipleFiles={multipleFiles}
         setMultipleFiles={setMultipleFiles}
+        setBackgroundUrl={setBackgroundUrl}
       />
     </>
   );

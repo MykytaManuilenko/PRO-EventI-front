@@ -4,42 +4,32 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  gap: 20px;
+  gap: 40px;
   width: 90%;
   margin: auto;
 
-  .header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    .headerText {
-      font-size: 20px;
-      font-weight: 500;
-      color: color.$headerColor;
-      margin-bottom: 0;
-    }
-    .showButt {
-      margin: 0;
-      border: 2px solid color.$button-color;
-      color: color.$button-color;
-    }
-  }
-
   .userInfoContainer {
     @include containerStyle;
-    .userTypeContainer {
-      display: flex;
-      justify-content: flex-start;
-      width: 50%;
-      gap: 15px;
-    }
-
     .userData {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 50px;
+      .choosePhotoButton {
+        border: 1px solid #b5b5bf;
+        cursor: pointer;
+        border-radius: 133px;
+        width: 20%;
+        height: 100%;
+        padding: 30px;
+        grid-area: photo;
+        margin-bottom: 20px;
+      }
       p {
+        height: 100%;
         text-align: left;
         margin: 0;
+        margin-top: 20px;
       }
     }
 
@@ -57,55 +47,72 @@
       align-items: center;
       margin-top: 40px;
 
+      // .userTypePart {
+      //   display: flex;
+      //   flex-direction: row;
+      //   .userTypeContainer {
+      //     display: flex;
+      //     justify-content: flex-start;
+      //     width: 100%;
+      //     gap: 15px;
+      //   }
+      //   .addTypeButton {
+      //     margin-top: 0;
+      //     background-color: color.$editButtonColor;
+      //     border: none;
+      //     width: 60px;
+      //     padding: 5px;
+      //     font-size: 20px;
+      //     font-weight: 600;
+      //   }
+      // }
+
       .editButt {
         background-color: color.$button-color;
         border: none;
         width: 99px !important;
         margin: 0 !important;
       }
-    }
-  }
-  .myEventsContainer {
-    @include containerStyle;
 
-    .cards {
-      width: 100%;
-      table {
-        border-collapse: collapse;
-        width: 100%;
-        td {
-          text-align: left;
-          padding: 20px 0;
-        }
-      }
-      .eventButtons {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        align-items: center;
-
-        .showButton {
-          margin-top: 0;
-          background-color: color.$button-color;
+      .buttonsContainer {
+        .changePassButton {
+          margin-right: 30px;
+          color: color.$black;
           border: none;
-          padding: 12px 5px !important;
-          p {
-            width: 100%;
-          }
+          background-color: transparent;
+          text-decoration: underline;
+        }
+        .changePassButton:hover {
+          color: color.$button-color;
         }
       }
     }
   }
 
-  .likedEventContainer {
-    @include containerStyle;
-    .likedEventCards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      grid-gap: 1rem;
-      justify-items: center;
-      width: 100%;
-      margin-top: 30px;
+  .userTabs {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    top: 26px;
+    left: 1px;
+
+    .tab {
+      border: none;
+      background-color: transparent;
+      height: 100%;
+      padding: 20px 20px 36px 20px;
+      border-radius: 20px 20px 0 0;
+      font-size: 17px;
+    }
+    .active {
+      background-color: color.$white;
+      border: none;
+      color: color.$purple;
+      font-weight: 600;
+      font-size: 18px;
     }
   }
 }

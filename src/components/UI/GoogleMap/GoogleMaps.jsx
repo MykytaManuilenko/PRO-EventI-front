@@ -1,18 +1,20 @@
 import React, { useCallback, useState } from "react";
-import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  useJsApiLoader,
+  Marker,
+  InfoWindow,
+} from "@react-google-maps/api";
 
 const GoogleMaps = (props) => {
+  const [clickedMarker, setClickedMarker] = useState(false);
   const containerStyle = {
     width: "100%",
     height: "100%",
   };
 
-  //   const lat = parseFloat(props.lat);
-
-  //   const lng = parseFloat(props.lng);
   const center = {
     lat: props.lat,
-    // lat: 52.13,
     lng: props.lng,
   };
 
@@ -39,7 +41,23 @@ const GoogleMaps = (props) => {
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
-      <Marker position={center} />
+      <Marker position={center} onClick={() => setClickedMarker(true)} />
+      {clickedMarker && (
+        <InfoWindow
+          position={center}
+          onCloseClick={() => setClickedMarker(false)}
+        >
+          <div>
+            <a
+              href={`http://maps.google.com/maps?z=12&t=m&q=loc:${props.lat}+${props.lng}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Visit on Google Maps
+            </a>
+          </div>
+        </InfoWindow>
+      )}
     </GoogleMap>
   ) : (
     <></>

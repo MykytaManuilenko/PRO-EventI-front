@@ -4,6 +4,7 @@ import Button from "../../UI/Button/Button";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axiosInstance from "../../../utils/axiosInstance";
+import { useEffect } from "react";
 
 const EditModal = (props) => {
   const formik = useFormik({
@@ -20,7 +21,7 @@ const EditModal = (props) => {
     onSubmit: () => {
       const data = { name: formik.values.typeName };
       axiosInstance
-        .put(`/api/events/type/${props.typeid}`, data)
+        .put(`/api/event-types/${props.typeid}`, data)
         .then((res) => {
           props.setChanged(!props.changed);
           props.onHide();
@@ -30,6 +31,12 @@ const EditModal = (props) => {
         });
     },
   });
+
+  useEffect(() => {
+    formik.resetForm();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.show]);
+
   return (
     <Modal
       onHide={props.onHide}

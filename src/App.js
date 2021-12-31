@@ -16,8 +16,12 @@ import { Redirect, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./utils/AuthVerification/PrivateRoute";
 import EventPageAdmin from "./components/AdminPanel/EventPage/EventPageAdmin";
 import EventDetail from "./components/LogedUser/EventsPages/EventDetail/EventDetail";
-import MyEvents from "./components/LogedUser/EventsPages/MyEvents/MyEvents";
-import myLikedEvents from "./components/LogedUser/EventsPages/MyLikedEvents/MyLikedEvents";
+import MyEvents from "./components/LogedUser/UserProfile/MyEvents/MyEvents";
+import myLikedEvents from "./components/LogedUser/UserProfile/MyLikedEvents/MyLikedEvents";
+import EditUserProfile from "./components/LogedUser/UserProfile/EditUserProfile/EditUserProfile";
+import History from "./components/LogedUser/UserProfile/History/History";
+import UsersPage from "./components/AdminPanel/UsersPage/UsersPage";
+import ChangePassword from "./components/LogedUser/UserProfile/ChangePassword/ChangePassword";
 // import CreateEventType from "./components/AdminPanel/CreateEventType/CreateEventType";
 
 function App() {
@@ -43,9 +47,9 @@ function App() {
             ? {
                 width: "calc(100% - 260px)",
                 marginLeft: "260px",
+                marginBottom: "20px",
                 background:
                   "linear-gradient(116.48deg, rgba(255, 255, 255, 0.56) 0.47%, rgba(255, 255, 255, 0.357) 113.36%)",
-                backdropFilter: "blur(86px)",
               }
             : null
         }
@@ -70,7 +74,7 @@ function App() {
             isAuth={isAuthenticated}
             path="/events/:eventId"
             Component={EventDetail}
-            roles={["USER", "SYSTEM_ADMIN"]}
+            roles={["USER", "SYSTEM_ADMIN", "UNCONFIRMED_USER"]}
           />
 
           <PrivateRoute
@@ -88,8 +92,28 @@ function App() {
 
           <PrivateRoute
             isAuth={isAuthenticated}
+            path="/userProfile/edit"
+            Component={EditUserProfile}
+            roles={["USER", "SYSTEM_ADMIN"]}
+          />
+
+          <PrivateRoute
+            isAuth={isAuthenticated}
+            path="/userProfile/changePassword"
+            Component={ChangePassword}
+            roles={["USER", "SYSTEM_ADMIN"]}
+          />
+
+          <PrivateRoute
+            isAuth={isAuthenticated}
             path="/userProfile"
             Component={UserProfile}
+            roles={["USER", "SYSTEM_ADMIN"]}
+          />
+          <PrivateRoute
+            isAuth={isAuthenticated}
+            path="/history"
+            Component={History}
             roles={["USER", "SYSTEM_ADMIN"]}
           />
           <PrivateRoute
@@ -100,22 +124,18 @@ function App() {
             }
             roles={["USER", "SYSTEM_ADMIN"]}
           />
-          {/* <Route exact path="/events/:eventId">
-            <EventDetail />
-          </Route> */}
           <PrivateRoute
             isAuth={isAuthenticated}
             path="/createEvent"
             Component={CreateEvent}
             roles={["USER", "SYSTEM_ADMIN"]}
           />
-
-          {/* <PrivateRoute
+          <PrivateRoute
             isAuth={isAuthenticated}
-            path="/createType"
-            Component={CreateEventType}
+            path="/allUsers"
+            Component={UsersPage}
             roles={["SYSTEM_ADMIN"]}
-          /> */}
+          />
         </Switch>
       </main>
 

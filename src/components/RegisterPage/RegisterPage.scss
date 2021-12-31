@@ -1,4 +1,4 @@
-@use "../../style//AlertMessages/errorMessage";
+@use "../../style/AlertMessages/errorMessage";
 
 .regPage {
   height: 100%;
@@ -33,7 +33,7 @@
       font-weight: 500;
       font-size: 24px;
       line-height: 36px;
-      margin-bottom: 71px;
+      margin-bottom: 41px;
       color: #0c0d2c;
     }
 
@@ -41,80 +41,22 @@
       display: flex;
       width: 85%;
       margin-bottom: 49px;
+      gap: 20px;
     }
-
     .secondRow {
       display: flex;
       width: 85%;
-      margin-bottom: 49px;
+      margin-bottom: 30px;
+      gap: 20px;
     }
-
-    .inputNameCont,
-    .inputSurnameCont,
-    .birthInputCont,
-    .telephoneContain {
+    .thirdRow {
       display: flex;
+      justify-content: center;
       flex-direction: column;
-      align-items: flex-start;
-      position: relative;
       width: 85%;
+      gap: 20px;
+      margin-bottom: 30px;
     }
-
-    .emailContain,
-    .passContainer,
-    .typeSelector {
-      margin-bottom: 49px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      position: relative;
-      width: 85%;
-    }
-
-    .inputNameCont,
-    .birthInputCont {
-      margin-right: 82px;
-    }
-
-    .labels {
-      margin: 0;
-      position: absolute;
-      top: 5px;
-      bottom: 0;
-      padding-left: 10px;
-      pointer-events: none;
-      transition: 0.5s;
-      font-weight: 300;
-      font-size: 13px;
-      color: #919191;
-    }
-  }
-
-  .inputName,
-  .inputSurname,
-  .birthInput,
-  .sexInput,
-  .emailInput,
-  .telephoneInput,
-  .passwordInput {
-    border: none;
-    border-bottom: 0.6px solid #fcc117;
-    padding: 8px 0;
-    outline: none;
-    font-weight: 300;
-    font-size: 14px;
-    width: 100%;
-    position: relative;
-  }
-
-  input:not(:placeholder-shown) ~ label,
-  input:focus ~ label {
-    transform: translateY(-25px);
-  }
-
-  ::-webkit-input-placeholder {
-    opacity: 0;
-    transition: inherit;
   }
 }
 
@@ -132,11 +74,8 @@
 
   .redirectLog {
     margin: 0;
-    // display: flex;
     align-items: center;
     margin-left: 43px;
-    // margin-right: 10px;
-
     a {
       color: black;
       text-decoration: underline;
@@ -146,7 +85,6 @@
 
 .allertSuccess,
 .allertError {
-  //   margin-top: 100px;
   top: 89px;
   left: 60px;
   width: 90%;

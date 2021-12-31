@@ -10,6 +10,7 @@ const PhotoModal = (props) => {
   const handleFile = (e) => {
     props.setFile(e.target.files[0]);
     setPreview(URL.createObjectURL(e.target.files[0]));
+    props.setBackgroundUrl(URL.createObjectURL(e.target.files[0]));
   };
 
   const handleMultipleFile = (e) => {
@@ -19,20 +20,28 @@ const PhotoModal = (props) => {
     ) {
       console.log("TOO MUCH PHOTO :>> ");
     } else {
-      const fileArray = Array.from(e.target.files).map((file) =>
-        URL.createObjectURL(file)
-      );
+      const files = [...props.multipleFiles];
+      const fileArray = Array.from(e.target.files).map((file) => {
+        files.push(file);
+        props.setMultipleFiles(files);
+        return URL.createObjectURL(file);
+      });
       setPreviewMultiple((prevImages) => prevImages.concat(fileArray));
-      props.setMultipleFiles(e.target.files);
     }
   };
 
+  console.log("props.multipleFiles :>> ", props.multipleFiles);
+
   const showPhotos = (source) => {
-    return source.map((image) => {
+    return source.map((image, index) => {
       return (
-        <div className="previewPhoto" key={image}>
-          <img src={image} alt=""></img>
-        </div>
+        <div
+          className="previewPhoto"
+          key={index}
+          style={{
+            background: `center / cover no-repeat url(${image}) `,
+          }}
+        />
       );
     });
   };
@@ -72,7 +81,11 @@ const PhotoModal = (props) => {
               />
               <label>Add background photo</label>
             </div>
-            <div className="inputEventPhoto">
+            <div
+              className={`inputEventPhoto ${
+                previewMultiple.length >= 5 ? "disabledInput" : ""
+              }`}
+            >
               <input
                 type="file"
                 name="file"
@@ -83,11 +96,21 @@ const PhotoModal = (props) => {
               />
               <label>Add event photos</label>
             </div>
+            <div className="inputTooltip">You can add maximum 5 photos</div>
           </div>
 
           <div className="previewPhotoContainer">
-            <div className="previewPhoto">
-              <img src={preview} alt=""></img>
+            <div className="backgroundContainer">
+              <div
+                className="previewPhoto"
+                style={
+                  preview
+                    ? {
+                        background: `center / cover no-repeat url(${preview}) `,
+                      }
+                    : null
+                }
+              ></div>
               <p style={{ color: "#807C7C", textAlign: "center" }}>
                 background
               </p>

@@ -48,6 +48,13 @@ const LogNavBar = () => {
             >
               Events
             </NavLink>
+            <NavLink
+              to="/allUsers"
+              className={styleNav.navLink}
+              activeStyle={activeStyle}
+            >
+              All users
+            </NavLink>
           </>
         ) : (
           <>
@@ -59,15 +66,6 @@ const LogNavBar = () => {
               <PageIcon className={styleNav.icons} />
               My Page
             </NavLink>
-            {/* 
-            <NavLink
-              className={styleNav.navLink}
-              to="/friends"
-              activeStyle={activeStyle}
-            >
-              <FiendsIcon className={styleNav.icons} />
-              Friends
-            </NavLink> */}
 
             <NavLink
               className={styleNav.navLink}

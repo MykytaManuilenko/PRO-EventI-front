@@ -1,0 +1,229 @@
+@use "../../../../style/AlertMessages/errorMessage";
+@use "../../../../style/colors" as color;
+.createEventCont {
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+    background: color.$white;
+    box-shadow: 0px 4px 100px rgb(101 101 101 / 25%);
+    border-radius: 20px;
+    margin-top: 15px;
+
+    .title {
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 36px;
+      color: color.$titleColor;
+      text-align: left;
+      width: 100%;
+      padding-left: 49px;
+      margin-top: 32px;
+    }
+
+    hr {
+      background: -webkit-gradient(
+        linear,
+        0 0,
+        100% 0,
+        to(transparent),
+        color-stop(50%, #d8d6d6)
+      );
+      width: 100%;
+      height: 0.5px;
+    }
+
+    .createForm {
+      width: 90%;
+      margin: 30px 20px 20px 20px;
+
+      .firstRow {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 25px;
+
+        .photoButton {
+          border: 1px solid color.$gray;
+          cursor: pointer;
+          border-radius: 133px;
+          width: 50%;
+          height: 100%;
+          padding: 30px;
+          grid-area: photo;
+          margin-bottom: 20px;
+          .addPhoto {
+            margin: 0;
+          }
+        }
+
+        .locationInput {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          position: relative;
+          width: 100%;
+
+          .labels {
+            margin: 0;
+            position: absolute;
+            top: 5px;
+            bottom: 0;
+            padding-left: 10px;
+            pointer-events: none;
+            transition: 0.5s;
+            font-weight: 300;
+            font-size: 13px;
+            color: color.$labelColor;
+          }
+
+          input {
+            border: none;
+            border-bottom: 0.6px solid color.$gray;
+            padding: 8px 0;
+            outline: none;
+            font-weight: 300;
+            font-size: 14px;
+            width: 100%;
+          }
+
+          input:not(:placeholder-shown) ~ .labels,
+          input:focus ~ .labels {
+            transform: translateY(-25px);
+          }
+
+          ::-webkit-input-placeholder {
+            opacity: 0;
+            transition: inherit;
+          }
+        }
+      }
+
+      .secondRow {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        margin-top: 50px;
+
+        // .locationInput {
+        //   display: flex;
+        //   flex-direction: column;
+        //   align-items: flex-start;
+        //   position: relative;
+        //   width: 100%;
+
+        //   .labels {
+        //     margin: 0;
+        //     position: absolute;
+        //     top: 5px;
+        //     bottom: 0;
+        //     padding-left: 10px;
+        //     pointer-events: none;
+        //     transition: 0.5s;
+        //     font-weight: 300;
+        //     font-size: 13px;
+        //     color: color.$labelColor;
+        //   }
+
+        //   input {
+        //     border: none;
+        //     border-bottom: 0.6px solid color.$gray;
+        //     padding: 8px 0;
+        //     outline: none;
+        //     font-weight: 300;
+        //     font-size: 14px;
+        //     width: 100%;
+        //   }
+
+        //   input:not(:placeholder-shown) ~ .labels,
+        //   input:focus ~ .labels {
+        //     transform: translateY(-25px);
+        //   }
+
+        //   ::-webkit-input-placeholder {
+        //     opacity: 0;
+        //     transition: inherit;
+        //   }
+        // }
+      }
+
+      .thirdRow {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin-top: 45px;
+        gap: 25px;
+
+        .priceCheckbox {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          flex-direction: row;
+          text-align: left;
+          margin-top: 20px;
+          .inputPrice {
+            height: 20px;
+            width: 30px;
+          }
+          .checkboxLabel {
+            color: color.$labelColor;
+            transform: none;
+            font-size: 14px;
+            margin-left: 10px;
+          }
+        }
+      }
+
+      .inputMultiSelect {
+        width: 100%;
+      }
+      .descriptionInput {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 37px;
+        width: 100%;
+
+        label {
+          text-align: left;
+          font-weight: 300;
+          font-size: 15px;
+          margin-bottom: 10px;
+          color: color.$titleColor;
+        }
+        .inputDescr {
+          padding: 50px;
+          border-radius: 10px;
+          background-color: #fbfbfb;
+          box-shadow: inset 0px 2px 5px rgba(158, 156, 156, 0.25);
+          border: none;
+        }
+      }
+
+      .inputContainer {
+        border-bottom: 1px solid color.$gray;
+      }
+      .createButt {
+        background-color: color.$button-color;
+        border: none;
+      }
+    }
+  }
+}
+
+.inputTitle {
+  grid-area: title;
+  width: 40% !important;
+  margin-right: 28px;
+  margin-left: 28px;
+  margin-bottom: 0;
+}
+
+hr {
+  margin: 0 !important;
+}

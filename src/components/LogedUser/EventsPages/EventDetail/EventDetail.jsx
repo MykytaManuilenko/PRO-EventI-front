@@ -37,12 +37,13 @@ const EventDetail = () => {
               lat: res.results[0].geometry.location.lat,
               lng: res.results[0].geometry.location.lng,
             });
+            console.log("resGoogleMAps :>> ", res);
           })
           .catch((err) => {
             console.log("errGeometry :>> ", err);
           });
 
-        console.log("res.data :>> ", res.data);
+        // console.log("res.data :>> ", res.data);
       })
       .catch((err) => {
         console.log("err :>> ", err);

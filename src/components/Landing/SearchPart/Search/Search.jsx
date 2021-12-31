@@ -1,38 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Search.scss";
 import { Link } from "react-router-dom";
-// import useLocalStorage from '../../../../useLocalStorage';
 
 const Search = (props) => {
-  const searchParam = localStorage.getItem('search');
+  let filtered = [];
+  const [search, setSearch] = useState("");
+  let notFound = "";
 
-//   if(searchParam !== ""){
-//       props.setSearch(searchParam);
-//   }
-//   const [localSearch, setLocalSearch] = useLocalStorage('search', searchParam);
-  const filtered = [];
-
-  function searchFilter() {
-    props.eventInfo.filter((val) => {
-      if (props.search === "" ) {
-        props.setEvent(props.eventInfo);
-        // props.setIsMatch(true);
-        return val;
-      }else if (searchParam === "" && val.name.toLowerCase().includes(props.search.toLowerCase())) {
-        filtered.push(val);
-        console.log("val :>> ", val);
-        props.setEvent(filtered);
-        
-        // props.setIsMatch(true);
+  const searchFilter = () => {
+    props.events.filter((event) => {
+      if (search === "") {
+        filtered.push(event);
+        setSearch("");
         return filtered;
-      }else if(searchParam !== "" && val.name.toLowerCase().includes(props.search.toLowerCase())){
-        filtered.push(val);
-        props.setEvent(filtered);
+      } else if (event.title.toLowerCase().includes(search.toLowerCase())) {
+        filtered.push(event);
         return filtered;
+      } else if (!event.title.toLowerCase().includes(search.toLowerCase())) {
+        notFound = "Not found any event :(";
+        return "notFound";
       }
     });
-  }
-
+  };
   return (
     <div className="Search">
       <div className="Input">
@@ -40,16 +29,25 @@ const Search = (props) => {
           type="text"
           className="SearchInput"
           onChange={(event) => {
-            props.setSearch(event.target.value);
+            setSearch(event.target.value);
           }}
-        //   value={searchParam!=="" ? searchParam : props.search}
-        // value={props.search}
+          placeholder="search"
         />
         <label className="InputLabel">Search...</label>
       </div>
 
-      <Link className="LinkSearch" to={{pathname:"/allEvents", state: {filtered: filtered, searchValue: props.search}}}>
-        <button className="searchButton" onClick={() => searchFilter()}>
+      <Link
+        className="LinkSearch"
+        to={{
+          pathname: `${props.pathName}`,
+          state: {
+            filtered: filtered,
+            searchValue: search,
+            notFound: notFound,
+          },
+        }}
+      >
+        <button className="searchButton" onClick={searchFilter}>
           <img src="./search.svg" alt="" className="searchIcon" />
         </button>
       </Link>

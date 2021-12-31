@@ -1,0 +1,41 @@
+@use "../../../style/colors.scss" as color;
+@import "../../../style/container";
+
+.usersContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 40px;
+  width: 90%;
+  margin: auto;
+  .usersContentContainer {
+    @include containerStyle;
+    .deleteButton {
+      margin: 0;
+      background-color: color.$rejectButton;
+      border: none !important;
+      width: 60px;
+    }
+    .deactivateButton {
+      margin: 0;
+      background-color: color.$editButtonColor;
+      border: none !important;
+      margin-left: 10px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      th,
+      td {
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+    }
+  }
+}

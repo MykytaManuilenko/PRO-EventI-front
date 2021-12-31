@@ -16,7 +16,7 @@ const EventPageAdmin = () => {
 
   useEffect(() => {
     axiosInstance
-      .get("/api/events/type")
+      .get("/api/event-types")
       .then((res) => {
         setTypes(res.data);
       })
@@ -27,7 +27,7 @@ const EventPageAdmin = () => {
 
   const deleteType = (typeId) => {
     axiosInstance
-      .delete(`/api/events/type/${typeId}`)
+      .delete(`/api/event-types/${typeId}`)
       .then((res) => {
         console.log("res :>> ", res);
         setChangeModal(!changeModal);
@@ -40,7 +40,6 @@ const EventPageAdmin = () => {
     <>
       <div className="contnTypeAdmin">
         <p>Events Page</p>
-
         <table>
           <thead>
             <tr>

@@ -6,14 +6,7 @@ import Filters from "./Filters/Filters";
 const SearchPart = (props) => {
   return (
     <div className={"SearchPart " + props.cname}>
-      <Search
-        // isMatch={props.isMatch}
-        // setIsMatch={props.setIsMatch}
-        search={props.search}
-        setSearch={props.setSearch}
-        eventInfo={props.eventInfo}
-        setEvent={props.setEvent}
-      />
+      <Search events={props.events} pathName={props.pathName} />
       <Filters />
     </div>
   );

@@ -1,12 +1,14 @@
 import React from "react";
-import "./Arrow.scss"
+import "./Arrow.scss";
 
 const Arrow = (props) => {
   return (
-    <div className={"ArrowIcon" + (props.isOpen ? " open" : "")}>
-      <span className="left-bar"></span>
-      <span className="right-bar"></span>
-    </div>
+    <>
+      <div className={"ArrowIcon" + (props.isOpen ? " open" : "")}>
+        <span className="left-bar"></span>
+        <span className="right-bar"></span>
+      </div>
+    </>
   );
 };
 

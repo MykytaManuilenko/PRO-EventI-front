@@ -46,3 +46,12 @@ export const convertData = (data) => {
 
   return day + " " + monthName + ", " + year;
 };
+
+export const convertDataWithoutName = (data) => {
+  const dataNew = new Date(data);
+  const year = dataNew.getFullYear();
+  const month = dataNew.getMonth() + 1;
+  const day = dataNew.getDate();
+
+  return day + "." + month + "." + year;
+};

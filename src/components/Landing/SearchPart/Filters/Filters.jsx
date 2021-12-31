@@ -6,27 +6,28 @@ import { useEffect } from "react";
 
 const Filters = () => {
   const [filters, setFilters] = useState([]);
-  //добавить данные с базы!!!
-  // const [isOpen, setIsOpen] = useState(false);
   const [type, setType] = useState(false);
   const [data, setData] = useState(false);
   const [location, setLocation] = useState(false);
 
   const listOfFilter = ["Type", "Data", "Location"];
-  // const options = [
-  //   { value: 1, label: "Type" },
-  //   { value: 2, label: "Data" },
-  //   { value: 3, label: "Music" },
-  // ];
-  //   const options = [{name: 'Option 1️', id: 1},{name: 'Option 2️', id: 2}]
   useEffect(() => {
     axiosInstance
-      .get("/api/events/type", { params: { type: ["music", "event"] } })
+      .get("/api/event-types")
       .then((res) => {
-        console.log("res :>> ", res);
+        console.log("resFilters :>> ", res);
       })
       .catch((err) => {
         console.log("errFilters :>> ", err);
+      });
+
+    axiosInstance
+      .get("/api/events", { params: { type: "science" } })
+      .then((res) => {
+        console.log("filters :>> ", res);
+      })
+      .catch((err) => {
+        console.log("filters :>> ", err);
       });
   }, []);
 
@@ -47,16 +48,9 @@ const Filters = () => {
   };
   const name = [];
   listOfFilter.map((names) => name.push(names));
-  // console.log("name :>> ", name);
 
   return (
     <div className="Filters">
-      {/* menuIsOpen={true} defaultValue={options[1]} */}
-      {/* <Select options={options} isMulti components={{Option}} closeMenuOnSelect={false} placeholder={name[0]}></Select>
-          <Select options={options} components={{Option}} closeMenuOnSelect={false} placeholder={name[1]}></Select>
-          <Select options={options} components={{Option}} closeMenuOnSelect={false} placeholder={name[2]}></Select>
-          <Select options={options} components={{Option}} closeMenuOnSelect={false} placeholder={name[3]}></Select> */}
-
       <Dropdown
         types={types}
         open={type}
@@ -68,18 +62,6 @@ const Filters = () => {
         handleChange={handleFilters}
       >
         {name[0]}
-      </Dropdown>
-      <Dropdown
-        types={types}
-        open={data}
-        clicked={() => {
-          setType(false);
-          setData(!data);
-          setLocation(false);
-        }}
-        handleChange={handleFilters}
-      >
-        {name[1]}
       </Dropdown>
       <Dropdown
         types={types}

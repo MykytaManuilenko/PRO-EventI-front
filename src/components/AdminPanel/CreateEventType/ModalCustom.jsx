@@ -21,7 +21,7 @@ const ModalCustom = (props) => {
       const data = { name: formik.values.typeName };
 
       axiosInstance
-        .post("/api/events/type", data)
+        .post("/api/event-types", data)
         .then((res) => {
           props.setChanged(!props.changed);
           props.onHide();

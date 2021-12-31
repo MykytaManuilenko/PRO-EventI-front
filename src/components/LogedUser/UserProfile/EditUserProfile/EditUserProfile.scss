@@ -1,0 +1,49 @@
+@use "../../../../style/AlertMessages/errorMessage";
+@use "../../../../style/colors.scss" as color;
+@import "../../../../style/container";
+
+.editProfileContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 40px;
+  width: 90%;
+  margin: auto;
+
+  .userInfoContainer {
+    @include containerStyle;
+
+    .editInput {
+      border-bottom: 0.6px solid #b5b5bf;
+    }
+
+    .firstRow {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 25px;
+      .choosePhotoButton {
+        border: 1px solid #b5b5bf;
+        cursor: pointer;
+        border-radius: 133px;
+        width: 20%;
+        height: 100%;
+        padding: 30px;
+        grid-area: photo;
+        margin-bottom: 20px;
+      }
+    }
+    .secondRow {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .SaveButton {
+      background-color: #ff5569;
+      border: none;
+    }
+  }
+}

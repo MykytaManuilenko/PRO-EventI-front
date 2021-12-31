@@ -1,0 +1,32 @@
+@use "../../../../style/colors.scss" as color;
+@import "../../../../style/container";
+
+.containerForLikedPage {
+  @include containerStyle;
+  .containerForLikedEvent {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-gap: 1rem;
+    justify-items: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    .headerText {
+      font-size: 20px;
+      font-weight: 500;
+      color: color.$headerColor;
+      margin-bottom: 0;
+    }
+    .showButt {
+      margin: 0;
+      border: 2px solid color.$button-color;
+      color: color.$button-color;
+    }
+  }
+}

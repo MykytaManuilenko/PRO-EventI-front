@@ -1,0 +1,12 @@
+@use "../../../style/colors" as color;
+.containerGoBack {
+  position: absolute;
+  top: 31px;
+  left: 315px;
+
+  .goBack {
+    cursor: pointer;
+    color: color.$button-color;
+    font-size: 16px;
+  }
+}
