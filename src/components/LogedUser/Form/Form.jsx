@@ -342,7 +342,9 @@ const Form = (props) => {
                   setAddress={setAddress}
                   className="locationInput"
                   labelClass="labels"
-                  locationValue={props.data && formik.initialValues.location}
+                  locationValue={
+                    props.data ? formik.initialValues.location : ""
+                  }
                 />
               </div>
             </div>

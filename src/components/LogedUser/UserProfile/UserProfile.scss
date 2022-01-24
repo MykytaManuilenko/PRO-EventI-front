@@ -29,11 +29,25 @@
           margin: 0 !important;
         }
       }
-      p {
-        height: 100%;
-        text-align: left;
-        margin: 0;
-        margin-top: 20px;
+      .userDetails {
+        p {
+          height: 100%;
+          text-align: left;
+          margin: 0;
+          margin-top: 20px;
+        }
+        .location {
+          margin-top: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-left: -8px;
+          cursor: pointer;
+          p {
+            margin-top: 10px;
+            color: color.$headerColor;
+          }
+        }
       }
     }
 

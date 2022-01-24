@@ -53,6 +53,48 @@
       align-items: center;
       gap: 25px;
       margin-top: 30px;
+      margin-bottom: 50px;
+    }
+
+    .locationInput {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      width: 100%;
+
+      .labels {
+        margin: 0;
+        position: absolute;
+        top: 5px;
+        bottom: 0;
+        padding-left: 10px;
+        pointer-events: none;
+        transition: 0.5s;
+        font-weight: 300;
+        font-size: 13px;
+        color: color.$labelColor;
+      }
+
+      input {
+        border: none;
+        border-bottom: 0.6px solid color.$gray;
+        padding: 8px 0;
+        outline: none;
+        font-weight: 300;
+        font-size: 14px;
+        width: 100%;
+      }
+
+      input:not(:placeholder-shown) ~ .labels,
+      input:focus ~ .labels {
+        transform: translateY(-25px);
+      }
+
+      ::-webkit-input-placeholder {
+        opacity: 0;
+        transition: inherit;
+      }
     }
 
     .SaveButton {

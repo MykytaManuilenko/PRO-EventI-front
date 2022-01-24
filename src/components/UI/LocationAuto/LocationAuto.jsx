@@ -5,8 +5,11 @@ import { geocodeByAddress } from "react-places-autocomplete";
 
 const LocationAuto = (props) => {
   const [cities, setCities] = useState(
-    props.locationValue &&
-      `${props.locationValue.street}, ${props.locationValue.city}, ${props.locationValue.country}`
+    props.locationValue
+      ? props.locationValue.street === ""
+        ? `${props.locationValue.city}, ${props.locationValue.country}`
+        : `${props.locationValue.street}, ${props.locationValue.city}, ${props.locationValue.country}`
+      : null
   );
 
   const hadleChange = (value) => {
@@ -16,20 +19,36 @@ const LocationAuto = (props) => {
   const handleSelect = async (value) => {
     setCities(value);
     console.log("value :>> ", value);
-    const city = value.split(",")[1];
-    const street = value.split(",")[0];
-
-    geocodeByAddress(value).then((res) => {
-      res[0].address_components.map((add) => {
-        if (add.types[0] === "country") {
-          props.setAddress({
-            city: city,
-            street: street,
-            country: add.short_name,
-          });
-        }
+    if (props.locationValue.street === "") {
+      const city = value.split(",")[0];
+      const country = value.split(",")[0];
+      geocodeByAddress(value).then((res) => {
+        res[0].address_components.map((add) => {
+          if (add.types[0] === "country") {
+            props.setAddress({
+              city: city,
+              street: "",
+              country: add.short_name,
+            });
+          }
+        });
       });
-    });
+    } else {
+      const city = value.split(",")[1];
+      const street = value.split(",")[0];
+
+      geocodeByAddress(value).then((res) => {
+        res[0].address_components.map((add) => {
+          if (add.types[0] === "country") {
+            props.setAddress({
+              city: city,
+              street: street,
+              country: add.short_name,
+            });
+          }
+        });
+      });
+    }
   };
 
   return (
@@ -38,7 +57,16 @@ const LocationAuto = (props) => {
         value={cities && cities}
         onChange={hadleChange}
         onSelect={handleSelect}
-        searchOptions={{ componentRestrictions: { country: ["pl"] } }}
+        searchOptions={
+          props.locationValue.street === ""
+            ? {
+                componentRestrictions: { country: ["pl"] },
+                types: ["(cities)"],
+              }
+            : {
+                componentRestrictions: { country: ["pl"] },
+              }
+        }
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div style={{ width: "100%" }}>

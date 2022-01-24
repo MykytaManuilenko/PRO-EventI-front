@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import axiosInstance from "../../../utils/axiosInstance";
 import navStyle from "./UserNav.module.scss";
 
 const UserNav = () => {
-  // const userId = useSelector((state) => state.authentication.user_id);
   const [userData, setUserData] = useState();
 
   useEffect(() => {
@@ -22,12 +20,15 @@ const UserNav = () => {
   return (
     <div className={navStyle.userNavContainer}>
       <div className={navStyle.userInfo}>
-        {/* <p></p> */}
         <p>
           Hello, {userData && userData.firstName}{" "}
           {userData && userData.lastName}
         </p>
-        {/* <p>Hello, {userId}</p> */}
+        <img
+          alt="userAvatar"
+          src={userData && userData.avatarUrl}
+          className={navStyle.userAvatar}
+        ></img>
       </div>
     </div>
   );

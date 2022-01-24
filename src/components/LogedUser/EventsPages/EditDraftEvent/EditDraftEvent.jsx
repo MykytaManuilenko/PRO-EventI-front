@@ -6,7 +6,6 @@ import Form from "../../Form/Form";
 import Spinner from "react-bootstrap/esm/Spinner";
 
 const EditDraftEvent = () => {
-  const [isError, setIsError] = useState({ status: false, message: "" });
   const [eventData, setEventData] = useState();
   const { eventId } = useParams();
 

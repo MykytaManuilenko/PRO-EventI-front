@@ -11,6 +11,7 @@ import { CameraIcon } from "../../../../assets/icons";
 import Loading from "../../../UI/Loading/Loading";
 import { useDispatch } from "react-redux";
 import { uiActions } from "../../../../redux/slices/ui";
+import LocationAuto from "../../../UI/LocationAuto/LocationAuto";
 
 const EditUserProfile = () => {
   const [userData, setUserData] = useState();
@@ -19,6 +20,13 @@ const EditUserProfile = () => {
   const [previewAvatar, setPreviewAvatar] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
+  const [address, setAddress] = useState(
+    userData && {
+      country: "",
+      city: "",
+      street: "",
+    }
+  );
   useEffect(() => {
     axiosInstance
       .get("/api/users/me")
@@ -26,6 +34,11 @@ const EditUserProfile = () => {
         console.log("res :>> ", res);
         setUserData(res.data);
         setPreviewAvatar(res.data.avatarUrl ? res.data.avatarUrl : "");
+        setAddress({
+          country: res.data.address.country,
+          city: res.data.address.city,
+          street: "",
+        });
         setIsLoading(false);
       })
       .catch((err) => {
@@ -40,9 +53,8 @@ const EditUserProfile = () => {
       lastName: `${userData && userData.lastName}`,
       phone: `${userData && userData.phone}`,
       birthDate: `${userData && userData.birthDate}`,
-      country: {},
-      city: {},
       avatar: `${userData && userData.avatar}`,
+      location: `${userData && userData.address}`,
     },
     validationSchema: Yup.object({
       firstName: Yup.string()
@@ -56,8 +68,8 @@ const EditUserProfile = () => {
         lastName: formik.values.lastName,
         phone: formik.values.phone,
         birthDate: formik.values.birthDate,
-        country: "PL",
-        city: "Warsaw",
+        country: address.country,
+        city: address.city,
         avatar: userData.avatar ? userData.avatar : "",
       };
       const formData = new FormData();
@@ -128,6 +140,8 @@ const EditUserProfile = () => {
   if (isLoading) {
     return <Loading />;
   }
+
+  console.log("address :>> ", address);
 
   return (
     <>
@@ -227,6 +241,14 @@ const EditUserProfile = () => {
                 errors={formik.errors.phone}
                 labelName="Phone number"
                 className="editInput"
+              />
+            </div>
+            <div className="locationInput">
+              <LocationAuto
+                setAddress={setAddress}
+                className="locationInput"
+                labelClass="labels"
+                locationValue={address}
               />
             </div>
             <Button type="submit" class="SaveButton">

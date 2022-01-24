@@ -7,7 +7,7 @@ import MyLikedEventsTemplate from "./MyLikedEvents/MyLikedEventsTemplate";
 import { convertDataWithoutName } from "../../../utils/convertDate";
 import { useHistory } from "react-router-dom";
 import EditUserType from "./EditUserType/EditUserType";
-import { CameraIcon } from "../../../assets/icons";
+import { CameraIcon, LocationIcon } from "../../../assets/icons";
 import Loading from "../../UI/Loading/Loading";
 import AlertBootstrap from "../../UI/Alert/AlertBootstrap";
 
@@ -74,9 +74,20 @@ const UserProfile = (props) => {
                 />
               )}
             </div>
-            <p>
-              {userInfo.firstName} {userInfo.lastName}
-            </p>
+            <div className="userDetails">
+              <p>
+                {userInfo.firstName} {userInfo.lastName}
+              </p>
+              <div
+                className="location"
+                onClick={() => history.push("/userProfile/edit")}
+              >
+                <LocationIcon />
+                <p>
+                  {userInfo.address.city}, {userInfo.address.country}
+                </p>
+              </div>
+            </div>
           </div>
           <div className="bottomPart">
             <EditUserType userInfo={userInfo} />
