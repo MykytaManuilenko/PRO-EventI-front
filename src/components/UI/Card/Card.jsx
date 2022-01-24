@@ -75,7 +75,7 @@ const Card = (props) => {
           )}
           <p>{props.price}</p>
           <Button
-            class="showMoreButt"
+            class={isAuthenticated ? "showMoreButt" : "showMoreButtNonAuth"}
             onClick={() => history.push(`/events/${props.eventId}`)}
           >
             Show more

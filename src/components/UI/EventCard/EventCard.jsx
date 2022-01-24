@@ -1,4 +1,5 @@
 import React from "react";
+import TypeCard from "../TypeCard/TypeCard";
 import "./EventCard.scss";
 
 const EventCard = (props) => {
@@ -17,7 +18,18 @@ const EventCard = (props) => {
         {props.isCanceled ? <p>Canceled</p> : null}
       </div>
       <div className="text">
-        <p style={{ fontSize: "18px" }}>{props.title}</p>
+        <div className="titleContainer">
+          <p style={{ fontSize: "18px", marginRight: "15px" }}>{props.title}</p>
+          <TypeCard
+            typeName={props.status}
+            class={
+              props.status === "DRAFT"
+                ? "eventStatus"
+                : props.status === "PUBLISHED" && "eventStatusPublished"
+            }
+          />
+        </div>
+
         <p style={{ fontSize: "16px", color: "#8F909E" }}>{props.date}</p>
       </div>
     </div>

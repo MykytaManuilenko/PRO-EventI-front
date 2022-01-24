@@ -4,8 +4,11 @@ import Multiselect from "multiselect-react-dropdown";
 import Button from "../../../UI/Button/Button";
 import axiosInstance from "../../../../utils/axiosInstance";
 import "./EditUserType.scss";
+import { useDispatch } from "react-redux";
+import { uiActions } from "../../../../redux/slices/ui";
 
 const EditUserType = (props) => {
+  const dispatch = useDispatch();
   const [showMultiSelect, setShowMultiSelect] = useState(false);
   const [selectedValue, setSelectedValue] = useState();
   const [types, setTypes] = useState([]);
@@ -19,6 +22,12 @@ const EditUserType = (props) => {
         setTypesValues(res.data, userTypes);
       })
       .catch((err) => {
+        dispatch(
+          uiActions.openAlert({
+            status: "error",
+            message: err.response.data.message,
+          })
+        );
         console.log("err :>> ", err);
       });
     setShowMultiSelect(!showMultiSelect);
@@ -35,8 +44,20 @@ const EditUserType = (props) => {
         .put("/api/users/me/event-types", { eventTypes: userTypes })
         .then((res) => {
           console.log("res :>> ", res);
+          dispatch(
+            uiActions.openAlert({
+              status: "success",
+              message: "Event types are updated successfully!",
+            })
+          );
         })
         .catch((err) => {
+          dispatch(
+            uiActions.openAlert({
+              status: "error",
+              message: err.response.data.message,
+            })
+          );
           console.log("err :>> ", err);
         });
     }
@@ -55,6 +76,12 @@ const EditUserType = (props) => {
         setTypesValues([...types, { name: valueId }], typesArray);
       })
       .catch((err) => {
+        dispatch(
+          uiActions.openAlert({
+            status: "error",
+            message: err.response.data.message,
+          })
+        );
         console.log("err :>> ", err);
       });
   };

@@ -5,22 +5,19 @@ import jwt from "jwt-decode";
 import axiosInstance from "../../utils/axiosInstance";
 
 const registrationUser = (data) => (dispatch) => {
-  dispatch(uiActions.setLoading());
   axios
     .post("/api/register", data)
     .then((res) => {
       dispatch(
-        uiActions.setSuccessRegister({
+        uiActions.openAlert({
           status: "success",
-          message: "Confirm your email :)",
+          message: "Please confirm your email :)",
         })
       );
-      dispatch(uiActions.unsetErrorRegister());
     })
     .catch((err) => {
-      dispatch(uiActions.unsetSuccessRegister());
       dispatch(
-        uiActions.setErrorRegister({
+        uiActions.openAlert({
           status: "error",
           message: err.response.data.message,
         })
@@ -37,13 +34,12 @@ const logInUser = (data, history) => (dispatch) => {
       const merged = { userId: token.userId, role: token.role };
       dispatch(authAction.login(merged));
       history.push("/userProfile");
-      dispatch(uiActions.unsetErrorLogIn(""));
     })
     .catch((err) => {
       console.log("err :>> ", err);
       console.log("errrr :>> ", err.response.data);
       dispatch(
-        uiActions.setErrorLogIn({
+        uiActions.openAlert({
           status: "error",
           message: err.response.data.message,
         })

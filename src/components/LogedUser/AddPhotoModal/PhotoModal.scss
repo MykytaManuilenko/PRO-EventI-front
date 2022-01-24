@@ -47,7 +47,7 @@
         label {
           color: color.$titleColor;
           position: absolute;
-          top: 60px;
+          top: 35px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -70,6 +70,13 @@
         border-radius: 5px;
         width: 115px;
         height: 115px;
+        .removePhoto {
+          width: 100%;
+          text-align: end;
+          padding-right: 5px;
+          display: flex;
+          justify-content: flex-end;
+        }
       }
     }
   }

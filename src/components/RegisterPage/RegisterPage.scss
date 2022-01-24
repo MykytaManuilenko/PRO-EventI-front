@@ -1,5 +1,3 @@
-@use "../../style/AlertMessages/errorMessage";
-
 .regPage {
   height: 100%;
   width: 100%;
@@ -7,6 +5,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-image: url(../../assets/icons/background.svg);
 
   .registerContain {
     padding: 80px;
@@ -46,7 +45,7 @@
     .secondRow {
       display: flex;
       width: 85%;
-      margin-bottom: 30px;
+      margin-bottom: 35px;
       gap: 20px;
     }
     .thirdRow {
@@ -54,7 +53,7 @@
       justify-content: center;
       flex-direction: column;
       width: 85%;
-      gap: 20px;
+      gap: 35px;
       margin-bottom: 30px;
     }
   }
@@ -65,6 +64,7 @@
   justify-content: flex-start;
   width: 85%;
   align-items: baseline;
+  margin-top: 30px;
 
   .RegButt {
     background-color: #ff5569;
@@ -83,11 +83,11 @@
   }
 }
 
-.allertSuccess,
-.allertError {
-  top: 89px;
-  left: 60px;
-  width: 90%;
-  position: absolute;
-  margin: 0 !important;
-}
+// .allertSuccess,
+// .allertError {
+//   top: 89px;
+//   left: 60px;
+//   width: 90%;
+//   position: absolute;
+//   margin: 0 !important;
+// }

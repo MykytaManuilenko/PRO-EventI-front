@@ -5,6 +5,8 @@ import axiosInstance from "../../../utils/axiosInstance";
 import ModalCustom from "../CreateEventType/ModalCustom";
 import EditModal from "../EditEventType/EditModal";
 
+import { CreateIcon, DeleteIcon } from "../../../assets/icons";
+
 const EventPageAdmin = () => {
   const [types, setTypes] = useState([]);
   const [modalShow, setModalShow] = useState();
@@ -39,7 +41,7 @@ const EventPageAdmin = () => {
   return (
     <>
       <div className="contnTypeAdmin">
-        <p>Events Page</p>
+        <p className="headerText">Event Types</p>
         <table>
           <thead>
             <tr>
@@ -70,13 +72,13 @@ const EventPageAdmin = () => {
                           setModalEShow(true);
                         }}
                       >
-                        Edit
+                        <CreateIcon />
                       </Button>
                       <Button
                         class="deleteButt"
                         onClick={() => deleteType(type.eventTypeId)}
                       >
-                        Delete
+                        <DeleteIcon />
                       </Button>
                     </td>
                   </tr>

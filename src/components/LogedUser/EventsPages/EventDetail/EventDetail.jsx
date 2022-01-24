@@ -1,22 +1,28 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../../utils/axiosInstance";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import "./EventDetail.scss";
 import Button from "../../../UI/Button/Button";
-import { convertData } from "../../../../utils/convertData";
+import { convertData } from "../../../../utils/convertDate";
 import Like from "../../../UI/LikeSVG/Like";
 import TypeCard from "../../../UI/TypeCard/TypeCard";
 import GoBack from "../../../UI/GoBack/GoBack";
 import GoogleMaps from "../../../UI/GoogleMap/GoogleMaps";
 import Geocode from "react-geocode";
+import { CreateIcon, LocationIconLoged } from "../../../../assets/icons";
+import Loading from "../../../UI/Loading/Loading";
+import AlertBootstrap from "../../../UI/Alert/AlertBootstrap";
 
 const EventDetail = () => {
   const { eventId } = useParams();
   console.log("eventId :>> ", eventId);
   const [event, setEvent] = useState();
   const [isLiked, setIsLiked] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   const [location, setLocation] = useState();
-  Geocode.setApiKey("AIzaSyBN_OWsAKQlSBEXtL_APmQstbRZalUVSOE");
+  const [likedArray, setLikedArray] = useState([]);
+  const history = useHistory();
+  Geocode.setApiKey("AIzaSyCQQkyLlLCd1mI89e6MpM-NYA2jxHDvN9E");
 
   useEffect(() => {
     axiosInstance
@@ -24,6 +30,8 @@ const EventDetail = () => {
       .then((res) => {
         setEvent(res.data);
         setIsLiked(res.data.isLiked);
+        console.log("res :>> ", res);
+        setIsLoading(false);
 
         Geocode.fromAddress(
           res.data.address.country +
@@ -42,8 +50,6 @@ const EventDetail = () => {
           .catch((err) => {
             console.log("errGeometry :>> ", err);
           });
-
-        // console.log("res.data :>> ", res.data);
       })
       .catch((err) => {
         console.log("err :>> ", err);
@@ -60,8 +66,6 @@ const EventDetail = () => {
       data.getUTCMinutes()
     );
   };
-
-  const [likedArray, setLikedArray] = useState([]);
 
   const addFavourite = (eventId) => {
     const likeCopy = [...likedArray];
@@ -93,11 +97,14 @@ const EventDetail = () => {
     }
     console.log("likeCopy :>> ", likeCopy);
   };
-
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
-      <GoBack />
+      <AlertBootstrap disappear />
       <div className="containerForEvent">
+        <GoBack />
         {event && (
           <>
             <div
@@ -106,12 +113,28 @@ const EventDetail = () => {
                 background: `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), center / cover no-repeat url(${event.backgroundUrl}) `,
               }}
             >
-              <div className="likeContainer">
-                <Like
-                  addFavourite={() => addFavourite(eventId)}
-                  isLiked={isLiked}
-                />
+              <div className="upPartWithButtons">
+                <div className="likeContainer">
+                  <Like
+                    addFavourite={() => addFavourite(eventId)}
+                    isLiked={isLiked}
+                  />
+                </div>
+                {event.status === "DRAFT" && (
+                  <div className="draftFunctionsContainer">
+                    <TypeCard typeName={event.status} />
+                    <Button
+                      class="editButton"
+                      onClick={() =>
+                        history.push(`/myEvents/${event.eventId}/edit`)
+                      }
+                    >
+                      <CreateIcon style={{ height: "30px" }} />
+                    </Button>
+                  </div>
+                )}
               </div>
+
               <div className="eventTitle">
                 <div className="leftPartTitle">
                   <p className="title">{event.title}</p>
@@ -125,9 +148,7 @@ const EventDetail = () => {
                       marginTop: "20px",
                     }}
                   >
-                    <img
-                      src="/locationI.svg"
-                      alt=""
+                    <LocationIconLoged
                       style={{ width: "24px", height: "24px", zIndex: 2 }}
                     />
                     <p style={{ marginBottom: "0", marginLeft: "5px" }}>
@@ -146,7 +167,11 @@ const EventDetail = () => {
                   >
                     Date&time
                   </p>
-                  <p>{convertDataWithTime(event.startTime)}</p>
+                  {event.status === "FINISHED" ? (
+                    <TypeCard outlined={true} typeName={event.status} />
+                  ) : (
+                    <p>{convertDataWithTime(event.startTime)}</p>
+                  )}
                   <p
                     style={{
                       marginTop: "20px",
@@ -157,7 +182,20 @@ const EventDetail = () => {
                   >
                     Price: {event.price}
                   </p>
-                  <Button class="buyButton">Book now</Button>
+
+                  <Button
+                    class={
+                      event.status === "FINISHED" ? "disabled" : "buyButton"
+                    }
+                    disabled={event.status === "FINISHED"}
+                    style={
+                      event.status === "FINISHED" && {
+                        boxShadow: "5px 5px 10px #10050525",
+                      }
+                    }
+                  >
+                    Book now
+                  </Button>
                 </div>
               </div>
             </div>

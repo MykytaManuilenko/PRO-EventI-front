@@ -4,7 +4,7 @@ import "./CardSlider.scss";
 import "pure-react-carousel/dist/react-carousel.es.css";
 
 import Card from "../../UI/Card/Card";
-import { convertData } from "../../../utils/convertData";
+import { convertData } from "../../../utils/convertDate";
 
 const CardSlider = (props) => {
   return (

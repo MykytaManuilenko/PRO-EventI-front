@@ -4,7 +4,7 @@ import Button from "../../UI/Button/Button";
 import Card from "../../UI/Card/Card";
 import CardSlider from "../CardSlider/CardSlider";
 import "./CardsPart.scss";
-import { convertData } from "../../../utils/convertData";
+import { convertData } from "../../../utils/convertDate";
 
 const CardsPart = (props) => {
   return (

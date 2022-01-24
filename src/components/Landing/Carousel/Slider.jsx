@@ -5,7 +5,7 @@ import Button from "../../UI/Button/Button";
 import SearchPart from "../SearchPart/SearchPart";
 import { useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
-import { convertData } from "../../../utils/convertData";
+import { convertData } from "../../../utils/convertDate";
 
 const Slider = () => {
   const [events, setEvents] = useState();
@@ -21,15 +21,15 @@ const Slider = () => {
       .catch((err) => {
         console.log("err :>> ", err);
       });
-    axiosInstance
-      .get("/api/events")
-      .then((res) => {
-        console.log("allEvents :>> ", res);
-        setEvents(res.data);
-      })
-      .catch((err) => {
-        console.log("err :>> ", err);
-      });
+    // axiosInstance
+    //   .get("/api/events")
+    //   .then((res) => {
+    //     console.log("allEvents :>> ", res);
+    //     setEvents(res.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log("err :>> ", err);
+    //   });
   }, []);
 
   return (

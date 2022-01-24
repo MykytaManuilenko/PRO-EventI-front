@@ -4,7 +4,10 @@ import PlacesAutocomplete from "react-places-autocomplete";
 import { geocodeByAddress } from "react-places-autocomplete";
 
 const LocationAuto = (props) => {
-  const [cities, setCities] = useState();
+  const [cities, setCities] = useState(
+    props.locationValue &&
+      `${props.locationValue.street}, ${props.locationValue.city}, ${props.locationValue.country}`
+  );
 
   const hadleChange = (value) => {
     setCities(value);
@@ -12,12 +15,11 @@ const LocationAuto = (props) => {
 
   const handleSelect = async (value) => {
     setCities(value);
+    console.log("value :>> ", value);
     const city = value.split(",")[1];
     const street = value.split(",")[0];
 
     geocodeByAddress(value).then((res) => {
-      console.log("address :>> ", res[0].address_components);
-      console.log("res[0] :>> ", res[0].geometry.location.lat());
       res[0].address_components.map((add) => {
         if (add.types[0] === "country") {
           props.setAddress({

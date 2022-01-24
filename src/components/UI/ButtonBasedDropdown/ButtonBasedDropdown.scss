@@ -1,0 +1,8 @@
+@use "../../../style/colors.scss" as color;
+.moreButton {
+  border: 2px solid color.$button-color;
+  padding: 7px 20px;
+  border-radius: 10px;
+  margin-left: 20px;
+  cursor: pointer;
+}

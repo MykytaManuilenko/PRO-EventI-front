@@ -19,11 +19,13 @@ import EventDetail from "./components/LogedUser/EventsPages/EventDetail/EventDet
 import MyEvents from "./components/LogedUser/UserProfile/MyEvents/MyEvents";
 import myLikedEvents from "./components/LogedUser/UserProfile/MyLikedEvents/MyLikedEvents";
 import EditUserProfile from "./components/LogedUser/UserProfile/EditUserProfile/EditUserProfile";
-import History from "./components/LogedUser/UserProfile/History/History";
+import History from "./components/LogedUser/HistoryPage/History";
 import UsersPage from "./components/AdminPanel/UsersPage/UsersPage";
 import ChangePassword from "./components/LogedUser/UserProfile/ChangePassword/ChangePassword";
-// import CreateEventType from "./components/AdminPanel/CreateEventType/CreateEventType";
-
+import ForgotPasswordPage from "./components/LogInPage/ForgotPassword/ForgotPasswordPage";
+import ForgotPasswordRedirect from "./components/LogInPage/ForgotPassword/ForgotPasswordRedirect";
+import EditDraftEvent from "./components/LogedUser/EventsPages/EditDraftEvent/EditDraftEvent";
+import PostponeEvent from "./components/LogedUser/EventsPages/PostponeEvent/PostponeEvent";
 function App() {
   const isAuthenticated = useSelector(
     (state) => state.authentication.isAuthenticated
@@ -50,6 +52,7 @@ function App() {
                 marginBottom: "20px",
                 background:
                   "linear-gradient(116.48deg, rgba(255, 255, 255, 0.56) 0.47%, rgba(255, 255, 255, 0.357) 113.36%)",
+                position: "relative",
               }
             : null
         }
@@ -70,6 +73,27 @@ function App() {
           <Route exact path="/allEvents">
             {!isAuthenticated ? <AllEvents /> : <Redirect to="/userProfile" />}
           </Route>
+
+          <Route exact path="/forgotPassword">
+            <ForgotPasswordPage />
+          </Route>
+
+          <Route exact path="/confirm/password">
+            <ForgotPasswordRedirect />
+          </Route>
+
+          <PrivateRoute
+            isAuth={isAuthenticated}
+            path="/myEvents/:eventId/edit"
+            Component={EditDraftEvent}
+            roles={["USER", "SYSTEM_ADMIN"]}
+          />
+          <PrivateRoute
+            isAuth={isAuthenticated}
+            path="/myEvents/:eventId/postpone"
+            Component={PostponeEvent}
+            roles={["USER", "SYSTEM_ADMIN"]}
+          />
           <PrivateRoute
             isAuth={isAuthenticated}
             path="/events/:eventId"
@@ -110,6 +134,7 @@ function App() {
             Component={UserProfile}
             roles={["USER", "SYSTEM_ADMIN"]}
           />
+
           <PrivateRoute
             isAuth={isAuthenticated}
             path="/history"

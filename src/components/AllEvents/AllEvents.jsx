@@ -4,7 +4,7 @@ import "./AllEvents.scss";
 import SearchPart from "../Landing/SearchPart/SearchPart";
 import { useLocation } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
-import { convertData } from "../../utils/convertData";
+import { convertData } from "../../utils/convertDate";
 
 const AllEvents = () => {
   const [cardsArray, setCardsArr] = useState([]);

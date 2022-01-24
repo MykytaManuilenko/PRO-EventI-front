@@ -31,16 +31,19 @@
     .navLink {
       display: flex;
       justify-content: center;
+      text-decoration: none;
       flex-direction: row;
       margin-bottom: 61px;
       color: white;
       font-size: 19px;
-      font-weight: 400;
+      font-weight: 500;
     }
   }
 
   .icons {
     margin-right: 19px;
+    // stroke: purple;
+    // fill: purple;
   }
 
   .logOutButt {

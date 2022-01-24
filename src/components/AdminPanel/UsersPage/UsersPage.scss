@@ -10,11 +10,21 @@
   margin: auto;
   .usersContentContainer {
     @include containerStyle;
+    .headerText {
+      font-size: 20px;
+      font-weight: 500;
+      color: color.$headerColor;
+      margin-bottom: 0;
+      text-align: start;
+      width: 100%;
+      margin-bottom: 30px;
+    }
     .deleteButton {
       margin: 0;
-      background-color: color.$rejectButton;
+      background-color: transparent;
+      box-shadow: none;
       border: none !important;
-      width: 60px;
+      width: auto;
     }
     .deactivateButton {
       margin: 0;
@@ -35,6 +45,23 @@
 
       tr:nth-child(even) {
         background-color: #f2f2f2;
+      }
+
+      .switch {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 5px;
+        input {
+          background-color: red;
+          width: 40px;
+          height: 20px;
+          border: red;
+        }
+        input:checked {
+          background-color: #bddf74;
+          border: #bddf74;
+        }
       }
     }
   }

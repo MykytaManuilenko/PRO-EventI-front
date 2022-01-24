@@ -8,8 +8,7 @@
   background: #ffffff;
   box-shadow: 0px 4px 100px rgb(101 101 101 / 25%);
   border-radius: 20px;
-  // margin-top: 15px;
-  //   padding: 30px;
+  // position: relative;
 
   .eventHeader {
     width: 100%;
@@ -20,13 +19,38 @@
     align-items: center;
     flex-direction: column;
     padding: 20px 0;
+    position: relative;
 
-    .likeContainer {
+    .upPartWithButtons {
       display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      height: 20%;
-      margin-bottom: 20px;
+      justify-content: center;
+      flex-direction: row;
+      position: relative;
+      width: 100%;
+
+      .likeContainer {
+        display: flex;
+        height: 20%;
+        margin-bottom: 20px;
+      }
+
+      .draftFunctionsContainer {
+        position: absolute;
+        right: 30px;
+        top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .editButton {
+          background-color: transparent;
+          box-shadow: none;
+          border: none;
+          margin: 0;
+          width: auto;
+        }
+      }
     }
 
     .eventTitle {
@@ -37,18 +61,19 @@
       width: 100%;
       padding: 0 120px;
 
-      color: #ffffff;
       .leftPartTitle {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
+        color: #ffffff;
       }
       .rightPart {
         // margin-top: 75px;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        color: #ffffff;
       }
       .title {
         font-size: 30px;
@@ -66,6 +91,13 @@
       border: none !important;
       background-color: #ff6a7c;
       box-shadow: 5px 5px 10px #10050525;
+    }
+    .disabled {
+      margin-top: 20px;
+      border: none !important;
+      background-color: #ff6a7c;
+      filter: brightness(55%);
+      cursor: not-allowed;
     }
   }
 

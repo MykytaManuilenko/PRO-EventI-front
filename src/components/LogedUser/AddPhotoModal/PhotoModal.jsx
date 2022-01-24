@@ -4,8 +4,16 @@ import Button from "../../UI/Button/Button";
 import "./PhotoModal.scss";
 
 const PhotoModal = (props) => {
-  const [preview, setPreview] = useState();
-  const [previewMultiple, setPreviewMultiple] = useState([]);
+  const [preview, setPreview] = useState(
+    props.backgroundURL !== " " && props.backgroundURL
+  );
+  const [previewMultiple, setPreviewMultiple] = useState(
+    props.eventPhotosURL
+      ? props.eventPhotosURL.length === 0
+        ? []
+        : props.eventPhotosURL
+      : []
+  );
 
   const handleFile = (e) => {
     props.setFile(e.target.files[0]);
@@ -21,16 +29,36 @@ const PhotoModal = (props) => {
       console.log("TOO MUCH PHOTO :>> ");
     } else {
       const files = [...props.multipleFiles];
-      const fileArray = Array.from(e.target.files).map((file) => {
+      const arrayWithUrls = [];
+      const arrayWithPhotosId = [];
+      Array.from(e.target.files).map((file) => {
         files.push(file);
         props.setMultipleFiles(files);
-        return URL.createObjectURL(file);
+        console.log("object :>> ", URL.createObjectURL(file));
+        arrayWithUrls.push(URL.createObjectURL(file));
       });
-      setPreviewMultiple((prevImages) => prevImages.concat(fileArray));
+      arrayWithUrls.map((photo) => {
+        const tmp = photo.split("/");
+        arrayWithPhotosId.push(tmp[3]);
+        console.log("tmp :>> ", tmp);
+      });
+      props.setPhotosId((prevPhotoId) => prevPhotoId.concat(arrayWithPhotosId));
+      setPreviewMultiple((prevImages) => prevImages.concat(arrayWithUrls));
     }
   };
 
-  console.log("props.multipleFiles :>> ", props.multipleFiles);
+  const onRemoveFromArray = (index, arrayWithPhoto) => {
+    arrayWithPhoto.splice(index, 1);
+    console.log("arrayWithPhotoChanged :>> ", arrayWithPhoto);
+    setPreviewMultiple((prevPhoto) =>
+      prevPhoto.filter((photo) => photo.id !== index)
+    );
+    return arrayWithPhoto;
+  };
+  const onRemoveBackground = () => {
+    props.setBackgroundUrl("");
+    setPreview("");
+  };
 
   const showPhotos = (source) => {
     return source.map((image, index) => {
@@ -41,7 +69,14 @@ const PhotoModal = (props) => {
           style={{
             background: `center / cover no-repeat url(${image}) `,
           }}
-        />
+        >
+          <div
+            className="removePhoto"
+            onClick={() => onRemoveFromArray(index, source)}
+          >
+            x
+          </div>
+        </div>
       );
     });
   };
@@ -110,7 +145,14 @@ const PhotoModal = (props) => {
                       }
                     : null
                 }
-              ></div>
+              >
+                <div
+                  className="removePhoto"
+                  onClick={() => onRemoveBackground()}
+                >
+                  x
+                </div>
+              </div>
               <p style={{ color: "#807C7C", textAlign: "center" }}>
                 background
               </p>

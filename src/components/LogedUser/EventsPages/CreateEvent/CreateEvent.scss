@@ -1,18 +1,17 @@
 @use "../../../../style/AlertMessages/errorMessage";
 @use "../../../../style/colors" as color;
 .createEventCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 90%;
+  margin: auto;
+  background: color.$white;
+  box-shadow: 0px 4px 100px rgb(101 101 101 / 25%);
+  border-radius: 20px;
+  // margin-top: 15px;
   .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 90%;
-    margin: auto;
-    background: color.$white;
-    box-shadow: 0px 4px 100px rgb(101 101 101 / 25%);
-    border-radius: 20px;
-    margin-top: 15px;
-
     .title {
       font-weight: 500;
       font-size: 24px;
@@ -37,7 +36,6 @@
     }
 
     .createForm {
-      width: 90%;
       margin: 30px 20px 20px 20px;
 
       .firstRow {
@@ -110,47 +108,6 @@
         align-items: center;
         gap: 25px;
         margin-top: 50px;
-
-        // .locationInput {
-        //   display: flex;
-        //   flex-direction: column;
-        //   align-items: flex-start;
-        //   position: relative;
-        //   width: 100%;
-
-        //   .labels {
-        //     margin: 0;
-        //     position: absolute;
-        //     top: 5px;
-        //     bottom: 0;
-        //     padding-left: 10px;
-        //     pointer-events: none;
-        //     transition: 0.5s;
-        //     font-weight: 300;
-        //     font-size: 13px;
-        //     color: color.$labelColor;
-        //   }
-
-        //   input {
-        //     border: none;
-        //     border-bottom: 0.6px solid color.$gray;
-        //     padding: 8px 0;
-        //     outline: none;
-        //     font-weight: 300;
-        //     font-size: 14px;
-        //     width: 100%;
-        //   }
-
-        //   input:not(:placeholder-shown) ~ .labels,
-        //   input:focus ~ .labels {
-        //     transform: translateY(-25px);
-        //   }
-
-        //   ::-webkit-input-placeholder {
-        //     opacity: 0;
-        //     transition: inherit;
-        //   }
-        // }
       }
 
       .thirdRow {
@@ -207,6 +164,12 @@
 
       .inputContainer {
         border-bottom: 1px solid color.$gray;
+      }
+      .buttonsContainer {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        gap: 20px;
       }
       .createButt {
         background-color: color.$button-color;

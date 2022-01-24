@@ -8,6 +8,7 @@ import "./CreateEventType.scss";
 
 const ModalCustom = (props) => {
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       typeName: "",
     },
@@ -17,7 +18,7 @@ const ModalCustom = (props) => {
         .max(100, "Must be 100 characters or less")
         .required("Field is required"),
     }),
-    onSubmit: () => {
+    onSubmit: ({ resetForm }) => {
       const data = { name: formik.values.typeName };
 
       axiosInstance
@@ -25,6 +26,7 @@ const ModalCustom = (props) => {
         .then((res) => {
           props.setChanged(!props.changed);
           props.onHide();
+          resetForm();
         })
         .catch((err) => {
           console.log("err :>> ", err);
@@ -62,7 +64,7 @@ const ModalCustom = (props) => {
             />
             <label>Type name*</label>
             {formik.touched.typeName && formik.errors.typeName ? (
-              <p>{formik.errors.typeName}</p>
+              <p className="errorText">{formik.errors.typeName}</p>
             ) : null}
           </div>
           <div className="buttContainer">

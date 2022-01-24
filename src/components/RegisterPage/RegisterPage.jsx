@@ -11,6 +11,7 @@ import { uiActions } from "../../redux/slices/ui";
 import Multiselect from "multiselect-react-dropdown";
 import getEventTypes from "../../api/services/User";
 import Input from "../UI/Input/Input";
+import AlertBootstrap from "../UI/Alert/AlertBootstrap";
 
 const RegisterPage = () => {
   const Error = useSelector((state) => state.UI.errRegister);
@@ -62,7 +63,6 @@ const RegisterPage = () => {
         birthDate: values.birthDate,
         phone: values.phone,
         eventTypes: selectedValue,
-        // eventTypes: ["music", "dance"],
       };
       console.log("data :>> ", data);
       if (selectedValue.length !== 0) {
@@ -88,11 +88,8 @@ const RegisterPage = () => {
       .catch((err) => console.log("errAAA :>> ", err));
   }, []);
   return (
-    <div
-      className="regPage"
-      style={{ backgroundImage: "url(./Background.svg)" }}
-    >
-      {isError ? (
+    <div className="regPage">
+      {/* {isError ? (
         <Alert
           className="allertError"
           variant="danger"
@@ -104,7 +101,8 @@ const RegisterPage = () => {
         >
           {Error.message}
         </Alert>
-      ) : null}
+      ) : null} */}
+      <AlertBootstrap />
 
       {isSuccess ? (
         <Alert
@@ -124,7 +122,6 @@ const RegisterPage = () => {
           <p className="title">Create your account</p>
 
           <div className="firstRow">
-            <div className="placePhoto"></div>
             <Input
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -194,6 +191,9 @@ const RegisterPage = () => {
                 inputField: {
                   margin: "0",
                   height: "100%",
+                  fontWeight: "300",
+                  fontSize: "13px",
+                  color: "#919191",
                 },
                 chips: {
                   backgroundColor: "rgba(167, 169, 163, 0.41)",

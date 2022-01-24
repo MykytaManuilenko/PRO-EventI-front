@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Search.scss";
 import { Link } from "react-router-dom";
+import { SearchIcon } from "../../../../assets/icons";
 
 const Search = (props) => {
   let filtered = [];
@@ -48,7 +49,7 @@ const Search = (props) => {
         }}
       >
         <button className="searchButton" onClick={searchFilter}>
-          <img src="./search.svg" alt="" className="searchIcon" />
+          <SearchIcon className="searchIcon" />
         </button>
       </Link>
     </div>

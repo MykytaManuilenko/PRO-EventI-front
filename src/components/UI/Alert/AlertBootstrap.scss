@@ -1,0 +1,9 @@
+.alertContainer {
+  // position: absolute;
+  position: fixed;
+  // margin-top: 89px;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  z-index: 20;
+}

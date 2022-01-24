@@ -3,27 +3,92 @@ import styleNav from "./LogNavBar.module.scss";
 import { NavLink, useHistory } from "react-router-dom";
 import { logOutUser } from "../../../redux/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  HomeIcon,
+  HomeIconActive,
+  EventIcon,
+  EventIconActive,
+  InfoIcon,
+  HistoryIcon,
+  HistoryIconActive,
+  LogOutIcon,
+} from "../../../assets/icons";
 
-import { ReactComponent as PageIcon } from "../icons/homeIcon.svg";
-import { ReactComponent as FiendsIcon } from "../icons/friendsIcon.svg";
-import { ReactComponent as MessageIcon } from "../icons/messageIcon.svg";
-import { ReactComponent as EventsIcon } from "../icons/eventIcon.svg";
-import { ReactComponent as InfoIcon } from "../icons/infoIcon.svg";
-import { ReactComponent as LogOutIcon } from "../icons/logOutButt.svg";
 const activeStyle = {
   borderRadius: "10px 0 0 10px",
   padding: "12px",
   background: "white",
-  color: "#6984FC",
+  color: "#8698e9",
   width: "100%",
-  fontWeight: "500",
+  fontWeight: "600",
 };
 
 const LogNavBar = () => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("accessToken");
+  const [isActive, setIsActive] = useState();
   const history = useHistory();
   const userRole = useSelector((state) => state.authentication.userRole);
+
+  const onPath = (paths, index) => {
+    return (match, location) => {
+      if (paths.includes(location.pathname)) {
+        setIsActive(true);
+        return true;
+      }
+      // setIsActive(index);
+      // return paths.includes(location.pathname);
+    };
+  };
+  const navLinks = [
+    {
+      name: "My Page",
+      icon: HomeIcon,
+      iconActive: HomeIconActive,
+      link: "/userProfile",
+      // activePath: ['/userProfile']
+    },
+    {
+      name: "Events",
+      icon: EventIcon,
+      iconActive: EventIconActive,
+      link: "/events",
+      // activePath: ['/events']
+    },
+    {
+      name: "History",
+      icon: HistoryIcon,
+      iconActive: HistoryIconActive,
+      link: "/history",
+    },
+    {
+      name: "About us",
+      icon: InfoIcon,
+      iconActive: InfoIcon,
+      link: "/about",
+    },
+  ];
+
+  const adminNavLinks = [
+    {
+      name: "My Page",
+      icon: HomeIcon,
+      iconActive: HomeIconActive,
+      link: "/userProfile",
+    },
+    {
+      name: "Events",
+      icon: EventIcon,
+      iconActive: EventIconActive,
+      link: "/events",
+    },
+    {
+      name: "All users",
+      icon: EventIcon,
+      iconActive: EventIconActive,
+      link: "/allUsers",
+    },
+  ];
 
   return (
     <nav className={styleNav.logNav}>
@@ -32,67 +97,51 @@ const LogNavBar = () => {
       <div className={styleNav.listOfLinks}>
         {userRole === "SYSTEM_ADMIN" ? (
           <>
-            <NavLink
-              className={styleNav.navLink}
-              to="/userProfile"
-              activeStyle={activeStyle}
-            >
-              <PageIcon className={styleNav.icons} />
-              My Page
-            </NavLink>
-
-            <NavLink
-              to="/events"
-              className={styleNav.navLink}
-              activeStyle={activeStyle}
-            >
-              Events
-            </NavLink>
-            <NavLink
-              to="/allUsers"
-              className={styleNav.navLink}
-              activeStyle={activeStyle}
-            >
-              All users
-            </NavLink>
+            {adminNavLinks.map((navLink, index) => {
+              return (
+                <NavLink
+                  key={index}
+                  className={styleNav.navLink}
+                  to={navLink.link}
+                  activeStyle={activeStyle}
+                  isActive={onPath(navLink.link, index)}
+                >
+                  {isActive === index
+                    ? // isActive
+                      navLink.iconActive && (
+                        <navLink.iconActive className={styleNav.icons} />
+                      )
+                    : navLink.icon && (
+                        <navLink.icon className={styleNav.icons} />
+                      )}
+                  {navLink.name}
+                </NavLink>
+              );
+            })}
           </>
         ) : (
           <>
-            <NavLink
-              className={styleNav.navLink}
-              to="/userProfile"
-              activeStyle={activeStyle}
-            >
-              <PageIcon className={styleNav.icons} />
-              My Page
-            </NavLink>
-
-            <NavLink
-              className={styleNav.navLink}
-              to="/message"
-              activeStyle={activeStyle}
-            >
-              <MessageIcon className={styleNav.icons} />
-              Message
-            </NavLink>
-
-            <NavLink
-              className={styleNav.navLink}
-              to="/events"
-              activeStyle={activeStyle}
-            >
-              <EventsIcon className={styleNav.icons} />
-              Events
-            </NavLink>
-
-            <NavLink
-              className={styleNav.navLink}
-              to="/about"
-              activeStyle={activeStyle}
-            >
-              <InfoIcon className={styleNav.icons} />
-              About us
-            </NavLink>
+            {navLinks.map((navLink, index) => {
+              return (
+                <NavLink
+                  key={index}
+                  className={styleNav.navLink}
+                  to={navLink.link}
+                  activeStyle={activeStyle}
+                  isActive={onPath(navLink.link, index)}
+                >
+                  {isActive === index
+                    ? // isActive
+                      navLink.iconActive && (
+                        <navLink.iconActive className={styleNav.icons} />
+                      )
+                    : navLink.icon && (
+                        <navLink.icon className={styleNav.icons} />
+                      )}
+                  {navLink.name}
+                </NavLink>
+              );
+            })}
           </>
         )}
       </div>

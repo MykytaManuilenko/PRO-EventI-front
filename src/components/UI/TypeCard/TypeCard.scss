@@ -2,22 +2,22 @@
   border-radius: 10px;
   background-color: #fbfbfb;
   border: 1px solid #e9e9eb;
-  box-shadow: inset 0px 2px 5px rgba(158, 156, 156, 0.25);
+  box-shadow: inset 0px 2px 5px rgba(158, 156, 156, 0.25) !important;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: baseline;
   padding: 7px 15px;
+
   p {
     margin-bottom: 0;
+    color: black;
   }
   .deleteButton {
     border: none;
     background-color: transparent;
-    // padding-left: 10px;
-    img {
+    .cancelIcon {
       width: 18px;
     }
-    // height: ;
   }
 }

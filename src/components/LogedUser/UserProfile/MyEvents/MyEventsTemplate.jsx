@@ -2,50 +2,73 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../../utils/axiosInstance";
 import { useHistory } from "react-router-dom";
 import "./MyEvents.scss";
-import { convertData } from "../../../../utils/convertData";
+import { convertData } from "../../../../utils/convertDate";
 import EventCard from "../../../UI/EventCard/EventCard";
 import Button from "../../../UI/Button/Button";
 import ModalUi from "../../../UI/ModalUi/ModalUi";
-import ButtonBasedDropdown from "../../../UI/ButtonBasedDropdown/ButtonBasedDropdown";
+import {
+  PublishIcon,
+  CreateIcon,
+  DeleteIcon,
+  ReadMoreIcon,
+} from "../../../../assets/icons";
+import { uiActions } from "../../../../redux/slices/ui";
+import { useDispatch } from "react-redux";
+import Loading from "../../../UI/Loading/Loading";
 
 const MyEventsTemplate = (props) => {
   const [events, setEvents] = useState();
   const history = useHistory();
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const [eventId, setEventId] = useState();
-  const [isCanceled, setIsCanceled] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isPublished, setIsPublished] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, props.scrollPosition);
     axiosInstance
-      .get(
-        "/api/events/my",
-        props.cardQuantityShown && {
-          params: { limit: props.cardQuantityShown },
-        }
-      )
+      .get("/api/events/my", {
+        params: {
+          status: "PUBLISHED, DRAFT",
+          limit: props.cardQuantityShown && props.cardQuantityShown,
+        },
+      })
       .then((res) => {
         console.log("res :>> ", res);
         setEvents(res.data);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log("err :>> ", err);
       });
-  }, [isCanceled]);
+  }, [isPublished]);
 
-  const clickHandler = (eventId) => {
-    console.log("eventId :>> ", eventId);
+  const publishEventHandler = (eventId) => {
     axiosInstance
-      .patch(`/api/events/cancel/${eventId}`)
+      .patch(`/api/events/${eventId}`)
       .then((res) => {
-        setShow(false);
-        setIsCanceled(!isCanceled);
+        console.log("res :>> ", res);
+        dispatch(
+          uiActions.openAlert({
+            status: "success",
+            message: "Event is published successfully!",
+          })
+        );
+        setIsPublished(!isPublished);
       })
       .catch((err) => {
+        dispatch(
+          uiActions.openAlert({
+            status: "error",
+            message: err.response.data.message,
+          })
+        );
         console.log("err :>> ", err);
       });
   };
-
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <div className="containerCreatedEvents">
@@ -69,24 +92,46 @@ const MyEventsTemplate = (props) => {
                           title={event.title}
                           date={convertData(event.startTime)}
                           isCanceled={event.canceled}
+                          status={event.status}
                         />
                       </td>
-                      <td>
+                      <td style={{ width: "20%", marginLeft: "10px" }}>
                         <div className="eventButtons">
+                          {event.status === "DRAFT" && (
+                            <Button
+                              class="actionButton"
+                              onClick={() => publishEventHandler(event.eventId)}
+                            >
+                              <PublishIcon />
+                            </Button>
+                          )}
+
                           <Button
-                            class="showButton"
+                            class="actionButton"
+                            onClick={() => {
+                              event.status === "DRAFT"
+                                ? history.push(
+                                    `/myEvents/${event.eventId}/edit`
+                                  )
+                                : event.status === "PUBLISHED" &&
+                                  history.push(
+                                    `myEvents/${event.eventId}/postpone`
+                                  );
+                            }}
+                          >
+                            <CreateIcon />
+                          </Button>
+                          <Button class="actionButton">
+                            <DeleteIcon />
+                          </Button>
+                          <Button
+                            class="actionButton"
                             onClick={() =>
                               history.push(`/events/${event.eventId}`)
                             }
                           >
-                            Show more
+                            <ReadMoreIcon />
                           </Button>
-                          <ButtonBasedDropdown
-                            onClick={() => {
-                              setShow(true);
-                              setEventId(event.eventId);
-                            }}
-                          />
                         </div>
                       </td>
                     </tr>
@@ -107,7 +152,7 @@ const MyEventsTemplate = (props) => {
               firstButton="No"
               secondButton="Yes"
               firstBttClick={() => setShow(false)}
-              secondBttClick={() => clickHandler(eventId)}
+              // secondBttClick={() => clickHandler(eventId)}
             ></ModalUi>
           </table>
         </div>

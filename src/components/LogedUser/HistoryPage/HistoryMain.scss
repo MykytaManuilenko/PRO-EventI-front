@@ -1,0 +1,35 @@
+@use "../../../style/colors" as color;
+
+.historyMain {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: auto;
+  margin-top: -26px;
+}
+.userTabs {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  top: 26px;
+  left: 1px;
+
+  .tab {
+    border: none;
+    background-color: transparent;
+    height: 100%;
+    padding: 20px 20px 36px 20px;
+    border-radius: 20px 20px 0 0;
+    font-size: 17px;
+  }
+  .active {
+    background-color: color.$white;
+    border: none;
+    color: color.$purple;
+    font-weight: 600;
+    font-size: 18px;
+  }
+}

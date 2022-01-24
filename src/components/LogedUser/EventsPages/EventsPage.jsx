@@ -5,8 +5,10 @@ import Button from "../../UI/Button/Button";
 import axiosInstance from "../../../utils/axiosInstance";
 import Card from "../../UI/Card/Card";
 import SearchPart from "../../Landing/SearchPart/SearchPart";
-import { convertData } from "../../../utils/convertData";
+import { convertData } from "../../../utils/convertDate";
 import { useLocation } from "react-router-dom";
+import Spinner from "react-bootstrap/Spinner";
+import Loading from "../../UI/Loading/Loading";
 
 const EventsPage = () => {
   const [events, setEvents] = useState();
@@ -15,16 +17,12 @@ const EventsPage = () => {
 
   const { filtered } =
     location.state && location.state.filtered ? location.state : {};
-  // const { notFound } =
-  //   location.state && location.state.notFound ? location.state : {};
-  // const { searchValue } =
-  //   location.state && location.state.searchValue ? location.state : {};
 
   useEffect(() => {
     axiosInstance
       .get("/api/events")
       .then((res) => {
-        console.log("res :>> ", res);
+        console.log("resEvents :>> ", res);
         setEvents(res.data);
         setIsLoading(false);
         console.log("events page :>> ", res.data);
@@ -34,9 +32,10 @@ const EventsPage = () => {
       });
   }, []);
 
-  return isLoading ? (
-    <p>Loading...</p>
-  ) : (
+  if (isLoading) {
+    return <Loading />;
+  }
+  return (
     <>
       <div className="containerEventPage">
         <SearchPart

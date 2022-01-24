@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../../utils/axiosInstance";
 import Card from "../../../UI/Card/Card";
-import { convertData } from "../../../../utils/convertData";
+import { convertData } from "../../../../utils/convertDate";
 import "./MyLikedEvents.scss";
 import { useHistory } from "react-router-dom";
 import Button from "../../../UI/Button/Button";
+import Spinner from "react-bootstrap/Spinner";
+import Loading from "../../../UI/Loading/Loading";
 
 const MyLikedEventsTemplate = (props) => {
   const [likedEvents, setLikedEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
   useEffect(() => {
     window.scrollTo(0, props.scrollPosition);
@@ -21,11 +24,16 @@ const MyLikedEventsTemplate = (props) => {
       .then((res) => {
         console.log("res :>> ", res);
         setLikedEvents(res.data);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log("err :>> ", err);
       });
   }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <div className="containerForLikedPage">

@@ -6,6 +6,7 @@ import LocationAuto from "../../UI/LocationAuto/LocationAuto";
 import { useDispatch, useSelector } from "react-redux";
 import { logOutUser } from "../../../redux/actions/auth";
 import { useLocation } from "react-router-dom";
+import { LocationIcon } from "../../../assets/icons";
 
 const NavBar = (props) => {
   const isAuthenticated = useSelector(
@@ -14,11 +15,16 @@ const NavBar = (props) => {
 
   const dispatch = useDispatch();
   const [navbar, setNavbar] = useState(false);
-  // const [cities, setCities] = useState("");
   const [locValue, setLocValue] = useState("");
   const [isClicked, setIsClicked] = useState(false);
   const ref = useRef();
-  const routes = ["/login", "/allEvents", "/registration"];
+  const routes = [
+    "/login",
+    "/allEvents",
+    "/registration",
+    "/forgotPassword",
+    "/confirm/password",
+  ];
   const [colour, setColour] = useState("");
 
   let location = useLocation();
@@ -87,7 +93,8 @@ const NavBar = (props) => {
             />
           ) : (
             <div>
-              <img src="./location.svg" alt="" className="locationI" />{" "}
+              {/* <img src="./location.svg" alt="" className="locationI" />{" "} */}
+              <LocationIcon className="locationI" />
               {locValue ? locValue : "Choose city"}
             </div>
           )}

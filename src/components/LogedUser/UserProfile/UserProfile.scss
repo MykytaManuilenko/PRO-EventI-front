@@ -17,13 +17,17 @@
       gap: 50px;
       .choosePhotoButton {
         border: 1px solid #b5b5bf;
-        cursor: pointer;
         border-radius: 133px;
-        width: 20%;
-        height: 100%;
-        padding: 30px;
-        grid-area: photo;
+        width: 130px;
+        height: 130px;
         margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        img {
+          margin: 0 !important;
+        }
       }
       p {
         height: 100%;
@@ -47,31 +51,13 @@
       align-items: center;
       margin-top: 40px;
 
-      // .userTypePart {
-      //   display: flex;
-      //   flex-direction: row;
-      //   .userTypeContainer {
-      //     display: flex;
-      //     justify-content: flex-start;
-      //     width: 100%;
-      //     gap: 15px;
-      //   }
-      //   .addTypeButton {
-      //     margin-top: 0;
-      //     background-color: color.$editButtonColor;
-      //     border: none;
-      //     width: 60px;
-      //     padding: 5px;
-      //     font-size: 20px;
-      //     font-weight: 600;
-      //   }
-      // }
-
       .editButt {
         background-color: color.$button-color;
         border: none;
+        width: auto;
         width: 99px !important;
         margin: 0 !important;
+        padding: 12px 5px !important;
       }
 
       .buttonsContainer {
@@ -115,12 +101,4 @@
       font-size: 18px;
     }
   }
-}
-
-.moreButton {
-  border: 2px solid color.$button-color;
-  padding: 7px 20px;
-  border-radius: 10px;
-  margin-left: 20px;
-  cursor: pointer;
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import GoBack from "../../../UI/GoBack/GoBack";
@@ -7,9 +7,13 @@ import "./ChangePassword.scss";
 import Button from "../../../UI/Button/Button";
 import axiosInstance from "../../../../utils/axiosInstance";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { uiActions } from "../../../../redux/slices/ui";
+import AlertBootstrap from "../../../UI/Alert/AlertBootstrap";
 
 const ChangePassword = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       oldPassword: "",
@@ -36,14 +40,27 @@ const ChangePassword = () => {
         .then((response) => {
           console.log("response :>> ", response);
           history.push("/userProfile");
+          dispatch(
+            uiActions.openAlert({
+              status: "success",
+              message: "Password is successfully changed!",
+            })
+          );
         })
         .catch((err) => {
+          dispatch(
+            uiActions.openAlert({
+              status: "error",
+              message: err.response.data.message,
+            })
+          );
           console.log("err :>> ", err);
         });
     },
   });
   return (
     <>
+      <AlertBootstrap disappear={false} />
       <GoBack />
       <div className="changePasswordPage">
         <div className="changePasswordContainer">

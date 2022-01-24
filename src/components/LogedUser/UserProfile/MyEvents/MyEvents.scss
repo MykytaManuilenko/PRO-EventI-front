@@ -26,14 +26,22 @@
       justify-content: flex-end;
       align-items: center;
 
-      .showButton {
+      .actionButton {
+        margin-top: 0;
+        background-color: transparent;
+        border: none;
+        padding: 12px 5px !important;
+        width: auto;
+        box-shadow: none;
+        p {
+          width: 100%;
+        }
+      }
+      .showMoreButton {
         margin-top: 0;
         background-color: color.$button-color;
         border: none;
         padding: 12px 5px !important;
-        p {
-          width: 100%;
-        }
       }
     }
   }
@@ -51,9 +59,9 @@
       margin-bottom: 0;
     }
     .showButt {
-      margin: 0;
-      border: 2px solid color.$button-color;
-      color: color.$button-color;
+      margin-top: 0;
+      background-color: color.$button-color;
+      border: none;
     }
   }
 }

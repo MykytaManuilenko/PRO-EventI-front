@@ -1,10 +1,15 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { uiActions } from "../../redux/slices/ui";
 
 const PrivateRoute = ({ path, Component, roles, isAuth }) => {
+  const dispatch = useDispatch();
   const userRole = useSelector((state) => state.authentication.userRole);
-
+  useEffect(() => {
+    dispatch(uiActions.closeAlert());
+  }, []);
   return (
     <Route
       exact

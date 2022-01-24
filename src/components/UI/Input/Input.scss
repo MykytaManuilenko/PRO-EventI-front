@@ -1,10 +1,10 @@
+@use "../../../style/AlertMessages/errorMessage";
 .inputCont {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   position: relative;
   width: 100%;
-  // margin-top: 20px;
   .inputName {
     border: none;
     border-bottom: 0.6px solid #fcc117;
