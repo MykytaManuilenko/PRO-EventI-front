@@ -9,7 +9,7 @@ const LocationAuto = (props) => {
       ? props.locationValue.street === ""
         ? `${props.locationValue.city}, ${props.locationValue.country}`
         : `${props.locationValue.street}, ${props.locationValue.city}, ${props.locationValue.country}`
-      : null
+      : ""
   );
 
   const hadleChange = (value) => {

@@ -12,6 +12,8 @@ import Loading from "../../../UI/Loading/Loading";
 import { useDispatch } from "react-redux";
 import { uiActions } from "../../../../redux/slices/ui";
 import LocationAuto from "../../../UI/LocationAuto/LocationAuto";
+import defaultAvatar from "../../../../assets/purpleAvatar.png";
+import AlertBootstrap from "../../../UI/Alert/AlertBootstrap";
 
 const EditUserProfile = () => {
   const [userData, setUserData] = useState();
@@ -35,8 +37,9 @@ const EditUserProfile = () => {
         setUserData(res.data);
         setPreviewAvatar(res.data.avatarUrl ? res.data.avatarUrl : "");
         setAddress({
-          country: res.data.address.country,
-          city: res.data.address.city,
+          country:
+            res.data.address.country === null ? "" : res.data.address.country,
+          city: res.data.address.city === null ? "" : res.data.address.city,
           street: "",
         });
         setIsLoading(false);
@@ -68,16 +71,21 @@ const EditUserProfile = () => {
         lastName: formik.values.lastName,
         phone: formik.values.phone,
         birthDate: formik.values.birthDate,
-        country: address.country,
-        city: address.city,
-        avatar: userData.avatar ? userData.avatar : "",
+        country: address.country === "" ? null : address.country,
+        city: address.city === "" ? null : address.city,
+        avatar: userData.avatar ? userData.avatar : null,
       };
       const formData = new FormData();
-      formData.append("file", file);
+      console.log("file :>> ", file);
+      if (file === undefined) {
+        console.log("AAA :>> ");
+      } else {
+        formData.append("file", file);
+      }
 
       console.log("userData.avatarUrl :>> ", userData.avatarUrl);
       console.log("previewAvatar :>> ", previewAvatar);
-      if (userData.avatarUrl === previewAvatar) {
+      if (userData.avatarUrl === previewAvatar || file === undefined) {
         axiosInstance
           .put("/api/users/me", data)
           .then((res) => {
@@ -146,15 +154,11 @@ const EditUserProfile = () => {
   return (
     <>
       <GoBack />
+      <AlertBootstrap />
       <div className="editProfileContainer">
         <div className="userInfoContainer">
           <form onSubmit={formik.handleSubmit} noValidate>
             <div className="firstRow">
-              <img
-                src="../../../../assets/defaultAvatar.png"
-                alt=""
-                style={{ width: "30px", height: "30px" }}
-              />
               <div
                 className="choosePhotoButton"
                 style={
@@ -162,10 +166,9 @@ const EditUserProfile = () => {
                     ? {
                         background: `center / cover no-repeat url(${previewAvatar}) `,
                       }
-                    : null
-                  // {
-                  //   background: `center / cover no-repeat url('../../../../assets/defaultAvatar.png') `,
-                  // }
+                    : {
+                        background: `center / cover no-repeat url(${defaultAvatar}) `,
+                      }
                 }
               >
                 <input
@@ -175,13 +178,13 @@ const EditUserProfile = () => {
                   multiple={false}
                   onChange={(e) => handleFile(e)}
                 />
-                <CameraIcon
+                {/* <CameraIcon
                   style={{
                     height: "50px",
                     width: "60px",
                     marginBottom: "10px",
                   }}
-                />
+                /> */}
               </div>
               <div
                 style={{

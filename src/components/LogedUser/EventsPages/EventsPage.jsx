@@ -7,7 +7,6 @@ import Card from "../../UI/Card/Card";
 import SearchPart from "../../Landing/SearchPart/SearchPart";
 import { convertData } from "../../../utils/convertDate";
 import { useLocation } from "react-router-dom";
-import Spinner from "react-bootstrap/Spinner";
 import Loading from "../../UI/Loading/Loading";
 
 const EventsPage = () => {

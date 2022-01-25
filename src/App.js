@@ -58,6 +58,9 @@ function App() {
         }
       >
         <Switch>
+          <Route exact path="/confirm/registration">
+            <Confirmation />
+          </Route>
           <Route exact path="/">
             {!isAuthenticated ? <Landing /> : <Redirect to="/userProfile" />}
           </Route>
@@ -165,10 +168,6 @@ function App() {
       </main>
 
       <footer>{!isAuthenticated && <Footer />}</footer>
-
-      <Route path="/confirm/registration">
-        <Confirmation />
-      </Route>
     </div>
   );
 }

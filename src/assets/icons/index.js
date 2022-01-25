@@ -22,3 +22,4 @@ export { ReactComponent as PublishIcon } from "./publish.svg";
 export { ReactComponent as ReadMoreIcon } from "./readMore.svg";
 export { ReactComponent as MoreIcon } from "./more.svg";
 export { ReactComponent as SearchIcon } from "./search.svg";
+export { ReactComponent as UserAvatar } from "./avatar.svg";

@@ -10,6 +10,7 @@ import EditUserType from "./EditUserType/EditUserType";
 import { CameraIcon, LocationIcon } from "../../../assets/icons";
 import Loading from "../../UI/Loading/Loading";
 import AlertBootstrap from "../../UI/Alert/AlertBootstrap";
+import defaultAvatar from "../../../assets/purpleAvatar.png";
 
 const UserProfile = (props) => {
   const [userInfo, setUserInfo] = useState("");
@@ -61,19 +62,12 @@ const UserProfile = (props) => {
                       background: `center / cover no-repeat url(${userInfo.avatarUrl}) `,
                       border: "3px solid #8698e9",
                     }
-                  : null
+                  : {
+                      background: `center / cover no-repeat url(${defaultAvatar}) `,
+                      border: "3px solid #8698e9",
+                    }
               }
-            >
-              {userInfo.avatarUrl ? null : (
-                <CameraIcon
-                  style={{
-                    height: "50px",
-                    width: "60px",
-                    marginBottom: "10px",
-                  }}
-                />
-              )}
-            </div>
+            ></div>
             <div className="userDetails">
               <p>
                 {userInfo.firstName} {userInfo.lastName}
@@ -84,7 +78,11 @@ const UserProfile = (props) => {
               >
                 <LocationIcon />
                 <p>
-                  {userInfo.address.city}, {userInfo.address.country}
+                  {userInfo.address.city === null &&
+                  userInfo.address.country === null
+                    ? "Choose city"
+                    : `${userInfo.address.city},
+                    ${userInfo.address.country}`}
                 </p>
               </div>
             </div>

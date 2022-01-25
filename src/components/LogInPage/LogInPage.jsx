@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "../UI/Button/Button";
 import "./LogInPage.scss";
 import { Link, useHistory } from "react-router-dom";
@@ -36,7 +36,7 @@ const LogInPage = () => {
   return (
     <>
       <div className="logPage">
-        <AlertBootstrap />
+        <AlertBootstrap disappear />
         <div className="LogInContainer">
           <form className="logInForm" onSubmit={formik.handleSubmit}>
             <p className="title">Login to your account</p>

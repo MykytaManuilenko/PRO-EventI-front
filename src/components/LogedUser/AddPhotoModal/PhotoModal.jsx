@@ -17,6 +17,7 @@ const PhotoModal = (props) => {
 
   const handleFile = (e) => {
     props.setFile(e.target.files[0]);
+    console.log("e.target.files[0] :>> ", e.target.files[0]);
     setPreview(URL.createObjectURL(e.target.files[0]));
     props.setBackgroundUrl(URL.createObjectURL(e.target.files[0]));
   };
@@ -85,7 +86,6 @@ const PhotoModal = (props) => {
     e.preventDefault();
     props.onHide();
   };
-
   return (
     <Modal
       onHide={props.onHide}

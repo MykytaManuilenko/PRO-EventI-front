@@ -185,9 +185,13 @@ const EventDetail = () => {
 
                   <Button
                     class={
-                      event.status === "FINISHED" ? "disabled" : "buyButton"
+                      event.status === "FINISHED" || event.status === "DRAFT"
+                        ? "disabled"
+                        : "buyButton"
                     }
-                    disabled={event.status === "FINISHED"}
+                    disabled={
+                      event.status === "FINISHED" || event.status === "DRAFT"
+                    }
                     style={
                       event.status === "FINISHED" && {
                         boxShadow: "5px 5px 10px #10050525",
@@ -225,10 +229,12 @@ const EventDetail = () => {
                 <p className="descrTitle" style={{ marginTop: "15px" }}>
                   Type
                 </p>
-                {event.types &&
-                  event.types.map((type, index) => {
-                    return <TypeCard typeName={type} index={index} />;
-                  })}
+                <div className="eventTypes">
+                  {event.types &&
+                    event.types.map((type, index) => {
+                      return <TypeCard typeName={type} index={index} />;
+                    })}
+                </div>
               </div>
             </div>
           </>

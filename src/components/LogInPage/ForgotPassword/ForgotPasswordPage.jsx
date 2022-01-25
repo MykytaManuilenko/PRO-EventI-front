@@ -6,6 +6,7 @@ import axiosInstance from "../../../utils/axiosInstance";
 import "./ForgotPasswordPage.scss";
 import Button from "../../UI/Button/Button";
 import { Alert } from "react-bootstrap";
+import { BackgroundImage } from "../../../assets/icons";
 
 const ForgotPasswordPage = () => {
   const [error, setError] = useState({ state: false, message: "" });
@@ -59,15 +60,7 @@ const ForgotPasswordPage = () => {
         </Alert>
       ) : null}
 
-      <div
-        style={{
-          backgroundImage: "url(./Background.svg)",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          width: "100%",
-        }}
-      >
+      <div>
         <div className="forgotPasswordContainer">
           <form
             noValidate

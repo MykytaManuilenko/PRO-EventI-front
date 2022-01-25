@@ -6,21 +6,14 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { registrationUser } from "../../redux/actions/auth";
 import { useSelector, useDispatch } from "react-redux";
-import { Alert } from "react-bootstrap";
-import { uiActions } from "../../redux/slices/ui";
 import Multiselect from "multiselect-react-dropdown";
 import getEventTypes from "../../api/services/User";
 import Input from "../UI/Input/Input";
 import AlertBootstrap from "../UI/Alert/AlertBootstrap";
 
 const RegisterPage = () => {
-  const Error = useSelector((state) => state.UI.errRegister);
-  const Success = useSelector((state) => state.UI.successRegister);
-  const isError = useSelector((state) => state.UI.isErrReg);
-  const isSuccess = useSelector((state) => state.UI.isSucReg);
   const [selectedValue, setSelectedVal] = useState("");
   const [types, setTypes] = useState([]);
-  const [show, setShow] = useState(true);
 
   const regexpPhonePL =
     /^(?:(?:(?:\+|00)?48)|(?:\(\+?48\)))?(?:1[2-8]|2[2-69]|3[2-49]|4[1-8]|5[0-9]|6[0-35-9]|[7-8][1-9]|9[145])\d{7}$/;
@@ -89,34 +82,7 @@ const RegisterPage = () => {
   }, []);
   return (
     <div className="regPage">
-      {/* {isError ? (
-        <Alert
-          className="allertError"
-          variant="danger"
-          onClose={() => {
-            dispatch(uiActions.unsetErrorRegister(""));
-            setShow(false);
-          }}
-          dismissible
-        >
-          {Error.message}
-        </Alert>
-      ) : null} */}
-      <AlertBootstrap />
-
-      {isSuccess ? (
-        <Alert
-          className="allertSuccess"
-          variant="success"
-          onClose={() => {
-            dispatch(uiActions.unsetSuccessRegister(""));
-            setShow(false);
-          }}
-          dismissible
-        >
-          {Success.message}
-        </Alert>
-      ) : null}
+      <AlertBootstrap disappear />
       <div className="registerContain">
         <form className="regForm" onSubmit={formik.handleSubmit} noValidate>
           <p className="title">Create your account</p>
