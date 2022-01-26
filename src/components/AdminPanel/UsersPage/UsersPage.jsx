@@ -47,9 +47,9 @@ const UsersPage = () => {
           </thead>
           <tbody>
             {allUsers &&
-              allUsers.map((user) => {
+              allUsers.map((user, index) => {
                 return (
-                  <tr>
+                  <tr key={index}>
                     <td style={{ width: "20%" }}>{user.userId}</td>
                     <td>{user.firstName}</td>
                     <td>{user.status}</td>

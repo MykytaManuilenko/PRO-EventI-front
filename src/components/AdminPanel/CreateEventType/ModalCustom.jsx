@@ -18,7 +18,7 @@ const ModalCustom = (props) => {
         .max(100, "Must be 100 characters or less")
         .required("Field is required"),
     }),
-    onSubmit: ({ resetForm }) => {
+    onSubmit: () => {
       const data = { name: formik.values.typeName };
 
       axiosInstance
@@ -26,7 +26,7 @@ const ModalCustom = (props) => {
         .then((res) => {
           props.setChanged(!props.changed);
           props.onHide();
-          resetForm();
+          formik.resetForm({});
         })
         .catch((err) => {
           console.log("err :>> ", err);

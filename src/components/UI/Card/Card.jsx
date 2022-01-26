@@ -49,16 +49,8 @@ const Card = (props) => {
     <div className="Card">
       <div
         className={["UpPart", props.className].join(" ")}
-        style={
-          !props.isCanceled
-            ? { background: `center / cover no-repeat url(${props.image})` }
-            : {
-                background: `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), center / cover no-repeat url(${props.image})`,
-              }
-        }
-      >
-        {props.isCanceled ? <p>Canceled</p> : null}
-      </div>
+        style={{ background: `center / cover no-repeat url(${props.image})` }}
+      ></div>
       <div className="DownPart">
         <div className="TextContainer">
           <p className="EventName">{props.name}</p>

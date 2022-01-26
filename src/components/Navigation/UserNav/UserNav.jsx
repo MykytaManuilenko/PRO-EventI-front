@@ -25,25 +25,29 @@ const UserNav = () => {
           Hello, {userData && userData.firstName}{" "}
           {userData && userData.lastName}
         </p>
-        <div
-          style={
-            userData && userData.avatarUrl === null
-              ? {
-                  background: `center / cover no-repeat url(${defaultAvatar}) `,
-                  border: "3px solid #8698e9",
-                  width: "53px",
-                  height: "50px",
-                  borderRadius: "133px",
-                }
-              : {
-                  background: `center / cover no-repeat url(${userData.avatarUrl}) `,
-                  border: "3px solid #8698e9",
-                  width: "53px",
-                  height: "50px",
-                  borderRadius: "133px",
-                }
-          }
-        />
+        {userData && userData.role !== "SYSTEM_ADMIN" && (
+          <div
+            style={
+              userData
+                ? userData.avatarUrl === null
+                  ? {
+                      background: `center / cover no-repeat url(${defaultAvatar}) `,
+                      border: "3px solid #8698e9",
+                      width: "53px",
+                      height: "50px",
+                      borderRadius: "133px",
+                    }
+                  : {
+                      background: `center / cover no-repeat url(${userData.avatarUrl}) `,
+                      border: "3px solid #8698e9",
+                      width: "53px",
+                      height: "50px",
+                      borderRadius: "133px",
+                    }
+                : ""
+            }
+          />
+        )}
       </div>
     </div>
   );

@@ -1,0 +1,26 @@
+.paymentForm {
+  width: 60%;
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .title {
+    width: 100%;
+    text-align: left;
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+
+  .cardDetails {
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+  }
+
+  .payButton {
+    background-color: #ff6a7c;
+    border: none;
+  }
+}

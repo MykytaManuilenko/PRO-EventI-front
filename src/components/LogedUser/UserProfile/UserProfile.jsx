@@ -11,6 +11,7 @@ import { CameraIcon, LocationIcon } from "../../../assets/icons";
 import Loading from "../../UI/Loading/Loading";
 import AlertBootstrap from "../../UI/Alert/AlertBootstrap";
 import defaultAvatar from "../../../assets/purpleAvatar.png";
+import MyBookedEventsTemplate from "./MyBookedEvents/MyBookedEventsTemplate";
 
 const UserProfile = (props) => {
   const [userInfo, setUserInfo] = useState("");
@@ -72,23 +73,27 @@ const UserProfile = (props) => {
               <p>
                 {userInfo.firstName} {userInfo.lastName}
               </p>
-              <div
-                className="location"
-                onClick={() => history.push("/userProfile/edit")}
-              >
-                <LocationIcon />
-                <p>
-                  {userInfo.address.city === null &&
-                  userInfo.address.country === null
-                    ? "Choose city"
-                    : `${userInfo.address.city},
+              {userInfo.role !== "SYSTEM_ADMIN" && (
+                <div
+                  className="location"
+                  onClick={() => history.push("/userProfile/edit")}
+                >
+                  <LocationIcon />
+                  <p>
+                    {userInfo.address.city === null &&
+                    userInfo.address.country === null
+                      ? "Choose city"
+                      : `${userInfo.address.city},
                     ${userInfo.address.country}`}
-                </p>
-              </div>
+                  </p>
+                </div>
+              )}
             </div>
           </div>
           <div className="bottomPart">
-            <EditUserType userInfo={userInfo} />
+            {userInfo.role !== "SYSTEM_ADMIN" && (
+              <EditUserType userInfo={userInfo} />
+            )}
             <div className="buttonsContainer">
               <button
                 className="changePassButton"
@@ -140,6 +145,7 @@ const UserProfile = (props) => {
               scrollPosition={scrollPosition}
             />
           )}
+          {isVisibleMyTickets && <MyBookedEventsTemplate />}
         </div>
       </div>
     </>

@@ -26,6 +26,8 @@ import ForgotPasswordPage from "./components/LogInPage/ForgotPassword/ForgotPass
 import ForgotPasswordRedirect from "./components/LogInPage/ForgotPassword/ForgotPasswordRedirect";
 import EditDraftEvent from "./components/LogedUser/EventsPages/EditDraftEvent/EditDraftEvent";
 import PostponeEvent from "./components/LogedUser/EventsPages/PostponeEvent/PostponeEvent";
+import BookEventPage from "./components/LogedUser/BookEventPage/BookEventPage";
+import MyBookedEvents from "./components/LogedUser/UserProfile/MyBookedEvents/MyBookedEvents";
 function App() {
   const isAuthenticated = useSelector(
     (state) => state.authentication.isAuthenticated
@@ -58,15 +60,16 @@ function App() {
         }
       >
         <Switch>
-          <Route exact path="/confirm/registration">
-            <Confirmation />
-          </Route>
           <Route exact path="/">
             {!isAuthenticated ? <Landing /> : <Redirect to="/userProfile" />}
           </Route>
 
           <Route exact path="/login">
             {!isAuthenticated ? <LogInPage /> : <Redirect to="/userProfile" />}
+          </Route>
+
+          <Route exact path="/confirm/registration">
+            <Confirmation />
           </Route>
 
           <Route exact path="/registration">
@@ -99,6 +102,13 @@ function App() {
           />
           <PrivateRoute
             isAuth={isAuthenticated}
+            path="/events/:eventId/book"
+            Component={BookEventPage}
+            roles={["USER", "SYSTEM_ADMIN"]}
+          />
+
+          <PrivateRoute
+            isAuth={isAuthenticated}
             path="/events/:eventId"
             Component={EventDetail}
             roles={["USER", "SYSTEM_ADMIN", "UNCONFIRMED_USER"]}
@@ -114,6 +124,12 @@ function App() {
             isAuth={isAuthenticated}
             path="/likedEvents"
             Component={myLikedEvents}
+            roles={["USER", "SYSTEM_ADMIN"]}
+          />
+          <PrivateRoute
+            isAuth={isAuthenticated}
+            path="/bookedEvents"
+            Component={MyBookedEvents}
             roles={["USER", "SYSTEM_ADMIN"]}
           />
 

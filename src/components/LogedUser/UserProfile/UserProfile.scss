@@ -75,6 +75,7 @@
       }
 
       .buttonsContainer {
+        align-self: flex-end;
         .changePassButton {
           margin-right: 30px;
           color: color.$black;

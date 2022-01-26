@@ -36,8 +36,6 @@ const logInUser = (data, history) => (dispatch) => {
       history.push("/userProfile");
     })
     .catch((err) => {
-      console.log("err :>> ", err);
-      console.log("errrr :>> ", err.response.data);
       dispatch(
         uiActions.openAlert({
           status: "error",

@@ -197,6 +197,7 @@ const EventDetail = () => {
                         boxShadow: "5px 5px 10px #10050525",
                       }
                     }
+                    onClick={() => history.push(`/events/${eventId}/book`)}
                   >
                     Book now
                   </Button>
