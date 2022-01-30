@@ -27,9 +27,11 @@ const ModalCustom = (props) => {
           props.setChanged(!props.changed);
           props.onHide();
           formik.resetForm({});
+          props.setError("");
         })
         .catch((err) => {
           console.log("err :>> ", err);
+          props.setError(err.response.data.message);
         });
     },
   });
@@ -47,6 +49,7 @@ const ModalCustom = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <p className="errorText">{props.error}</p>
         <form
           onSubmit={formik.handleSubmit}
           className="formCreateType"

@@ -1,5 +1,4 @@
 import React from "react";
-import AlertBootstrap from "../../../UI/Alert/AlertBootstrap";
 import GoBack from "../../../UI/GoBack/GoBack";
 import MyEventsTemplate from "./MyEventsTemplate";
 
@@ -7,7 +6,6 @@ const MyEvents = () => {
   return (
     <>
       <GoBack />
-      <AlertBootstrap disappear />
       <div
         style={{
           display: "flex",

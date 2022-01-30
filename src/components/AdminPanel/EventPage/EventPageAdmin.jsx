@@ -11,7 +11,7 @@ const EventPageAdmin = () => {
   const [types, setTypes] = useState([]);
   const [modalShow, setModalShow] = useState();
   const [modalEShow, setModalEShow] = useState();
-
+  const [error, setError] = useState("");
   const [changeModal, setChangeModal] = useState(true);
   const [typeName, setTypeName] = useState();
   const [typeID, setTypeID] = useState("");
@@ -92,17 +92,27 @@ const EventPageAdmin = () => {
           </Button>
           <EditModal
             show={modalEShow}
-            onHide={() => setModalEShow(false)}
+            onHide={() => {
+              setModalEShow(false);
+              setError("");
+            }}
             typename={typeName && typeName}
             typeid={typeID && typeID}
             setChanged={setChangeModal}
             changed={changeModal}
+            setError={setError}
+            error={error}
           />
           <ModalCustom
             show={modalShow}
-            onHide={() => setModalShow(false)}
+            onHide={() => {
+              setModalShow(false);
+              setError("");
+            }}
             setChanged={setChangeModal}
             changed={changeModal}
+            setError={setError}
+            error={error}
           />
         </div>
       </div>

@@ -58,7 +58,7 @@ const EventsPage = () => {
         ) : null}
         <p className="title">All Events</p>
         <div className="gridEventCont">
-          {events &&
+          {events && eventsCopy.length !== 0 ? (
             eventsCopy.map((event) => {
               return (
                 <Card
@@ -70,7 +70,10 @@ const EventsPage = () => {
                   isLiked={event.isLiked}
                 />
               );
-            })}
+            })
+          ) : (
+            <p>No events found :(</p>
+          )}
         </div>
         <Link to="/createEvent">
           <Button class="addEventButt">Add Event</Button>

@@ -22,7 +22,7 @@ const CardSlider = (props) => {
           {props.events &&
             props.events.map((event, key) => {
               return (
-                <Slide index={key}>
+                <Slide key={key}>
                   {props.isAuth ? (
                     <Card
                       key={event.eventId}

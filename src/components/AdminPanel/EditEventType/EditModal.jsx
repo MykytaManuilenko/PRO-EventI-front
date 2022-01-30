@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "../../UI/Button/Button";
 import { useFormik } from "formik";
@@ -25,9 +25,10 @@ const EditModal = (props) => {
         .then((res) => {
           props.setChanged(!props.changed);
           props.onHide();
+          props.setError("");
         })
         .catch((err) => {
-          console.log("err :>> ", err);
+          props.setError(err.response.data.message);
         });
     },
   });
@@ -51,6 +52,7 @@ const EditModal = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <p className="errorText">{props.error}</p>
         <form
           onSubmit={formik.handleSubmit}
           className="formCreateType"
@@ -68,7 +70,7 @@ const EditModal = (props) => {
             />
             <label>Type name*</label>
             {formik.touched.typeName && formik.errors.typeName ? (
-              <p>{formik.errors.typeName}</p>
+              <p className="errorText">{formik.errors.typeName}</p>
             ) : null}
           </div>
           <div className="buttContainer">

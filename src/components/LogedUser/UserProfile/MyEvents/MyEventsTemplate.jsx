@@ -21,8 +21,11 @@ const MyEventsTemplate = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isPublished, setIsPublished] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
+  const [eventId, setEventId] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, props.scrollPosition);
@@ -41,7 +44,28 @@ const MyEventsTemplate = (props) => {
       .catch((err) => {
         console.log("err :>> ", err);
       });
-  }, [isPublished]);
+  }, [isPublished, isDeleted]);
+
+  const handleDeleteEvent = (eventId) => {
+    axiosInstance
+      .delete(`/api/events/${eventId}`)
+      .then((res) => {
+        console.log("res :>> ", res);
+        setIsDeleted(!isDeleted);
+        dispatch(
+          uiActions.openAlert({
+            status: "success",
+            message: "Event is deleted successfully!",
+          })
+        );
+        setError("");
+        setShow(false);
+      })
+      .catch((err) => {
+        console.log("err :>> ", err);
+        setError(err.response.data.message);
+      });
+  };
 
   const publishEventHandler = (eventId) => {
     axiosInstance
@@ -123,7 +147,13 @@ const MyEventsTemplate = (props) => {
                           >
                             <CreateIcon />
                           </Button>
-                          <Button class="actionButton">
+                          <Button
+                            class="actionButton"
+                            onClick={() => {
+                              setShow(true);
+                              setEventId(event.eventId);
+                            }}
+                          >
                             <DeleteIcon />
                           </Button>
                           <Button
@@ -149,13 +179,18 @@ const MyEventsTemplate = (props) => {
             </tbody>
             <ModalUi
               show={show}
-              hide={() => setShow(false)}
-              title="Are you sure you want to cancel the event?"
+              hide={() => {
+                setShow(false);
+                setError("");
+              }}
+              title="Are you sure you want to delete the event?"
               firstButton="No"
               secondButton="Yes"
               firstBttClick={() => setShow(false)}
-              // secondBttClick={() => clickHandler(eventId)}
-            ></ModalUi>
+              secondBttClick={() => handleDeleteEvent(eventId)}
+              error={error}
+              setError={setError}
+            />
           </table>
         </div>
       </div>

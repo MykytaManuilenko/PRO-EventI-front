@@ -359,12 +359,27 @@ const Form = (props) => {
                 value={formik.values.description}
                 name="description"
               />
-              <p>
-                {formik.values.description.length}/{MAXVALUE}
-              </p>
-              {formik.touched.description && formik.errors.description ? (
-                <p className="errorText">{formik.errors.description}</p>
-              ) : null}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  style={{
+                    margin: 0,
+                    marginTop: "10px",
+                    fontSize: "13px",
+                    color: "#919191",
+                  }}
+                >
+                  {formik.values.description.length}/{MAXVALUE}
+                </p>
+                {formik.touched.description && formik.errors.description ? (
+                  <p className="errorText">{formik.errors.description}</p>
+                ) : null}
+              </div>
             </div>
             <div className="inputMultiSelect">
               <Multiselect

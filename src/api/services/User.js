@@ -7,7 +7,7 @@ function getEventTypes(url) {
       return res;
     })
     .catch((err) => {
-      console.log("err :>> ", err);
+      return err;
     });
 }
 

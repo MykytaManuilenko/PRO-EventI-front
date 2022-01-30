@@ -12,6 +12,7 @@ import {
   HistoryIcon,
   HistoryIconActive,
   LogOutIcon,
+  FriendsIcon,
 } from "../../../assets/icons";
 
 const activeStyle = {
@@ -84,8 +85,8 @@ const LogNavBar = () => {
     },
     {
       name: "All users",
-      icon: EventIcon,
-      iconActive: EventIconActive,
+      icon: FriendsIcon,
+      iconActive: FriendsIcon,
       link: "/allUsers",
     },
   ];

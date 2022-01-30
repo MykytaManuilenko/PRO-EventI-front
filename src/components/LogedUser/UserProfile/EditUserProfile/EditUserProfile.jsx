@@ -7,7 +7,6 @@ import Input from "../../../UI/Input/Input";
 import { useHistory } from "react-router-dom";
 import Button from "../../../UI/Button/Button";
 import GoBack from "../../../UI/GoBack/GoBack";
-import { CameraIcon } from "../../../../assets/icons";
 import Loading from "../../../UI/Loading/Loading";
 import { useDispatch } from "react-redux";
 import { uiActions } from "../../../../redux/slices/ui";
@@ -178,13 +177,6 @@ const EditUserProfile = () => {
                   multiple={false}
                   onChange={(e) => handleFile(e)}
                 />
-                {/* <CameraIcon
-                  style={{
-                    height: "50px",
-                    width: "60px",
-                    marginBottom: "10px",
-                  }}
-                /> */}
               </div>
               <div
                 style={{

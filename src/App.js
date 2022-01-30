@@ -33,9 +33,6 @@ function App() {
   const isAuthenticated = useSelector(
     (state) => state.authentication.isAuthenticated
   );
-
-  console.log("isAuthenticated :>> ", isAuthenticated);
-
   const userRole = useSelector((state) => state.authentication.userRole);
   return (
     <div className="App">

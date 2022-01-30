@@ -19,16 +19,15 @@ const MyBookedEventsTemplate = (props) => {
         }
       )
       .then((res) => {
-        // console.log("resBooked :>> ", res);
         setBookedEvents(res.data);
       })
       .catch((err) => {
         console.log("errBooker :>> ", err);
       });
   }, []);
-  if (bookedEvents.length === 0) {
-    return <Loading />;
-  }
+  // if (bookedEvents.length === 0) {
+  //   return <Loading />;
+  // }
   return (
     <>
       <div className="containerForLikedPage">

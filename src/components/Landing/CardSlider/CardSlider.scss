@@ -12,12 +12,6 @@
 
 /* gives us the illusion of a "centered" slide */
 .notAuth {
-  // padding-left: 32%;
-  // padding-right: 42%;
-  // padding: 25px;
-  // display: flex;
-  // justify-content: center;
-  // gap: 25px;
   height: 300px;
   padding-left: 32%;
   padding-right: 35%;
@@ -25,16 +19,14 @@
 .authPerson {
   padding-left: 18%;
   padding-right: 65%;
+  height: 300px;
 }
 
 /* gives us the illusion of spaces between the slides */
 .carousel__inner-slide {
-  // width: 275px;
-  // height: calc(100% - 20px);
   margin-right: 20px;
   left: 10px;
   top: 10px;
-  // background-color: burlywood;
 }
 
 .carousel__dot {

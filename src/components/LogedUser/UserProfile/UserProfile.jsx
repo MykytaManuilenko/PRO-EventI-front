@@ -7,7 +7,7 @@ import MyLikedEventsTemplate from "./MyLikedEvents/MyLikedEventsTemplate";
 import { convertDataWithoutName } from "../../../utils/convertDate";
 import { useHistory } from "react-router-dom";
 import EditUserType from "./EditUserType/EditUserType";
-import { CameraIcon, LocationIcon } from "../../../assets/icons";
+import { LocationIcon } from "../../../assets/icons";
 import Loading from "../../UI/Loading/Loading";
 import AlertBootstrap from "../../UI/Alert/AlertBootstrap";
 import defaultAvatar from "../../../assets/purpleAvatar.png";
@@ -80,8 +80,8 @@ const UserProfile = (props) => {
                 >
                   <LocationIcon />
                   <p>
-                    {userInfo.address.city === null &&
-                    userInfo.address.country === null
+                    {userInfo.address.city === "" &&
+                    userInfo.address.country === ""
                       ? "Choose city"
                       : `${userInfo.address.city},
                     ${userInfo.address.country}`}

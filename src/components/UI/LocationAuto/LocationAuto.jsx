@@ -6,9 +6,11 @@ import { geocodeByAddress } from "react-places-autocomplete";
 const LocationAuto = (props) => {
   const [cities, setCities] = useState(
     props.locationValue
-      ? props.locationValue.street === ""
-        ? `${props.locationValue.city}, ${props.locationValue.country}`
-        : `${props.locationValue.street}, ${props.locationValue.city}, ${props.locationValue.country}`
+      ? props.locationValue.street === "" && props.locationValue.city === ""
+        ? ""
+        : props.locationValue.street !== ""
+        ? `${props.locationValue.street}, ${props.locationValue.city}, ${props.locationValue.country}`
+        : `${props.locationValue.city}, ${props.locationValue.country}`
       : ""
   );
 
@@ -22,8 +24,6 @@ const LocationAuto = (props) => {
       });
     }
   };
-
-  console.log("cities :>> ", cities);
 
   const handleSelect = async (value) => {
     setCities(value);
@@ -45,9 +45,6 @@ const LocationAuto = (props) => {
     } else {
       const city = value.split(",")[1];
       const street = value.split(",")[0];
-
-      console.log("city :>> ", city);
-      console.log("street :>> ", street);
 
       geocodeByAddress(value).then((res) => {
         res[0].address_components.map((add) => {
