@@ -1,0 +1,39 @@
+.modal-content {
+  border: none !important;
+  border-radius: 20px !important;
+
+  .modal-body {
+    display: flex;
+    justify-content: center;
+
+    .eventTicket {
+      width: 100%;
+
+      .eventHeader {
+        height: 250px;
+
+        .eventDetails {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          padding: 30px;
+          color: white;
+          .eventTitle {
+            font-size: 30px;
+            font-weight: 600;
+            margin-bottom: 0;
+          }
+        }
+      }
+      .bottomPartOfTicket {
+        padding: 20px;
+        .ticketData {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+    }
+  }
+}

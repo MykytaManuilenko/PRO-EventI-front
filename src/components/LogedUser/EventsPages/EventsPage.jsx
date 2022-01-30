@@ -8,10 +8,15 @@ import SearchPart from "../../Landing/SearchPart/SearchPart";
 import { convertData } from "../../../utils/convertDate";
 import { useLocation } from "react-router-dom";
 import Loading from "../../UI/Loading/Loading";
+import UserRecomendation from "./UserRecomendation";
+import Search from "../../Landing/Search/Search";
 
 const EventsPage = () => {
   const [events, setEvents] = useState();
+
+  const [eventsCopy, setEventsCopy] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [isFiltered, setIsFiltered] = useState(false);
   const location = useLocation();
 
   const { filtered } =
@@ -23,6 +28,7 @@ const EventsPage = () => {
       .then((res) => {
         console.log("resEvents :>> ", res);
         setEvents(res.data);
+        setEventsCopy(res.data);
         setIsLoading(false);
         console.log("events page :>> ", res.data);
       })
@@ -37,41 +43,34 @@ const EventsPage = () => {
   return (
     <>
       <div className="containerEventPage">
-        <SearchPart
-          cname="SearchPartLogIn"
+        <Search
+          setIsFiltered={setIsFiltered}
           events={events}
-          pathName={"/events"}
+          setEventsCopy={setEventsCopy}
+          isAuth={true}
+          className="eventsPageSearch"
         />
+        {!isFiltered ? (
+          <>
+            <p className="title">Picked for you</p>
+            <UserRecomendation events={events} />
+          </>
+        ) : null}
         <p className="title">All Events</p>
         <div className="gridEventCont">
-          {!filtered
-            ? events &&
-              events.map((event) => {
-                return (
-                  <Card
-                    key={event.eventId}
-                    image={event.backgroundUrl}
-                    name={event.title}
-                    date={convertData(event.startTime)}
-                    eventId={event.eventId}
-                    isLiked={event.isLiked}
-                    price={event.price}
-                  />
-                );
-              })
-            : filtered.map((event) => {
-                return (
-                  <Card
-                    key={event.eventId}
-                    image={event.backgroundUrl}
-                    name={event.title}
-                    date={convertData(event.startTime)}
-                    eventId={event.eventId}
-                    isLiked={event.isLiked}
-                    price={event.price}
-                  />
-                );
-              })}
+          {events &&
+            eventsCopy.map((event) => {
+              return (
+                <Card
+                  key={event.eventId}
+                  image={event.backgroundUrl}
+                  name={event.title}
+                  date={convertData(event.startTime)}
+                  eventId={event.eventId}
+                  isLiked={event.isLiked}
+                />
+              );
+            })}
         </div>
         <Link to="/createEvent">
           <Button class="addEventButt">Add Event</Button>

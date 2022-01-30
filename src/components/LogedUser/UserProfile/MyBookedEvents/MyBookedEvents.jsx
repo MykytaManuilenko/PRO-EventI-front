@@ -16,7 +16,7 @@ const MyBookedEvents = () => {
           margin: "auto",
         }}
       >
-        <MyBookedEventsTemplate />
+        <MyBookedEventsTemplate hideButton />
       </div>
     </>
   );

@@ -6,10 +6,12 @@ import SearchPart from "../SearchPart/SearchPart";
 import { useEffect } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { convertData } from "../../../utils/convertDate";
+import Search from "../Search/Search";
 
-const Slider = () => {
-  const [events, setEvents] = useState();
+const Slider = (props) => {
+  // const [events, setEvents] = useState();
   const [topEvents, setTopEvents] = useState();
+  const [eventsCopy, setEventsCopy] = useState();
 
   useEffect(() => {
     axiosInstance
@@ -26,12 +28,13 @@ const Slider = () => {
     //   .then((res) => {
     //     console.log("allEvents :>> ", res);
     //     setEvents(res.data);
+    //     setEventsCopy(res.data);
     //   })
     //   .catch((err) => {
     //     console.log("err :>> ", err);
     //   });
   }, []);
-
+  console.log("eventsSlider :>> ", props.events);
   return (
     <div className="containerCarousel">
       <Carousel indicators={false} interval={null} className="Carousel">
@@ -55,8 +58,12 @@ const Slider = () => {
             );
           })}
       </Carousel>
-
-      <SearchPart events={topEvents} pathName={"/allEvents"} />
+      <Search
+        className="landingSearch"
+        events={props.events && props.events}
+        setEventsCopy={props.setEventsCopy}
+        isNotAuth={true}
+      />
     </div>
   );
 };

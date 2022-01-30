@@ -1,9 +1,14 @@
+@use "../../../style/colors" as color;
 .ArrowIcon {
   margin-left: 5px;
   width: 50px;
   position: relative;
   cursor: pointer;
   border-radius: 4px;
+
+  position: absolute;
+  top: 16px;
+  right: 0;
 }
 
 .left-bar {
@@ -19,12 +24,60 @@
   border-radius: 2px;
   &:after {
     content: "";
-    background-color: #fcc117;
+    background-color: color.$button-color;
     width: 20px;
     height: 4px;
     display: block;
     float: right;
     border-radius: 6px 10px 10px 6px;
+    transition: all 0.5s cubic-bezier(0.25, 1.7, 0.35, 0.8);
+    z-index: -1;
+  }
+}
+
+.notAuthLeftBar {
+  position: absolute;
+  background-color: transparent;
+  top: -2px;
+  left: 2px;
+  width: 20px;
+  height: 0;
+  display: block;
+  transform: rotate(45deg);
+  float: right;
+  border-radius: 2px;
+  &:after {
+    content: "";
+    background-color: color.$editButtonColor;
+    width: 20px;
+    height: 4px;
+    display: block;
+    float: right;
+    border-radius: 6px 10px 10px 6px;
+    transition: all 0.5s cubic-bezier(0.25, 1.7, 0.35, 0.8);
+    z-index: -1;
+  }
+}
+
+.notAuthRightBar {
+  position: absolute;
+  background-color: transparent;
+  top: -3px;
+  left: 14px;
+  width: 21px;
+  height: 10px;
+  display: block;
+  transform: rotate(-45deg);
+  float: right;
+  border-radius: 2px;
+  &:after {
+    content: "";
+    background-color: color.$editButtonColor;
+    width: 20px;
+    height: 4px;
+    display: block;
+    float: right;
+    border-radius: 10px 6px 6px 10px;
     transition: all 0.5s cubic-bezier(0.25, 1.7, 0.35, 0.8);
     z-index: -1;
   }
@@ -43,7 +96,7 @@
   border-radius: 2px;
   &:after {
     content: "";
-    background-color: #fcc117;
+    background-color: color.$button-color;
     width: 20px;
     height: 4px;
     display: block;
@@ -55,11 +108,13 @@
 }
 
 .open {
-  .left-bar:after {
+  .left-bar:after,
+  .notAuthLeftBar:after {
     transform-origin: center center;
     transform: rotate(-90deg);
   }
-  .right-bar:after {
+  .right-bar:after,
+  .notAuthRightBar:after {
     transform-origin: center center;
     transform: rotate(90deg);
   }

@@ -13,9 +13,11 @@ const Search = (props) => {
       if (search === "") {
         filtered.push(event);
         setSearch("");
+        props.setEvents(filtered);
         return filtered;
       } else if (event.title.toLowerCase().includes(search.toLowerCase())) {
         filtered.push(event);
+        props.setEvents(filtered);
         return filtered;
       } else if (!event.title.toLowerCase().includes(search.toLowerCase())) {
         notFound = "Not found any event :(";

@@ -14,12 +14,21 @@ const LocationAuto = (props) => {
 
   const hadleChange = (value) => {
     setCities(value);
+    if (value.length === 0) {
+      props.setAddress({
+        city: "",
+        street: "",
+        country: "",
+      });
+    }
   };
+
+  console.log("cities :>> ", cities);
 
   const handleSelect = async (value) => {
     setCities(value);
     console.log("value :>> ", value);
-    if (props.locationValue.street === "") {
+    if (props.isSearch === true || props.locationValue.street === "") {
       const city = value.split(",")[0];
       const country = value.split(",")[0];
       geocodeByAddress(value).then((res) => {
@@ -36,6 +45,9 @@ const LocationAuto = (props) => {
     } else {
       const city = value.split(",")[1];
       const street = value.split(",")[0];
+
+      console.log("city :>> ", city);
+      console.log("street :>> ", street);
 
       geocodeByAddress(value).then((res) => {
         res[0].address_components.map((add) => {
@@ -58,7 +70,12 @@ const LocationAuto = (props) => {
         onChange={hadleChange}
         onSelect={handleSelect}
         searchOptions={
-          props.locationValue.street === ""
+          props.locationValue && props.locationValue.street === ""
+            ? {
+                componentRestrictions: { country: ["pl"] },
+                types: ["(cities)"],
+              }
+            : props.isSearch === true
             ? {
                 componentRestrictions: { country: ["pl"] },
                 types: ["(cities)"],
@@ -77,7 +94,7 @@ const LocationAuto = (props) => {
               })}
             />
             <label style={{ left: 0 }} className={props.labelClass}>
-              Location
+              {props.label ? props.label : "Location"}
             </label>
 
             <div

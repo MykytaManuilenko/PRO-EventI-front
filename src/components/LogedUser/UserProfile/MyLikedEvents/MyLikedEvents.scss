@@ -25,8 +25,8 @@
     }
     .showButt {
       margin: 0;
-      border: 2px solid color.$button-color;
-      color: color.$button-color;
+      border: none;
+      background-color: color.$button-color;
     }
   }
 }

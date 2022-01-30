@@ -39,9 +39,14 @@ const MyLikedEventsTemplate = (props) => {
       <div className="containerForLikedPage">
         <div className="header">
           <p className="headerText">Liked</p>
-          <Button class="showButt" onClick={() => history.push("/likedEvents")}>
-            Show all
-          </Button>
+          {!props.hideButton && (
+            <Button
+              class="showButt"
+              onClick={() => history.push("/likedEvents")}
+            >
+              Show all
+            </Button>
+          )}
         </div>
 
         <div className="containerForLikedEvent">

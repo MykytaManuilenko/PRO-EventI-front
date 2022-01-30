@@ -15,6 +15,7 @@ const AlertBootstrap = (props) => {
 
   useEffect(() => {
     if (
+      alert &&
       alert !== null &&
       alert.status !== "error" &&
       props.disappear &&
@@ -34,13 +35,15 @@ const AlertBootstrap = (props) => {
       {alert !== null && isOpenAlert ? (
         <Alert
           variant={
-            alert !== null && alert.status === "error" ? "danger" : "success"
+            alert && alert !== null && alert.status === "error"
+              ? "danger"
+              : "success"
           }
           className="allertError"
           onClose={() => dispatch(uiActions.closeAlert())}
           dismissible
         >
-          {alert.message}
+          {alert && alert.message}
         </Alert>
       ) : null}
     </div>

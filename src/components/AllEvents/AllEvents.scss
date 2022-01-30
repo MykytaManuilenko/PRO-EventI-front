@@ -8,7 +8,6 @@
   margin: auto;
 
   .TitlePart {
-    margin-top: 61px;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -41,11 +40,5 @@
     justify-items: center;
     width: 100%;
     margin: 30px 0;
-  }
-
-  .searchPart {
-    background-color: transparent !important;
-    box-shadow: none;
-    margin-top: 120px !important;
   }
 }

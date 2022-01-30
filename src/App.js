@@ -27,11 +27,14 @@ import ForgotPasswordRedirect from "./components/LogInPage/ForgotPassword/Forgot
 import EditDraftEvent from "./components/LogedUser/EventsPages/EditDraftEvent/EditDraftEvent";
 import PostponeEvent from "./components/LogedUser/EventsPages/PostponeEvent/PostponeEvent";
 import BookEventPage from "./components/LogedUser/BookEventPage/BookEventPage";
+import ConfirmPostpone from "./components/LogedUser/EventsPages/PostponeEvent/ConfirmPostpone";
 import MyBookedEvents from "./components/LogedUser/UserProfile/MyBookedEvents/MyBookedEvents";
 function App() {
   const isAuthenticated = useSelector(
     (state) => state.authentication.isAuthenticated
   );
+
+  console.log("isAuthenticated :>> ", isAuthenticated);
 
   const userRole = useSelector((state) => state.authentication.userRole);
   return (
@@ -93,6 +96,13 @@ function App() {
             path="/myEvents/:eventId/edit"
             Component={EditDraftEvent}
             roles={["USER", "SYSTEM_ADMIN"]}
+          />
+
+          <PrivateRoute
+            isAuth={isAuthenticated}
+            path="/confirm/eventPostpone"
+            Component={ConfirmPostpone}
+            roles={["SYSTEM_ADMIN"]}
           />
           <PrivateRoute
             isAuth={isAuthenticated}

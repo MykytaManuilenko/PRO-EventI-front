@@ -46,6 +46,7 @@ const Form = (props) => {
   const [photosId, setPhotosId] = useState("");
   const [photosIdRecieved, setPhotosIdRecieved] = useState([]);
   const [buttonState, setButtonState] = useState("");
+  const MAXVALUE = 1000;
 
   useEffect(() => {
     getType();
@@ -154,7 +155,7 @@ const Form = (props) => {
         .max(100, "Must be 100 characters or less")
         .required("Field is required"),
       description: Yup.string()
-        .max(1000, "Must be 1000 characters or less")
+        .max(MAXVALUE, "Must be 1000 characters or less")
         .required("Field is required"),
       price: !freePrice
         ? Yup.number()
@@ -358,6 +359,9 @@ const Form = (props) => {
                 value={formik.values.description}
                 name="description"
               />
+              <p>
+                {formik.values.description.length}/{MAXVALUE}
+              </p>
               {formik.touched.description && formik.errors.description ? (
                 <p className="errorText">{formik.errors.description}</p>
               ) : null}

@@ -75,9 +75,11 @@ const MyEventsTemplate = (props) => {
         <div className="header">
           <p className="headerText">My Events</p>
 
-          <Button class="showButt" onClick={() => history.push("/myEvents")}>
-            Show all
-          </Button>
+          {!props.hideButton && (
+            <Button class="showButt" onClick={() => history.push("/myEvents")}>
+              Show all
+            </Button>
+          )}
         </div>
         <div className="cardsContainer">
           <table>

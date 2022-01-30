@@ -25,6 +25,7 @@
     "react-bootstrap": "^2.0.2",
     "react-dom": "^17.0.2",
     "react-geocode": "^0.2.3",
+    "react-google-qrcode": "^1.0.3",
     "react-items-carousel": "^2.8.0",
     "react-leaf-carousel": "^2.0.3",
     "react-places-autocomplete": "^7.3.0",

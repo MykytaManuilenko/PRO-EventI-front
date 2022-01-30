@@ -19,7 +19,7 @@ const MyBookedEventsTemplate = (props) => {
         }
       )
       .then((res) => {
-        console.log("resBooked :>> ", res);
+        // console.log("resBooked :>> ", res);
         setBookedEvents(res.data);
       })
       .catch((err) => {
@@ -33,27 +33,32 @@ const MyBookedEventsTemplate = (props) => {
     <>
       <div className="containerForLikedPage">
         <div className="header">
-          <p className="headerText">Liked</p>
-          <Button
-            class="showButt"
-            onClick={() => history.push("/bookedEvents")}
-          >
-            Show all
-          </Button>
+          <p className="headerText">My Tickets</p>
+          {!props.hideButton && (
+            <Button
+              class="showButt"
+              onClick={() => history.push("/bookedEvents")}
+            >
+              Show all
+            </Button>
+          )}
         </div>
         <div className="containerForLikedEvent">
           {bookedEvents && bookedEvents.length > 0 ? (
             bookedEvents.map((bookedEvent) => {
               return (
-                <Card
-                  image={bookedEvent.backgroundUrl}
-                  name={bookedEvent.title}
-                  eventId={bookedEvent.eventId}
-                  isLiked={bookedEvent.isLiked}
-                  key={bookedEvent.eventId}
-                  date={convertData(bookedEvent.startTime)}
-                  isCanceled={bookedEvent.canceled}
-                />
+                <>
+                  <Card
+                    image={bookedEvent.backgroundUrl}
+                    name={bookedEvent.title}
+                    eventId={bookedEvent.eventId}
+                    isLiked={bookedEvent.isLiked}
+                    key={bookedEvent.eventId}
+                    date={convertData(bookedEvent.startTime)}
+                    isCanceled={bookedEvent.canceled}
+                    tickets
+                  />
+                </>
               );
             })
           ) : (

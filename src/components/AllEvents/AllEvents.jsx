@@ -5,10 +5,14 @@ import SearchPart from "../Landing/SearchPart/SearchPart";
 import { useLocation } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import { convertData } from "../../utils/convertDate";
+import Search from "../Landing/Search/Search";
+import Loading from "../UI/Loading/Loading";
 
 const AllEvents = () => {
-  const [cardsArray, setCardsArr] = useState([]);
+  const [cardsArray, setCardsArr] = useState();
+  const [eventsCopy, setEventsCopy] = useState();
   const [search, setSearch] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     axiosInstance
@@ -16,6 +20,8 @@ const AllEvents = () => {
       .then((res) => {
         console.log("res :>> ", res);
         setCardsArr(res.data);
+        setEventsCopy(res.data);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log("err :>> ", err);
@@ -32,18 +38,19 @@ const AllEvents = () => {
     location.state && location.state.notFound ? location.state : {};
   const { searchValue } =
     location.state && location.state.searchValue ? location.state : {};
-  // const [filteredSearch, setFilteredSearch] = useState(
-  //   filtered ? filtered : cardsArray
-  // );
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <div className="main">
-        <SearchPart
+        {/* <SearchPart
           cname="searchPart"
           events={cardsArray}
           pathName={"/allEvents"}
-        />
+        /> */}
+        <Search events={cardsArray} setEventsCopy={setEventsCopy} />
         <div className="TitlePart">
           <p className="Title">
             All events{searchValue ? `: ${searchValue}` : ""}
@@ -51,7 +58,20 @@ const AllEvents = () => {
           <hr className="Line" />
         </div>
         <div className="CardsContainer">
-          {!filtered
+          {cardsArray &&
+            eventsCopy.map((event) => {
+              return (
+                <Card
+                  key={event.eventId}
+                  image={event.backgroundUrl}
+                  name={event.title}
+                  date={convertData(event.startTime)}
+                  eventId={event.eventId}
+                  isLiked={event.isLiked}
+                />
+              );
+            })}
+          {/* {!filtered
             ? cardsArray.map((card) => {
                 return (
                   <Card
@@ -75,7 +95,7 @@ const AllEvents = () => {
                     eventId={event.eventId}
                   />
                 );
-              })}
+              })} */}
           {/* {filtered.length === 0 && <p>{notFound}</p>} */}
 
           {/* {isMatch ? (

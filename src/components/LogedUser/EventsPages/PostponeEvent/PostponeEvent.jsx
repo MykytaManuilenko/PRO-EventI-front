@@ -7,13 +7,18 @@ import LocationAuto from "../../../UI/LocationAuto/LocationAuto";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../../../../utils/axiosInstance";
 import { convertDateWithTime } from "../../../../utils/convertDate";
-import Spinner from "react-bootstrap/Spinner";
 import GoBack from "../../../UI/GoBack/GoBack";
 import Button from "../../../UI/Button/Button";
 import Loading from "../../../UI/Loading/Loading";
+import { useDispatch } from "react-redux";
+import { uiActions } from "../../../../redux/slices/ui";
+import AlertBootstrap from "../../../UI/Alert/AlertBootstrap";
+import { useHistory } from "react-router-dom";
 
 const PostponeEvent = () => {
   const { eventId } = useParams();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [eventDetail, setEventDetail] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState({
@@ -70,9 +75,22 @@ const PostponeEvent = () => {
           params: { eventId: eventId },
         })
         .then((res) => {
+          dispatch(
+            uiActions.openAlert({
+              status: "success",
+              message: "Your application successfully created!",
+            })
+          );
+          history.goBack();
           console.log("resSendPostponeRequest :>> ", res);
         })
         .catch((err) => {
+          dispatch(
+            uiActions.openAlert({
+              status: "error",
+              message: err.response.data.message,
+            })
+          );
           console.log("errSendPostponeRequest :>> ", err);
         });
     },
@@ -83,6 +101,7 @@ const PostponeEvent = () => {
   return (
     <>
       <GoBack />
+      <AlertBootstrap />
       <div className="postponeEventContainer">
         <p className="title">Create new event</p>
         <hr />

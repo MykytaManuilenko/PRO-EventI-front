@@ -17,7 +17,7 @@ const MyLikedEvents = () => {
           margin: "auto",
         }}
       >
-        <MyLikedEventsTemplate />
+        <MyLikedEventsTemplate hideButton />
       </div>
     </>
   );

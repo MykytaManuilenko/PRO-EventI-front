@@ -4,7 +4,7 @@ import Dropdown from "../../../UI/Dropdown/Dropdown";
 import axiosInstance from "../../../../utils/axiosInstance";
 import { useEffect } from "react";
 
-const Filters = () => {
+const Filters = (props) => {
   const [filters, setFilters] = useState([]);
   const [type, setType] = useState(false);
   const [data, setData] = useState(false);
@@ -21,14 +21,14 @@ const Filters = () => {
         console.log("errFilters :>> ", err);
       });
 
-    axiosInstance
-      .get("/api/events", { params: { type: "science" } })
-      .then((res) => {
-        console.log("filters :>> ", res);
-      })
-      .catch((err) => {
-        console.log("filters :>> ", err);
-      });
+    // axiosInstance
+    //   .get("/api/events", { params: { type: "science" } })
+    //   .then((res) => {
+    //     console.log("filters :>> ", res);
+    //   })
+    //   .catch((err) => {
+    //     console.log("filters :>> ", err);
+    //   });
   }, []);
 
   const types = ["All type", "Music", "Dance", "Science"];
@@ -45,6 +45,22 @@ const Filters = () => {
       console.log("filtersCopy :>> ", filtersCopy);
       setFilters(filtersCopy);
     }
+    console.log("filtersc", filtersCopy.toString().toLowerCase());
+    props.setIsFiltered(filtersCopy.length === 0 ? false : true);
+    axiosInstance
+      .get(
+        "/api/events",
+        filtersCopy.length !== 0 && {
+          params: { type: filtersCopy.toString().toLowerCase() },
+        }
+      )
+      .then((res) => {
+        console.log("filters :>> ", res);
+        props.setEvents(res.data);
+      })
+      .catch((err) => {
+        console.log("filters :>> ", err);
+      });
   };
   const name = [];
   listOfFilter.map((names) => name.push(names));

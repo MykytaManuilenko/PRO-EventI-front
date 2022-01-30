@@ -9,9 +9,15 @@ import TypeCard from "../../../UI/TypeCard/TypeCard";
 import GoBack from "../../../UI/GoBack/GoBack";
 import GoogleMaps from "../../../UI/GoogleMap/GoogleMaps";
 import Geocode from "react-geocode";
-import { CreateIcon, LocationIconLoged } from "../../../../assets/icons";
+import {
+  CreateIcon,
+  LocationIconLoged,
+  PublishIcon,
+} from "../../../../assets/icons";
 import Loading from "../../../UI/Loading/Loading";
 import AlertBootstrap from "../../../UI/Alert/AlertBootstrap";
+import { useDispatch } from "react-redux";
+import { uiActions } from "../../../../redux/slices/ui";
 
 const EventDetail = () => {
   const { eventId } = useParams();
@@ -21,7 +27,9 @@ const EventDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [location, setLocation] = useState();
   const [likedArray, setLikedArray] = useState([]);
+  const [isPublished, setIsPublished] = useState(false);
   const history = useHistory();
+  const dispatch = useDispatch();
   Geocode.setApiKey("AIzaSyCQQkyLlLCd1mI89e6MpM-NYA2jxHDvN9E");
 
   useEffect(() => {
@@ -54,7 +62,7 @@ const EventDetail = () => {
       .catch((err) => {
         console.log("err :>> ", err);
       });
-  }, []);
+  }, [isPublished]);
 
   const convertDataWithTime = (date) => {
     const data = new Date(date);
@@ -65,6 +73,30 @@ const EventDetail = () => {
       ":" +
       data.getUTCMinutes()
     );
+  };
+
+  const publishEventHandler = (eventId) => {
+    axiosInstance
+      .patch(`/api/events/${eventId}`)
+      .then((res) => {
+        console.log("res :>> ", res);
+        dispatch(
+          uiActions.openAlert({
+            status: "success",
+            message: "Event is published successfully!",
+          })
+        );
+        setIsPublished(!isPublished);
+      })
+      .catch((err) => {
+        dispatch(
+          uiActions.openAlert({
+            status: "error",
+            message: err.response.data.message,
+          })
+        );
+        console.log("err :>> ", err);
+      });
   };
 
   const addFavourite = (eventId) => {
@@ -122,7 +154,13 @@ const EventDetail = () => {
                 </div>
                 {event.status === "DRAFT" && (
                   <div className="draftFunctionsContainer">
-                    <TypeCard typeName={event.status} />
+                    <TypeCard typeName={event.status} class="type" />
+                    <Button
+                      class="editButton"
+                      onClick={() => publishEventHandler(eventId)}
+                    >
+                      <PublishIcon />
+                    </Button>
                     <Button
                       class="editButton"
                       onClick={() =>

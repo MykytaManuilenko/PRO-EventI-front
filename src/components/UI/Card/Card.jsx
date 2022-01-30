@@ -5,11 +5,13 @@ import { useSelector } from "react-redux";
 import axiosInstance from "../../../utils/axiosInstance";
 import Like from "../LikeSVG/Like";
 import { useHistory } from "react-router-dom";
+import TicketModal from "../../LogedUser/UserProfile/MyBookedEvents/TicketModal";
 
 const Card = (props) => {
   const isAuthenticated = useSelector(
     (state) => state.authentication.isAuthenticated
   );
+  const [modalShow, setModalShow] = useState(false);
   const history = useHistory();
   const [isLiked, setIsLiked] = useState(props.isLiked);
   const [likedArray, setLikedArray] = useState([]);
@@ -46,35 +48,55 @@ const Card = (props) => {
   };
 
   return (
-    <div className="Card">
-      <div
-        className={["UpPart", props.className].join(" ")}
-        style={{ background: `center / cover no-repeat url(${props.image})` }}
-      ></div>
-      <div className="DownPart">
-        <div className="TextContainer">
-          <p className="EventName">{props.name}</p>
-          <p className="EventDate">{props.date}</p>
+    <>
+      <div className="Card">
+        <div
+          className={["UpPart", props.className].join(" ")}
+          style={{ background: `center / cover no-repeat url(${props.image})` }}
+        ></div>
+        <div className="DownPart">
+          <div className="TextContainer">
+            <p className="EventName">{props.name}</p>
+            <p className="EventDate">{props.date}</p>
+          </div>
         </div>
-      </div>
-      <div className="hovered">
-        <div className="hoveredContainer">
-          {isAuthenticated && (
-            <Like
-              isLiked={isLiked}
-              addFavourite={() => addFavourite(props.eventId)}
-            />
+
+        <div className="hovered">
+          {props.tickets ? (
+            <div className="hoveredContainer">
+              <Button
+                class="showMoreButtNonAuth"
+                onClick={() => setModalShow(true)}
+              >
+                View ticket
+              </Button>
+            </div>
+          ) : (
+            <div className="hoveredContainer">
+              {isAuthenticated && (
+                <Like
+                  isLiked={isLiked}
+                  addFavourite={() => addFavourite(props.eventId)}
+                />
+              )}
+              <Button
+                class={isAuthenticated ? "showMoreButt" : "showMoreButtNonAuth"}
+                onClick={() => history.push(`/events/${props.eventId}`)}
+              >
+                Show more
+              </Button>
+            </div>
           )}
-          <p>{props.price}</p>
-          <Button
-            class={isAuthenticated ? "showMoreButt" : "showMoreButtNonAuth"}
-            onClick={() => history.push(`/events/${props.eventId}`)}
-          >
-            Show more
-          </Button>
         </div>
       </div>
-    </div>
+      {props.tickets && (
+        <TicketModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          eventId={props.eventId}
+        />
+      )}
+    </>
   );
 };
 

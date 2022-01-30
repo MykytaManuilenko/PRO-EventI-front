@@ -24,10 +24,10 @@ const CardsPart = (props) => {
 
       <div className="CardsContainer">
         {props.events &&
-          props.events.map((event, index) => {
-            if (index > 8) return null;
+          props.events.map((event) => {
             return (
               <Card
+                key={event.eventId}
                 image={event.backgroundUrl}
                 name={event.title}
                 date={convertData(event.startTime)}

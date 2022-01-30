@@ -8,32 +8,46 @@ import { convertData } from "../../../utils/convertDate";
 
 const CardSlider = (props) => {
   return (
-    <div className="carousel__container">
+    <div
+      className={props.isAuth ? "carouselContainerAuth" : "carousel__container"}
+    >
       <CarouselProvider
-        naturalSlideWidth={50}
+        naturalSlideWidth={props.isAuth ? 100 : 50}
         naturalSlideHeight={225}
-        totalSlides={8}
+        totalSlides={10}
         visibleSlides={1}
-        currentSlide={2}
+        currentSlide={1}
       >
-        <Slider>
+        <Slider className={props.isAuth ? "authPerson" : "carousel__slider"}>
           {props.events &&
             props.events.map((event, key) => {
               return (
                 <Slide index={key}>
-                  <Card
-                    className="nonAuthenticated"
-                    image={event.backgroundUrl}
-                    name={event.title}
-                    date={convertData(event.startTime)}
-                  />
+                  {props.isAuth ? (
+                    <Card
+                      key={event.eventId}
+                      image={event.backgroundUrl}
+                      name={event.title}
+                      date={convertData(event.startTime)}
+                      eventId={event.eventId}
+                      isLiked={event.isLiked}
+                      price={event.price}
+                    />
+                  ) : (
+                    <Card
+                      className="nonAuthenticated"
+                      image={event.backgroundUrl}
+                      name={event.title}
+                      date={convertData(event.startTime)}
+                    />
+                  )}
                 </Slide>
               );
             })}
         </Slider>
         <Dot className="dots" slide={1}></Dot>
-        <Dot className="dots" slide={2}></Dot>
-        <Dot className="dots" slide={4}></Dot>
+        <Dot className="dots" slide={3}></Dot>
+        <Dot className="dots" slide={5}></Dot>
       </CarouselProvider>
     </div>
   );
