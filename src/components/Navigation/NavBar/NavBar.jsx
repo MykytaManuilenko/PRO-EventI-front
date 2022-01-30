@@ -77,28 +77,28 @@ const NavBar = (props) => {
         <NavItem active={navbar} colour={colour} />
       </div>
       <div className="rightPart">
-        <div
-          className="location"
+        {/* <div */}
+        {/* className="location"
           ref={ref}
           onClick={() => {
             setIsClicked(!isClicked);
           }}
           style={{ color: colour }}
-        >
-          {isClicked ? (
-            <LocationAuto
+        > */}
+        {/* {isClicked ? ( */}
+        {/* <LocationAuto
               locValue={locValue}
               setLocValue={setLocValue}
               setIsClicked={setIsClicked}
             />
-          ) : (
-            <div>
-              {/* <img src="./location.svg" alt="" className="locationI" />{" "} */}
-              <LocationIcon className="locationI" />
-              {locValue ? locValue : "Choose city"}
-            </div>
-          )}
-        </div>
+          ) : ( */}
+        {/* <div> */}
+        {/* <img src="./location.svg" alt="" className="locationI" />{" "} */}
+        {/* <LocationIcon className="locationI" /> */}
+        {/* {locValue ? locValue : "Choose city"} */}
+        {/* </div> */}
+        {/* )} */}
+        {/* </div> */}
         {!isAuthenticated ? (
           <Link to="/login">
             <button className="logButton">Log in</button>

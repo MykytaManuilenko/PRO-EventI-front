@@ -9,8 +9,14 @@ import Search from "../Landing/Search/Search";
 import Loading from "../UI/Loading/Loading";
 
 const AllEvents = () => {
+  const location = useLocation();
+  const { filtered } =
+    location.state && location.state.filtered ? location.state : {};
+  const { searchValue } =
+    location.state && location.state.searchValue ? location.state : {};
+
   const [cardsArray, setCardsArr] = useState();
-  const [eventsCopy, setEventsCopy] = useState();
+  const [eventsCopy, setEventsCopy] = useState(filtered ? filtered : []);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,26 +36,12 @@ const AllEvents = () => {
 
   localStorage.setItem("search", search);
 
-  const location = useLocation();
-
-  const { filtered } =
-    location.state && location.state.filtered ? location.state : {};
-  const { notFound } =
-    location.state && location.state.notFound ? location.state : {};
-  const { searchValue } =
-    location.state && location.state.searchValue ? location.state : {};
-
   if (isLoading) {
     return <Loading />;
   }
   return (
     <>
       <div className="main">
-        {/* <SearchPart
-          cname="searchPart"
-          events={cardsArray}
-          pathName={"/allEvents"}
-        /> */}
         <Search events={cardsArray} setEventsCopy={setEventsCopy} />
         <div className="TitlePart">
           <p className="Title">

@@ -1,7 +1,7 @@
 .carousel__container {
   // max-width: 550px;
   margin: auto 0;
-  width: 100vw;
+  width: 100%;
   margin-top: 59px;
 }
 
@@ -11,14 +11,16 @@
 }
 
 /* gives us the illusion of a "centered" slide */
-.carousel__slider {
+.notAuth {
   // padding-left: 32%;
   // padding-right: 42%;
-  padding: 25px;
+  // padding: 25px;
   // display: flex;
   // justify-content: center;
   // gap: 25px;
   height: 300px;
+  padding-left: 32%;
+  padding-right: 35%;
 }
 .authPerson {
   padding-left: 18%;

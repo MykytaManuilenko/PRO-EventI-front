@@ -3,7 +3,6 @@ import "./NavItem.scss";
 import { Link } from "react-router-dom";
 
 const NavItem = (props) => {
-  console.log("props.colour :>> ", props.colour);
   return (
     <ul className={"NavItem" + (props.active ? " activeNavItem" : "")}>
       <li>

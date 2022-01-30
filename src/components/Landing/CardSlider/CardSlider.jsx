@@ -12,13 +12,13 @@ const CardSlider = (props) => {
       className={props.isAuth ? "carouselContainerAuth" : "carousel__container"}
     >
       <CarouselProvider
-        naturalSlideWidth={props.isAuth ? 100 : 50}
+        naturalSlideWidth={props.isAuth ? 100 : 100}
         naturalSlideHeight={225}
         totalSlides={10}
         visibleSlides={1}
         currentSlide={1}
       >
-        <Slider className={props.isAuth ? "authPerson" : "carousel__slider"}>
+        <Slider className={props.isAuth ? "authPerson" : "notAuth"}>
           {props.events &&
             props.events.map((event, key) => {
               return (

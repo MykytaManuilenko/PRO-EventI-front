@@ -70,6 +70,10 @@ const Search = (props) => {
         if (props.isNotAuth === true) {
           history.push({
             pathname: "/allEvents",
+            state: {
+              filtered: filteredEvents,
+              searchValue: search,
+            },
           });
         }
       })
