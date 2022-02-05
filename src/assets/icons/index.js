@@ -18,7 +18,6 @@ export { ReactComponent as LocationIcon } from "./location.svg";
 export { ReactComponent as LocationIconLoged } from "./locationLoged.svg";
 export { ReactComponent as LogOutIcon } from "./logOutButt.svg";
 export { ReactComponent as FriendsIcon } from "./friendsIcon.svg";
-// export { ReactComponent as Mess } from "./messageIcon.svg";
 export { ReactComponent as PublishIcon } from "./publish.svg";
 export { ReactComponent as ReadMoreIcon } from "./readMore.svg";
 export { ReactComponent as MoreIcon } from "./more.svg";

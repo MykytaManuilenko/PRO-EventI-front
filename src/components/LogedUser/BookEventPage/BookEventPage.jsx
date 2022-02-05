@@ -10,7 +10,9 @@ import { useState } from "react";
 import Loading from "../../UI/Loading/Loading";
 import { LocationIconLoged } from "../../../assets/icons";
 import { convertData } from "../../../utils/convertDate";
+import Button from "../../UI/Button/Button";
 import AlertBootstrap from "../../UI/Alert/AlertBootstrap";
+import EventTicket from "./EventTicket";
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 const BookEventPage = () => {
@@ -19,16 +21,6 @@ const BookEventPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(true);
 
-  const convertDataWithTime = (date) => {
-    const data = new Date(date);
-    return (
-      convertData(date) +
-      " at " +
-      data.getUTCHours() +
-      ":" +
-      data.getUTCMinutes()
-    );
-  };
   useEffect(() => {
     axiosInstance
       .get(`/api/events/${eventId}`)
@@ -62,61 +54,20 @@ const BookEventPage = () => {
         <GoBack />
 
         <div className="contentContainer">
-          <Elements stripe={stripePromise}>
-            <PaymentForm eventId={eventId} />
-          </Elements>
+          {eventDetails && eventDetails.price !== "0.00" && (
+            <Elements stripe={stripePromise}>
+              <PaymentForm
+                eventId={eventId}
+                eventDetails={eventDetails && eventDetails}
+              />
+            </Elements>
+          )}
 
-          <div className="eventTicket">
-            <div
-              className="eventHeader"
-              style={
-                eventDetails && {
-                  background: `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), center / cover no-repeat url(${eventDetails.backgroundUrl}) `,
-                }
-              }
-            >
-              <div className="eventDetails">
-                <p className="eventTitle">
-                  {eventDetails && eventDetails.title}
-                </p>
-                <p className="secondary">
-                  <p>
-                    {convertDataWithTime(
-                      eventDetails && eventDetails.startTime
-                    )}
-                  </p>
-                </p>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginTop: "20px",
-                  }}
-                >
-                  <LocationIconLoged
-                    style={{ width: "24px", height: "24px", zIndex: 2 }}
-                  />
-                  <p style={{ marginBottom: "0", marginLeft: "5px" }}>
-                    {eventDetails && eventDetails.address.country},{" "}
-                    {eventDetails && eventDetails.address.city},{" "}
-                    {eventDetails && eventDetails.address.street}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="bottomPartOfTicket">
-              <p className="userName">
-                Ticket for{" "}
-                <b>
-                  {userData && userData.firstName}{" "}
-                  {userData && userData.lastName}
-                </b>
-              </p>
-              <p className="totalPrice">
-                Total Price: <b>{eventDetails && eventDetails.price}</b>
-              </p>
-            </div>
-          </div>
+          <EventTicket
+            eventDetails={eventDetails}
+            userData={userData}
+            eventId={eventId}
+          />
         </div>
       </div>
     </>

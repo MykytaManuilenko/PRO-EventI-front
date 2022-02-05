@@ -62,17 +62,6 @@ function usePaymentForm(eventPrice, eventId, history, dispatch) {
           })
         );
       });
-    // fetch(`${process.env.REACT_APP_API_URL}/charge`, {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     paymentMethodId,
-    //     amount: eventPrice,
-    //   }),
-    //   credentials: "include",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
   };
 
   return {

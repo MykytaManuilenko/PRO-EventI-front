@@ -17,6 +17,43 @@
     gap: 50px;
   }
 
+  .eventTicketRegister {
+    width: 100%;
+    position: relative;
+    border-radius: 20px;
+    .eventHeader {
+      width: 100%;
+      height: 250px;
+      border-radius: 20px;
+      position: relative;
+
+      .eventDetails {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 30px;
+        color: white;
+        .eventTitle {
+          font-size: 30px;
+          font-weight: 600;
+          margin-bottom: 0;
+        }
+      }
+    }
+    .bottomPartOfTicket {
+      padding: 20px;
+      .userName {
+        text-align: start;
+        margin-bottom: 10px;
+      }
+      .totalPrice {
+        text-align: end;
+        margin: 0;
+      }
+    }
+  }
+
   .eventTicket {
     width: 50%;
     position: relative;
@@ -53,5 +90,9 @@
         margin: 0;
       }
     }
+  }
+  .registerEventButton {
+    background-color: #ff6a7c;
+    border: none;
   }
 }

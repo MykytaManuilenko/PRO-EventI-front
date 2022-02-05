@@ -10,7 +10,6 @@ import usePaymentForm from "./usePaymentForm";
 import "./PaymentForm.scss";
 import StripeInput from "../../../UI/Input/StripeInput";
 import Button from "../../../UI/Button/Button";
-import { styled } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -18,22 +17,12 @@ const PaymentForm = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { handleSubmit } = usePaymentForm(
-    "2",
+    props.eventDetails.price,
     props.eventId,
     history,
     dispatch
   );
 
-  const CardElementContainer = styled("div")({
-    width: "60%",
-    display: "flex",
-    flexDirection: "column",
-    aligItems: "center",
-    "& .StripeElement": {
-      width: "100%",
-      padding: "15px",
-    },
-  });
   return (
     <>
       <form onSubmit={handleSubmit} className="paymentForm">
@@ -82,14 +71,9 @@ const PaymentForm = (props) => {
             InputLabelProps={{ shrink: true }}
           />
         </div>
-        {/* <CardElementContainer>
-          <CardElement />
-        </CardElementContainer> */}
-
         <Button class="payButton" type="submit">
           Pay
         </Button>
-        {/* <button>Pay</button> */}
       </form>
     </>
   );
