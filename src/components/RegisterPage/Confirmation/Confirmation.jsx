@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
 import { uiActions } from "../../../redux/slices/ui";
+import axiosInstance from "../../../utils/axiosInstance";
 
 const Confirmation = () => {
   const location = useLocation();
@@ -19,7 +20,7 @@ const Confirmation = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios
+    axiosInstance
       .patch(`/api/confirmations/${requestId}/registration?hash=${hash}`)
       .then(async (res) => {
         history.push("/login");

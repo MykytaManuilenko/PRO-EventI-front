@@ -63,42 +63,6 @@ const AllEvents = () => {
                 />
               );
             })}
-          {/* {!filtered
-            ? cardsArray.map((card) => {
-                return (
-                  <Card
-                    image={card.backgroundUrl}
-                    name={card.title}
-                    eventId={card.eventId}
-                    isLiked={card.isLiked}
-                    key={card.eventId}
-                    date={convertData(card.startTime)}
-                  />
-                );
-              })
-            : filtered.map((event) => {
-                return (
-                  <Card
-                    image={event.backgroundUrl}
-                    name={event.title}
-                    date={convertData(event.startTime)}
-                    key={event.eventId}
-                    isLiked={event.isLiked}
-                    eventId={event.eventId}
-                  />
-                );
-              })} */}
-          {/* {filtered.length === 0 && <p>{notFound}</p>} */}
-
-          {/* {isMatch ? (
-            filteredSearch.map((event, index) => {
-              return (
-                <Card image={event.image} name={event.name} date={event.date} />
-              );
-            })
-          ) : (
-            <h3>Not found</h3>
-          )} */}
         </div>
       </div>
     </>

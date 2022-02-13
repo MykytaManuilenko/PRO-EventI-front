@@ -103,7 +103,7 @@ const PostponeEvent = () => {
       <GoBack />
       <AlertBootstrap />
       <div className="postponeEventContainer">
-        <p className="title">Create new event</p>
+        <p className="title">Postpone event</p>
         <hr />
         <form
           className="postponeForm"

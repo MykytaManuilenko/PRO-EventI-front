@@ -96,7 +96,7 @@ const PhotoModal = (props) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Add event type
+          Add event photo
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>

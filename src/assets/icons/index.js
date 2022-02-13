@@ -23,3 +23,6 @@ export { ReactComponent as ReadMoreIcon } from "./readMore.svg";
 export { ReactComponent as MoreIcon } from "./more.svg";
 export { ReactComponent as SearchIcon } from "./search.svg";
 export { ReactComponent as UserAvatar } from "./avatar.svg";
+export { ReactComponent as HomePageBackground } from "./homePageBackground.svg";
+export { ReactComponent as FirstStepInstruction } from "./firstStep.svg";
+export { ReactComponent as BackgroundAuthentication } from "./loginRegisterBAckground.svg";

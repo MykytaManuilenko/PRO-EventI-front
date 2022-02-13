@@ -40,6 +40,6 @@ const store = configureStore({
 });
 
 const persistor = persistStore(store);
-// persistor.purge();
-// localStorage.clear();
+persistor.purge();
+localStorage.clear();
 export { store, persistor };

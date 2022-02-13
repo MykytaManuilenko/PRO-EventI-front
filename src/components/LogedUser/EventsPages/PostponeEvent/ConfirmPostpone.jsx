@@ -34,7 +34,7 @@ const ConfirmPostpone = () => {
         console.log("err :>> ", err);
       });
   }, []);
-  return <div> Hello this is confiramtion of postpone</div>;
+  return <div>Event is successfully postponed!</div>;
 };
 
 export default ConfirmPostpone;

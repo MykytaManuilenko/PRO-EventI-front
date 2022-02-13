@@ -1,0 +1,77 @@
+@use "../../style/colors" as color;
+.landingContainer {
+  //   height: 100vh;
+  display: flex;
+  //   justify-content: flex-end;
+  flex-direction: column;
+  //   position: relative;
+
+  .topLandingContainer {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    .icon {
+      width: 1057px;
+      position: absolute;
+      height: auto;
+      top: 0;
+      right: 0;
+    }
+    .title {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-direction: column;
+      width: 80%;
+      margin-left: 150px;
+      .p {
+        text-align: left;
+      }
+      .joinUsButton {
+        margin-top: 10px;
+        background-color: transparent;
+        border: 2px solid color.$purple;
+        color: color.$purple;
+        box-shadow: none !important;
+        text-shadow: none;
+      }
+    }
+  }
+  .instructionContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    margin: 150px 150px;
+    .titleInstruction {
+      font-size: 24px;
+    }
+    .stepsContainer {
+      width: 100%;
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      gap: 40px;
+      .steps {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .stepIcon {
+          width: 407px;
+          height: auto;
+        }
+        .textContainer {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+  .backgroundImage {
+    width: 100vw;
+    position: relative;
+    height: 769px;
+  }
+}

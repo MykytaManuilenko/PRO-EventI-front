@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 
 const MyBookedEventsTemplate = (props) => {
   const [bookedEvents, setBookedEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
   useEffect(() => {
     axiosInstance
@@ -21,12 +22,13 @@ const MyBookedEventsTemplate = (props) => {
       .then((res) => {
         console.log("resBOOKEDEVENT :>> ", res);
         setBookedEvents(res.data);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log("errBooker :>> ", err);
       });
   }, []);
-  if (bookedEvents.length === 0) {
+  if (isLoading) {
     return <Loading />;
   }
   return (
@@ -62,7 +64,7 @@ const MyBookedEventsTemplate = (props) => {
               );
             })
           ) : (
-            <p>You have no booked events :(</p>
+            <p style={{ whiteSpace: "nowrap" }}>You have no booked events :(</p>
           )}
         </div>
       </div>

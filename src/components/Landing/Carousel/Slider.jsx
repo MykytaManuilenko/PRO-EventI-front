@@ -9,9 +9,7 @@ import { convertData } from "../../../utils/convertDate";
 import Search from "../Search/Search";
 
 const Slider = (props) => {
-  // const [events, setEvents] = useState();
   const [topEvents, setTopEvents] = useState();
-  const [eventsCopy, setEventsCopy] = useState();
 
   useEffect(() => {
     axiosInstance
@@ -23,16 +21,6 @@ const Slider = (props) => {
       .catch((err) => {
         console.log("err :>> ", err);
       });
-    // axiosInstance
-    //   .get("/api/events")
-    //   .then((res) => {
-    //     console.log("allEvents :>> ", res);
-    //     setEvents(res.data);
-    //     setEventsCopy(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log("err :>> ", err);
-    //   });
   }, []);
   console.log("eventsSlider :>> ", props.events);
   return (

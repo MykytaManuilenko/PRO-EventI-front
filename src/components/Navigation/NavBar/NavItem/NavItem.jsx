@@ -5,22 +5,16 @@ import { Link } from "react-router-dom";
 const NavItem = (props) => {
   return (
     <ul className={"NavItem" + (props.active ? " activeNavItem" : "")}>
-      <li>
+      {/* <li>
         <Link to="/" style={{ color: props.colour }}>
           Home
         </Link>
       </li>
       <li>
-        <Link to="/allEvents" style={{ color: props.colour }}>
+        <Link to="/login" style={{ color: props.colour }}>
           Events
         </Link>
-      </li>
-      <li>
-        <Link to="/" style={{ color: props.colour }}>
-          {" "}
-          About us
-        </Link>
-      </li>
+      </li> */}
     </ul>
   );
 };

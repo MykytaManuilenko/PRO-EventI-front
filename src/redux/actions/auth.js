@@ -5,7 +5,7 @@ import jwt from "jwt-decode";
 import axiosInstance from "../../utils/axiosInstance";
 
 const registrationUser = (data) => (dispatch) => {
-  axios
+  axiosInstance
     .post("/api/register", data)
     .then((res) => {
       dispatch(
@@ -36,6 +36,7 @@ const logInUser = (data, history) => (dispatch) => {
       history.push("/userProfile");
     })
     .catch((err) => {
+      console.log("err :>> ", err);
       dispatch(
         uiActions.openAlert({
           status: "error",

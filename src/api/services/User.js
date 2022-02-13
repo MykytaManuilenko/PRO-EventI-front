@@ -1,7 +1,8 @@
+import axios from "axios";
 import axiosInstance from "../../utils/axiosInstance";
 
 function getEventTypes(url) {
-  return axiosInstance
+  return axios
     .get(url)
     .then((res) => {
       return res;

@@ -41,7 +41,7 @@ const ForgotPasswordRedirect = () => {
   return (
     <div
       style={{
-        backgroundImage: "url(./Background.svg)",
+        backgroundImage: "url(./loginRegisterBAckground.svg)",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",

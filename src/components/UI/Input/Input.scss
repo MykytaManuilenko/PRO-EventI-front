@@ -1,4 +1,5 @@
 @use "../../../style/AlertMessages/errorMessage";
+@use "../../../style/colors" as color;
 .inputCont {
   display: flex;
   flex-direction: column;
@@ -7,7 +8,7 @@
   width: 100%;
   .inputName {
     border: none;
-    border-bottom: 0.6px solid #fcc117;
+    border-bottom: 0.6px solid color.$purple;
     padding: 8px 0;
     outline: none;
     font-weight: 300;

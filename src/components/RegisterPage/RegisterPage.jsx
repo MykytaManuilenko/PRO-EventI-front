@@ -10,6 +10,7 @@ import Multiselect from "multiselect-react-dropdown";
 import getEventTypes from "../../api/services/User";
 import Input from "../UI/Input/Input";
 import AlertBootstrap from "../UI/Alert/AlertBootstrap";
+import axiosInstance from "../../utils/axiosInstance";
 
 const RegisterPage = () => {
   const [selectedValue, setSelectedVal] = useState("");
@@ -73,12 +74,15 @@ const RegisterPage = () => {
   });
 
   useEffect(() => {
-    getEventTypes("/api/event-types")
-      .then((response) => {
-        console.log("response :>> ", response.data);
-        setTypes(response.data);
+    axiosInstance
+      .get("/api/event-types")
+      .then((res) => {
+        console.log("res :>> ", res);
+        setTypes(res.data);
       })
-      .catch((err) => console.log("errAAA :>> ", err));
+      .catch((err) => {
+        console.log("err :>> ", err);
+      });
   }, []);
   return (
     <div className="regPage">
@@ -151,7 +155,7 @@ const RegisterPage = () => {
               style={{
                 searchBox: {
                   border: "none",
-                  borderBottom: "1px solid #fcc117",
+                  borderBottom: "1px solid #8698e9",
                   borderRadius: "0",
                 },
                 inputField: {

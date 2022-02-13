@@ -29,6 +29,7 @@ const LogInPage = () => {
         email: formik.values.email,
         password: formik.values.password,
       };
+      console.log("data :>> ", data);
       dispatch(logInUser(data, history));
     },
   });

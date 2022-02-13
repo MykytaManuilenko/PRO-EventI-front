@@ -1,12 +1,13 @@
 import axios from "axios";
 import jwt from "jwt-decode";
 import dayjs from "dayjs";
-
+const { REACT_APP_BACKEND_URL } = process.env;
 let authToken = localStorage.getItem("accessToken")
   ? localStorage.getItem("accessToken")
   : null;
 console.log("localStorage :>> ", localStorage.getItem("accessToken"));
 const axiosInstance = axios.create({
+  baseURL: REACT_APP_BACKEND_URL,
   headers: { authorization: "Bearer " + authToken && authToken },
 });
 

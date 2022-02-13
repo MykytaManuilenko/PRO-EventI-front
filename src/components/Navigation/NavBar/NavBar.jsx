@@ -2,11 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import NavItem from "./NavItem/NavItem";
 import "./NavBar.scss";
 import { Link } from "react-router-dom";
-import LocationAuto from "../../UI/LocationAuto/LocationAuto";
 import { useDispatch, useSelector } from "react-redux";
 import { logOutUser } from "../../../redux/actions/auth";
 import { useLocation } from "react-router-dom";
-import { LocationIcon } from "../../../assets/icons";
 
 const NavBar = (props) => {
   const isAuthenticated = useSelector(
@@ -72,33 +70,14 @@ const NavBar = (props) => {
           : { background: "white", borderRadius: "0 0 50px 50px" }
       }
     >
-      <h2 className="logo">Eventl</h2>
+      <Link to="/">
+        <h2 className="logo">Eventl</h2>
+      </Link>
+
       <div className="items">
         <NavItem active={navbar} colour={colour} />
       </div>
       <div className="rightPart">
-        {/* <div */}
-        {/* className="location"
-          ref={ref}
-          onClick={() => {
-            setIsClicked(!isClicked);
-          }}
-          style={{ color: colour }}
-        > */}
-        {/* {isClicked ? ( */}
-        {/* <LocationAuto
-              locValue={locValue}
-              setLocValue={setLocValue}
-              setIsClicked={setIsClicked}
-            />
-          ) : ( */}
-        {/* <div> */}
-        {/* <img src="./location.svg" alt="" className="locationI" />{" "} */}
-        {/* <LocationIcon className="locationI" /> */}
-        {/* {locValue ? locValue : "Choose city"} */}
-        {/* </div> */}
-        {/* )} */}
-        {/* </div> */}
         {!isAuthenticated ? (
           <Link to="/login">
             <button className="logButton">Log in</button>

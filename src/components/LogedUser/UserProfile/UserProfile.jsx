@@ -80,8 +80,8 @@ const UserProfile = (props) => {
                 >
                   <LocationIcon />
                   <p>
-                    {userInfo.address.city === "" &&
-                    userInfo.address.country === ""
+                    {userInfo.address.city === null &&
+                    userInfo.address.country === null
                       ? "Choose city"
                       : `${userInfo.address.city},
                     ${userInfo.address.country}`}

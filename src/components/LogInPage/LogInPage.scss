@@ -1,8 +1,9 @@
+@use "../../style/colors" as color;
 .logPage {
   height: 100%;
   width: 100%;
   margin: 0;
-  background-image: url(../../assets/icons/background.svg);
+  background-image: url(../../assets/icons/loginRegisterBAckground.svg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -79,7 +80,7 @@
 .nameInput,
 .passInput {
   border: none;
-  border-bottom: 0.6px solid #fcc117;
+  border-bottom: 0.6px solid color.$purple;
   padding: 8px 0;
   outline: none;
   font-weight: 300;

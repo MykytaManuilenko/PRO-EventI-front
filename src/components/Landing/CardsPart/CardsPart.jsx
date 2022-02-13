@@ -15,8 +15,6 @@ const CardsPart = (props) => {
       </div>
       <CardSlider events={props.events} />
 
-      <Button class="ShowButton">Show all</Button>
-
       <div className="TitlePart">
         <p className="Title">Upcoming events</p>
         <hr className="Line" />
